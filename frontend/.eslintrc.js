@@ -16,9 +16,15 @@ module.exports = {
     'html','import'
   ],
   'rules': {
-    'no-alert' : 0, // no-alert error disable
-    'no-console' : 0, // no-console error disable
-    'no-undef' : 0, // no-undef warning disable
+    // disable error
+    'no-alert' : 0,
+    'no-console' : 0,
+    'no-undef' : 0,
+    'import/first' : 0,
+    'import/no-extraneous-dependencies' : 0,
+    'no-mixed-spaces-and-tabs' : 0,
+    'no-tabs' : 0,
+    'linebreak-style' : 0,
     
   },
   "settings": {
