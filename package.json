@@ -6,7 +6,7 @@
   "scripts": {
     "server": "cd backend && npm start",
     "client": "cd frontend && npm run dev",
-    "start": "concurrently \"npm run client\" \"npm run server\"",
+    "start": "concurrently \"npm run client\" \"npm run server\""
   },
   "keywords": [],
   "author": "",

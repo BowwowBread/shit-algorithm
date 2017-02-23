@@ -11,7 +11,7 @@
    > Automatic
    ? Is this your project folder?
    > Yes
-   Where should we put Semantic UI inside your project?
+   ? Where should we put Semantic UI inside your project?
    > Ctrl + C
 7. cd ../
 8. npm install
