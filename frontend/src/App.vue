@@ -154,7 +154,11 @@
       },
       problemLoginCheck() {
         if (this.$cookie.get('userToken') == null) {
-          alert('로그인 해주세요');
+          this.$swal(
+            '입장 불가',
+            '로그인을 하셨나요?',
+            'error',
+          );
         } else {
           this.$router.go({
             name: 'problems',
@@ -163,7 +167,11 @@
       },
       rankLoginCheck() {
         if (this.$cookie.get('userToken') == null) {
-          alert('로그인 해주세요');
+          this.$swal(
+            '입장 불가',
+            '로그인을 하셨나요?',
+            'error',
+          );
         } else {
           this.$router.go({
             name: 'rank',
@@ -187,7 +195,12 @@
       },
       logout() {
         this.loginState = false;
-        alert('Log Out');
+        this.$swal({
+          title: '로그아웃합니다',
+          text: '이 상자는 2초후에 사라집니다',
+          timer: 2000,
+        },
+        );
         this.cookieDel();
       },
       // 폼 모달
@@ -225,20 +238,30 @@
                   this.$cookie.set('userToken', this.userToken, 1);
                   this.$cookie.set('userRating', this.userRating, 1);
                   // 쿠키 값 출력
-                  alert(' 안녕하세요 ');
+//                  alert(' 안녕하세요 ');
+                  this.$swal(
+                  	'로그인 성공',
+                    '안녕하세요!',
+                    'success',
+                  );
                 }
               })
               // 토큰인증 실패
 
               .catch((err) => {
-                alert(`token error ${err}`);
+//                alert(`token error ${err}`);
+                this.$swal(`token error ${err}`);
               });
           })
 
           .catch((err) => {
             alert(err);
             if (err.response.data.message === 'account false') {
-              alert('승인중입니다');
+//              alert('승인중입니다');
+              this.$swal(
+              	'로그인 실패',
+                '관리자의 승인을 기다려주세요',
+                'error');
             }
           });
         } else {
@@ -253,7 +276,8 @@
             this.closeModal();
             const result = res.data.result;
             const username = res.data.username;
-            alert(`${result} ':' ${username}`);
+//            alert(`${result} ':' ${username}`);
+            this.$swal(`${result} ':' ${username}`);
           })
           .catch((error) => {
             alert(error);

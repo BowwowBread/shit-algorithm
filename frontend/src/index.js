@@ -9,6 +9,7 @@ import Vuex from 'vuex';
 import Vue from 'vue';
 import router from './router';
 import App from './App.vue';
+import VueSweetAlert from 'vue-sweetalert';
 
 window.$ = jquery;
 
@@ -17,7 +18,7 @@ Vue.use(Vuex);
 Vue.use(axios);
 Vue.use(VueAwesomeSwiper);
 Vue.use(VueTyperPlugin);
-
+Vue.use(VueSweetAlert);
 
 Vue.prototype.$http = axios;
 Vue.prototype.axios = axios;
