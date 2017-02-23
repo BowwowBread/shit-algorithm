@@ -7,6 +7,12 @@
 4. cd ../
 5. cd frontend 
 6. npm install 
+   ? Set-up Semantic-UI
+   > Automatic
+   ? Is this your project folder?
+   > Yes
+   Where should we put Semantic UI inside your project?
+   > Ctrl + C
 7. cd ../
 8. npm install
 ```
