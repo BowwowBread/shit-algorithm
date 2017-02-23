@@ -268,16 +268,6 @@
 <style src="./assets/css/app.css" scoped></style>
 
 <style scoped>
-  /*.sigoPage-enter-active, .sigoPage-leave-active {*/
-    /*transition: opacity .5s, transform .5s;*/
-  /*}*/
-  /*.sigoPage-enter, .sigoPage-leave-to {*/
-    /*opacity: 0;*/
-    /*transform: translateY(-30%);*/
-  /*}*/
-  .sigo-enter{
-
-  }
   .sigoPage-enter-active {
     transition: all .3s ease;
   }

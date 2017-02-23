@@ -72,11 +72,11 @@ export default {
     };
   },
   created() {
-    this.solveMenu = true;
-    if (this.$cookie.get('userToken') == null) {
-      alert('로그인 해주세요');
-      location.href = '/';
-    }
+//    this.solveMenu = true;
+//    if (this.$cookie.get('userToken') == null) {
+//      alert('로그인 해주세요');
+//      location.href = '/';
+//    }
     const id = this.$route.params.id;
 //    const id = this.$route.params.num;
     this.$http.get(`/problems/${id}`)
