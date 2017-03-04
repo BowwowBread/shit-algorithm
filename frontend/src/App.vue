@@ -160,7 +160,7 @@
             'error',
           );
         } else {
-          this.$router.go({
+          this.$router.push({
             name: 'problems',
           });
         }
@@ -173,7 +173,7 @@
             'error',
           );
         } else {
-          this.$router.go({
+          this.$router.push({
             name: 'rank',
           });
         }
@@ -213,18 +213,20 @@
         $('.ui.modal').modal('hide');
       },
       submit() {
+      	const ROOT_URL = 'http://121.186.23.245:9999';
+      	this.$http.defaults.baseURL = ROOT_URL;
         if (this.signState === true) {
           // true = 로그인 , false = 회원가입
           this.$http.post('api/users/signin', {
             userid: this.userid,
             password: this.password,
-          })
+          }, config)
           .then((resSign) => {
             this.userToken = resSign.data.token;
             // 헤더 토큰 등록
             this.$http.defaults.headers.common.Authorization = this.userToken;
             // 토큰 테스트
-            this.$http.get('api/users/my-info')
+            this.$http.get('/api/users/my-info')
               // 로그인 성공
               .then((resInfo) => {
                 if (resInfo.status === 200) {
@@ -266,12 +268,12 @@
           });
         } else {
           // 회원가입
-          this.$http.post('api/users/signup', {
+          this.$http.post('/api/users/signup', {
             username: this.username,
             userid: this.userid,
             password: this.password,
             studentcode: this.studentcode,
-          })
+          }, config)
           .then((res) => {
             this.closeModal();
             const result = res.data.result;

@@ -55,6 +55,8 @@ export default{
   methods: {
 //            문제리스트
     fetchData() {
+      const ROOT_URL = 'http://121.186.23.245:9999';
+      this.$http.defaults.baseURL = ROOT_URL;
       this.$http.get('api/problems')
         .then((res) => {
           let i = 0;

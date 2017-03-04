@@ -21,7 +21,6 @@ Vue.use(VueTyperPlugin);
 Vue.use(VueSweetAlert);
 
 Vue.prototype.$http = axios;
-Vue.prototype.axios = axios;
 
 /* eslint-disable no-new */
 new Vue({
