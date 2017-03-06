@@ -124,37 +124,50 @@ export default {
       this.$http.defaults.baseURL = ROOT_URL;
       this.$http.post('/api/solution', {
         inputcode: this.code,
-        name: this.items.name,
+        name: this.items[0].num,
         lang: this.lang,
       })
         .then((resSubmit) => {
-      	  alert(resSubmit);
+      	  const num = resSubmit.data.name;
           this.printf = this.code.match('print');
           this.scanf = this.code.match('scanf');
+
           if (this.scanf == null) {
             // printf만 있을 경우
             console.log('printf');
-            const name = this.items[0].name;
-            console.log(name);
-            this.$http.get(`api/solution/${name}`)
+            this.$http.get(`api/solution/${num}`)
               .then((resResult) => {
             	  console.log(resResult);
                 this.result = resResult.data.result;
                 console.log(this.result);
                 if (this.result === this.items[0].outputex) {
-                	console.log('정답');
+                  this.$swal({
+                  	title: '정답',
+                    text: '다른 문제도 풀어보세요',
+                    type: 'success',
+                  })
+                    .then(() => {
+                      location.href = '/problems';
+                    });
+                } else {
+                  this.$swal(
+                    '실패',
+                    '다시 도전해 보세요',
+                    'error',
+                  );
                 }
               });
           } else {
           	// scanf 있을 경우
             console.log('scanf');
-            const name = this.items[0].name;
             const inputex = this.items[0].inputex;
-            console.log(`${name} + '' + ${inputex}`);
-          	this.$http.get(`api/soliution/${name}/${inputex}`)
+            const outputex = this.items[0].outputex;
+            console.log(inputex);
+            console.log(num);
+          	this.$http.get(`api/soliution/${num}/${decodeURI(inputex)}`)
               .then((resResult) => {
           		  this.result = resResult.data.result;
-          		  if (this.result === this.items[0].outputex) {
+          		  if (this.result === outputex) {
           		  	console.log('정답');
             }
               });

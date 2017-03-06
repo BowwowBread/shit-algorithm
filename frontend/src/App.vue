@@ -220,7 +220,7 @@
           this.$http.post('api/users/signin', {
             userid: this.userid,
             password: this.password,
-          }, config)
+          })
           .then((resSign) => {
             this.userToken = resSign.data.token;
             // 헤더 토큰 등록
@@ -233,7 +233,6 @@
                   this.loginState = true;
                   this.username = resInfo.data.user.username;
                   this.closeModal();
-                  this.loginState = true;
                   this.userRating = resInfo.data.user.rating;
                   // Cookie : 이름 , 내용 , 만료기간 , 도메인
                   this.$cookie.set('userName', this.username, 1);
@@ -273,7 +272,7 @@
             userid: this.userid,
             password: this.password,
             studentcode: this.studentcode,
-          }, config)
+          })
           .then((res) => {
             this.closeModal();
             const result = res.data.result;
