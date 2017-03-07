@@ -215,6 +215,8 @@
       submit() {
       	const ROOT_URL = 'http://121.186.23.245:9999';
       	this.$http.defaults.baseURL = ROOT_URL;
+//      	this.$http.defaults.common['Allow-Control-Allow-Origin'] = '*';
+        this.$http.defaults.post['Allow-Control-Allow-Origin'] = '*';
         if (this.signState === true) {
           // true = 로그인 , false = 회원가입
           this.$http.post('api/users/signin', {
@@ -233,6 +235,7 @@
                   this.loginState = true;
                   this.username = resInfo.data.user.username;
                   this.closeModal();
+                  this.loginState = true;
                   this.userRating = resInfo.data.user.rating;
                   // Cookie : 이름 , 내용 , 만료기간 , 도메인
                   this.$cookie.set('userName', this.username, 1);
@@ -272,7 +275,7 @@
             userid: this.userid,
             password: this.password,
             studentcode: this.studentcode,
-          })
+          }, config)
           .then((res) => {
             this.closeModal();
             const result = res.data.result;

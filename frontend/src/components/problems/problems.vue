@@ -22,10 +22,10 @@ export default {
     };
   },
   created() {
-    if (this.$cookie.get('userToken') == null) {
-      alert('로그인 해주세요');
-      location.href = '/';
-    }
+//    if (this.$cookie.get('userToken') == null) {
+//      alert('로그인 해주세요');
+//      location.href = '/';
+//    }
   },
 };
 
