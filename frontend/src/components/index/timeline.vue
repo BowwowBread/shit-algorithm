@@ -175,7 +175,6 @@
       this.$http.defaults.baseURL = ROOT_URL;
       this.$http.get('./api/users')
         .then((resUserInfo) => {
-      	  console.log(resUserInfo.data.users.length);
           this.userCount = resUserInfo.data.users.length;
         });
       console.log(this.userCount);

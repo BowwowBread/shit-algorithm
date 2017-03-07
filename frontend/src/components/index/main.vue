@@ -8,16 +8,16 @@
           <div data-swiper-parallax="-100">
             <vue-typer
               text='대회시스템'
-              :repeat="0"
+              :repeat="infinity"
               :shuffle='false'
               initial-action='typing'
               :pre-type-delay='70'
               :type-delay='70'
               :pre-erase-delay='2000'
               :erase-delay='250'
-              erase-style='select-all'
+              erase-style='backspace'
               :erase-on-complete='false'
-              caret-animation='blink'
+              caret-animation='smooth'
             ></vue-typer>
           </div>
           <br>
@@ -38,16 +38,16 @@
           <div data-swiper-parallax="-100">
             <vue-typer
               text='메세지2'
-              :repeat='0'
+              :repeat="infinity"
               :shuffle='false'
               initial-action='typing'
               :pre-type-delay='70'
               :type-delay='70'
               :pre-erase-delay='2000'
               :erase-delay='250'
-              erase-style='select-all'
+              erase-style='backspace'
               :erase-on-complete='false'
-              caret-animation='blink'
+              caret-animation='smooth'
             ></vue-typer>
           </div>
           <!--<div class="subtitle" data-swiper-parallax="-200">Subtitle</div>-->
@@ -67,16 +67,16 @@
           <div data-swiper-parallax="-100">
             <vue-typer
               text='메세지3'
-              :repeat='0'
+              :repeat="infinity"
               :shuffle='false'
               initial-action='typing'
               :pre-type-delay='70'
-              :type-delay='500'
+              :type-delay='70'
               :pre-erase-delay='2000'
               :erase-delay='250'
-              erase-style='select-all'
+              erase-style='backspace'
               :erase-on-complete='false'
-              caret-animation='blink'
+              caret-animation='smooth'
             ></vue-typer>
           </div>
           <!--<div class="subtitle" data-swiper-parallax="-200">Subtitle</div>-->
@@ -102,12 +102,12 @@ export default {
   name: 'parallax',
   data() {
     return {
-//      swiperOption: {
-//        parallax: true,
-//        speed: 600,
-//        autoplay: 5000,
-//        autoplayDisableOnInteraction: false,
-//      },
+      swiperOption: {
+        parallax: true,
+        speed: 600,
+        autoplay: 5000,
+        autoplayDisableOnInteraction: false,
+      },
     };
   },
 };
@@ -178,21 +178,14 @@ export default {
   }
 </style>
 <style>
-  .typed {
+  /*.vue-typer {*/
+    /*color: #fff !important;*/
+  /*}*/
+  .typed{
     color: #fff !important;
     font-size: 200%;
   }
-  .selected {
-    color: #E91E63 !important;
-  }
-  .typing {
-    background-color: #fff;
-  }
-  .selecting {
-    display: inline-block;
-    background-color: #E91E63;
-  }
-  .idle{
+  .vue-typer .custom.caret {
     display: none;
   }
 </style>

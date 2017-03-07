@@ -158,7 +158,6 @@
     methods: {
       scrollFunction() {
         this.scrolled = window.scrollY;
-        console.log(this.scrolled);
         if (this.scrolled > 200) {
           this.scrollMenu = true;
         } else {
@@ -236,7 +235,6 @@
           })
           .then((resSign) => {
             this.userToken = resSign.data.token;
-            console.log(this.userToken);
             // 헤더 토큰 등록
             this.$http.defaults.headers.common.Authorization = this.userToken;
             // 토큰 테스트
