@@ -30,14 +30,14 @@
                 </div>
                 <div class="solve_footer">
                     <div class="solve_output">
-                        실행 결과가 이곳에 나타납니다<br>
-                        <pre>{{code}}</pre>
+                        <p>{{runMsg}}</p><br>
+                        <pre>{{result}}</pre>
                     </div>
                     <div class="solve_button">
-                        <div class="solve_run">
+                        <div class="solve_run" @click="codeRun">
                             실행하기
                         </div>
-                        <div class="solve_reset">
+                        <div class="solve_reset" @click="codeReset">
                             초기화하기
                         </div>
                         <div class="solve_submit" @click="codeSubmit">
@@ -70,6 +70,8 @@ export default {
       scanf: null,
       result: '',
       code: '',
+      runState: false,
+      runMsg: '실행 결과가 이곳에 나타납니다',
       options: {
         selectOnLineNumbers: true,
         cursorBlinking: 'smooth',
@@ -81,6 +83,7 @@ export default {
         parameterHints: true,
         tabCompletion: true,
         language: this.lang,
+        contextmenu: false,
       },
     };
   },
@@ -119,9 +122,64 @@ export default {
       this.code = editor.getValue();
       console.log(editor.getValue());
     },
+    codeReset() {
+    	this.code = '';
+    	this.runMsg = '실행 결과가 이곳에 나타납니다';
+    	this.result = '';
+    },
+    codeRun() {
+      if (this.code.replace(/^\s*/, '') === '') {
+        this.$swal(
+          '컴파일오류',
+          '코드를 입력해주세요',
+          'error',
+        );
+        this.runMsg = 'ERROR';
+    		return;
+      }
+      this.$http.post('/api/solution', {
+        inputcode: this.code,
+        name: this.items[0].num,
+        lang: this.lang,
+      })
+        .then((resSubmit) => {
+          const num = resSubmit.data.name;
+          this.runState = true;
+          this.runMsg = '실행 결과 : ';
+          this.printf = this.code.match('print');
+          this.scanf = this.code.match('scanf');
+          if (this.scanf == null) {
+            // printf만 있을 경우
+            console.log('printf');
+            this.$http.get(`api/solution/${num}`)
+              .then((resResult) => {
+                console.log(resResult);
+                this.result = resResult.data.result;
+                console.log(this.result);
+              });
+          } else {
+            // scanf 있을 경우
+            console.log('scanf');
+            const inputex = this.items[0].inputex;
+            console.log(inputex);
+            console.log(num);
+            this.$http.get(`api/soliution/${num}/${decodeURI(inputex)}`)
+              .then((resResult) => {
+                this.result = resResult.data.result;
+              });
+          }
+          if (this.result.replace(/^\s*/, '').match('notfound')) {
+            this.result = '컴파일 에러';
+            alert('dd');
+          } else {
+          	console.log(this.result);
+          }
+        })
+        .catch((err) => {
+          alert(err);
+        });
+    },
     codeSubmit() {
-      const ROOT_URL = 'http://121.186.23.245:9999';
-      this.$http.defaults.baseURL = ROOT_URL;
       this.$http.post('/api/solution', {
         inputcode: this.code,
         name: this.items[0].num,
@@ -171,6 +229,9 @@ export default {
           		  	console.log('정답');
             }
               });
+          }
+          if (this.result.match('not found')) {
+          	this.result = '컴파일 에러';
           }
         })
         .catch((err) => {

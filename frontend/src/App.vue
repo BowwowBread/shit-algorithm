@@ -11,7 +11,7 @@
               <li v-if="loginState">
                 <router-link v-if="userRating == 3" to="/admin" :class="{menu_show_font : scrolled > 200}">관리자페이지 - {{username}}님</router-link>
                 <router-link v-else to="/mypage" :class="{menu_show_font : scrolled > 200}">{{username}}님</router-link>
-                <router-link to="/" @click="logout" :class="{menu_show_font : scrolled > 200}">로그아웃</router-link>
+                <a @click="logout" :class="{menu_show_font : scrolled > 200}">로그아웃</a>
               </li>
                 <li v-if="loginState == false"><a @click="openModal" :class="{menu_show_font : scrolled > 200}">SIGN</a></li>
             </ul>
@@ -127,9 +127,13 @@
         scrollMenu: false,
         solveMenu: false,
         on: false,
+        userCount: 0,
       };
     },
     created() {
+      const ROOT_URL = 'http://121.186.23.245:9999';
+      this.$http.defaults.baseURL = ROOT_URL;
+
       // 현재 쿠키
       window.addEventListener('scroll', this.scrollFunction);
       this.userToken = this.$cookie.get('userToken');
@@ -194,7 +198,6 @@
         return true;
       },
       logout() {
-        this.loginState = false;
         this.$swal({
           title: '로그아웃합니다',
           text: '이 상자는 2초후에 사라집니다',
@@ -202,6 +205,10 @@
         },
         );
         this.cookieDel();
+        this.$router.push({
+          name: 'index',
+        });
+        this.loginState = false;
       },
       // 폼 모달
       openModal() {
@@ -213,10 +220,6 @@
         $('.ui.modal').modal('hide');
       },
       submit() {
-      	const ROOT_URL = 'http://121.186.23.245:9999';
-      	this.$http.defaults.baseURL = ROOT_URL;
-//      	this.$http.defaults.common['Allow-Control-Allow-Origin'] = '*';
-        this.$http.defaults.post['Allow-Control-Allow-Origin'] = '*';
         if (this.signState === true) {
           // true = 로그인 , false = 회원가입
           this.$http.post('api/users/signin', {

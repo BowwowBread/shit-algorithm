@@ -1,6 +1,18 @@
 <template>
 <div class="timeline">
-  <vue-typer text='Hello World! I was registered globally!'></vue-typer>
+  <vue-typer
+    :text='["메세지1","메세지2","메세지3"]'
+    :repeat='Infinity'
+    :shuffle='false'
+    initial-action='typing'
+    :pre-type-delay='70'
+    :type-delay='70'
+    :pre-erase-delay='2000'
+    :erase-delay='250'
+    erase-style='select-all'
+    :erase-on-complete='false'
+    caret-animation='blink'
+  ></vue-typer>
   <div id="content" style="margin-bottom: 30px">
     <div class="ui grid" id="micon">
       <div class="five wide column">
@@ -163,9 +175,24 @@
 </div>
 </template>
 <script>
-export default {
-
-};
+  export default {
+    name: 'sigo',
+    data() {
+      return {
+        userCount: '',
+      };
+    },
+    created() {
+      const ROOT_URL = 'http://121.186.23.245:9999';
+      this.$http.defaults.baseURL = ROOT_URL;
+      this.$http.get('./api/users')
+        .then((resUserInfo) => {
+      	  console.log(resUserInfo.data.users.length);
+          this.userCount = resUserInfo.data.users.length;
+        });
+      console.log(this.userCount);
+    },
+  };
 </script>
 <style scoped>
 /*#292929

@@ -38,7 +38,7 @@
             <a href="#" class="active item"> 4 </a>
             <a href="#" class="active item"><i class="angle right icon"></i></a>
           </div>
-
+      </div>
     </div>
 </template>
 <script>
