@@ -1,30 +1,6 @@
 <template>
     <div id="admin">
         <div class="sigo_container">
-            <!--<div class="adminLogin">-->
-                <!--<div class="description">-->
-
-                <!--<div class="ui two column centered grid">-->
-                    <!--<div class="sigo_container">-->
-            <!--<div v-if="userRating != 3"class="culnmn">-->
-                <!--<h1 class="ui header">ADMIN LOGIN</h1>-->
-                <!--<div class="formdiv">-->
-                <!--<form class="ui large form">-->
-                    <!--<div class="field">-->
-                        <!--<input type="text" name="email" placeholder="아이디" id="adminid" v-model="adminid">-->
-                    <!--</div>-->
-                    <!--<div class="field">-->
-                        <!--<input type="password" name="password" placeholder="비밀번호" id="adminpw" v-model="adminpw">-->
-                    <!--</div>-->
-                    <!--<div class="ui fluid large teal submit button adminLogin" id="adlogin" v-on:click="adminLogin">-->
-                      <!--Login</div>-->
-                <!--</form>-->
-              <!--</div>-->
-              <!--</div>-->
-                    <!--</div>-->
-
-
-            </div>
             <div class="adminPage" v-if="adminState">
             <div class="ui">
                 <h1 class="ui header">ADMINPAGE</h1>
@@ -40,6 +16,7 @@
                     </div>
                 </div>
         </div>
+    </div>
     </div>
 
 </template>
@@ -72,17 +49,26 @@ export default {
     };
   },
   created() {
+//          토큰 테스트
     this.userToken = this.$cookie.get('userToken');
-    this.userRating = this.$cookie.get('userRating');
-    if ((this.userToken == null) && (this.userRating !== 3)) {
-      if (this.userToken == null) {
-        alert('로그인 해주세요');
-      } else if (this.userRating !== 3) {
-        alert('어드민이 아닙니다');
-      }
-      location.href = '/';
+    if (this.userToken != null) {
+      this.userToken = this.$cookie.get('userToken');
+      this.$http.defaults.headers.common.Authorization = this.userToken;
+      this.$http.get('/api/users/my-info')
+        .then((resInfo) => {
+          if (resInfo.status === 200) {
+            this.userRating = resInfo.data.user.rating;
+          }
+        })
+        .catch((error) => {
+          alert(error);
+        });
+    }
+    if (this.userRating === 1) {
+    	alert('어드민이 아닙니다');
+    	location.href = '/';
     } else {
-      this.adminState = true;
+    	this.adminState = true;
     }
   },
   methods: {
@@ -110,25 +96,6 @@ export default {
       this.listState = true;
     },
     // 어드민이 아닐경우
-    adminLogin() {
-      this.$http.post('api/users/signin', {
-        userid: this.adminid,
-        password: this.adminpw,
-      })
-        .then((res) => {
-          this.userToken = res.data.token;
-          this.userName = res.data.user.username;
-          this.userRating = res.data.user.rating;
-          this.$cookie.set('userName;', this.userName, 1);
-          this.$cookie.set('userToken', this.userToken, 1);
-          this.$cookie.set('userRating', this.userRating, 1);
-          this.closeModal();
-          this.adminState = true;
-        })
-        .catch((err) => {
-          alert(err);
-        });
-    },
   },
 };
 </script>

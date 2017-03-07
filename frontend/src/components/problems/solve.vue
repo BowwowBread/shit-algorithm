@@ -62,6 +62,7 @@ export default {
   },
   data() {
     return {
+    	userid: '',
       problemUrl: '"../api/problems/"',
       urlParams: '',
       items: [],
@@ -88,11 +89,24 @@ export default {
     };
   },
   created() {
-//    this.solveMenu = true;
-//    if (this.$cookie.get('userToken') == null) {
-//      alert('로그인 해주세요');
-//      location.href = '/';
-//    }
+    //      토큰 테스트
+    this.userToken = this.$cookie.get('userToken');
+    if (this.userToken != null) {
+      this.userToken = this.$cookie.get('userToken');
+      this.$http.defaults.headers.common.Authorization = this.userToken;
+      this.$http.get('/api/users/my-info')
+        .then((resInfo) => {
+          if (resInfo.status === 200) {
+            this.userid = resInfo.data.user.userId;
+          }
+        })
+        .catch((error) => {
+          alert(error);
+        });
+    } else {
+    	alert('로그인해주세요');
+    	location.href = '/';
+    }
     const ROOT_URL = 'http://121.186.23.245:9999';
     this.$http.defaults.baseURL = ROOT_URL;
     const id = this.$route.params.num;
@@ -138,8 +152,10 @@ export default {
     		return;
       }
       this.$http.post('/api/solution', {
+      	userid: this.userid,
+        problemNum: this.items[0].num,
         inputcode: this.code,
-        name: this.items[0].num,
+        name: 'problem',
         lang: this.lang,
       })
         .then((resSubmit) => {
@@ -158,21 +174,22 @@ export default {
                 console.log(this.result);
               });
           } else {
-            // scanf 있을 경우
+// scanf 있을 경우
             console.log('scanf');
             const inputex = this.items[0].inputex;
+//            const inputex = '37';
+            const outputex = this.items[0].outputex;
+//            const outputex = '37';
             console.log(inputex);
+            console.log(outputex);
             console.log(num);
-            this.$http.get(`api/soliution/${num}/${decodeURI(inputex)}`)
+            this.$http.get(`api/solution/${num}/${inputex}`)
               .then((resResult) => {
                 this.result = resResult.data.result;
               });
           }
-          if (this.result.replace(/^\s*/, '').match('notfound')) {
+          if (this.result.match('not found')) {
             this.result = '컴파일 에러';
-            alert('dd');
-          } else {
-          	console.log(this.result);
           }
         })
         .catch((err) => {
@@ -181,8 +198,10 @@ export default {
     },
     codeSubmit() {
       this.$http.post('/api/solution', {
+        userid: this.userid,
+        problemNum: this.items[0].num,
         inputcode: this.code,
-        name: this.items[0].num,
+        name: 'problem',
         lang: this.lang,
       })
         .then((resSubmit) => {
@@ -221,8 +240,9 @@ export default {
             const inputex = this.items[0].inputex;
             const outputex = this.items[0].outputex;
             console.log(inputex);
+            console.log(outputex);
             console.log(num);
-          	this.$http.get(`api/soliution/${num}/${decodeURI(inputex)}`)
+          	this.$http.get(`api/solution/${num}/${inputex}`)
               .then((resResult) => {
           		  this.result = resResult.data.result;
           		  if (this.result === outputex) {
