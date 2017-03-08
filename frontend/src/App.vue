@@ -252,7 +252,6 @@
                   this.$cookie.set('userToken', this.userToken, 1);
                   this.$cookie.set('userRating', this.userRating, 1);
                   // 쿠키 값 출력
-//                  alert(' 안녕하세요 ');
                   this.$swal(
                   	'로그인 성공',
                     '안녕하세요!',
@@ -261,13 +260,13 @@
                 }
               })
               // 토큰인증 실패
-
               .catch((err) => {
-//                alert(`token error ${err}`);
-                this.$swal(`token error ${err}`);
+                this.$swal(
+                  '로그인 실패',
+                  err,
+                  'error');
               });
           })
-
           .catch((err) => {
             if (err.response.data.message === 'account false') {
 //              alert('승인중입니다');
@@ -284,13 +283,14 @@
             userid: this.userid,
             password: this.password,
             studentcode: this.studentcode,
-          }, config)
+          })
           .then((res) => {
-            this.closeModal();
-            const result = res.data.result;
             const username = res.data.username;
-//            alert(`${result} ':' ${username}`);
-            this.$swal(`${result} ':' ${username}`);
+            this.$swal(
+              '회원가입 성공',
+              `안녕하세요 ${username}님`,
+              'success');
+            this.closeModal();
           })
           .catch((error) => {
             alert(error);

@@ -22,8 +22,22 @@ export default {
     };
   },
   created() {
-    if (this.$cookie.get('userToken') == null) {
-      alert('로그인 해주세요');
+    //      토큰 테스트
+    this.userToken = this.$cookie.get('userToken');
+    if (this.userToken != null) {
+      this.userToken = this.$cookie.get('userToken');
+      this.$http.defaults.headers.common.Authorization = this.userToken;
+      this.$http.get('/api/users/my-info')
+        .then((resInfo) => {
+          if (resInfo.status === 200) {
+            this.userid = resInfo.data.user.userId;
+          }
+        })
+        .catch((error) => {
+          alert(error);
+        });
+    } else {
+      alert('로그인해주세요');
       location.href = '/';
     }
   },

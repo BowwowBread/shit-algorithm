@@ -25,7 +25,7 @@
             </div>
             <div class="solve_main">
                 <div class="solve_input">
-                    <monaco-editor height="600" language="c" :code="code" :editorOptions="options" @mounted="onMounted" @codeChange="onCodeChange">
+                    <monaco-editor class="monacoEditor" language="c" :code="code" :editorOptions="options" @mounted="onMounted" @codeChange="onCodeChange">
                     </monaco-editor>
                 </div>
                 <div class="solve_footer">
@@ -54,6 +54,7 @@
 </template>
 <script>
 import MonacoEditor from 'vue-monaco-editor';
+
 export default {
   name: 'solve',
   components: {
@@ -68,7 +69,8 @@ export default {
       lang: 'c',
       printf: null,
       scanf: null,
-      result: '',
+      codeResult: '',
+      compileResult: '',
       code: '',
       runState: false,
       runMsg: '실행 결과가 이곳에 나타납니다',
@@ -138,7 +140,7 @@ export default {
     codeReset() {
     	this.code = '';
     	this.runMsg = '실행 결과가 이곳에 나타납니다';
-    	this.result = '';
+    	this.codeResult = '';
     },
     codeRun() {
       if (this.code.replace(/^\s*/, '') === '') {
@@ -158,6 +160,7 @@ export default {
         lang: this.lang,
       })
         .then((resSubmit) => {
+      	  this.compileResult = resSubmit.data.result;
           const num = resSubmit.data.name;
           this.runState = true;
           this.runMsg = '실행 결과 : ';
@@ -169,8 +172,8 @@ export default {
             this.$http.get(`api/solution/${num}`)
               .then((resResult) => {
                 console.log(resResult);
-                this.result = resResult.data.result;
-                console.log(this.result);
+                this.codeResult = resResult.data.result;
+                console.log(this.codeResult);
               });
           } else {
 // scanf 있을 경우
@@ -184,11 +187,11 @@ export default {
             console.log(num);
             this.$http.get(`api/solution/${num}/${inputex}`)
               .then((resResult) => {
-                this.result = resResult.data.result;
+                this.codeResult = resResult.data.result;
               });
           }
-          if (this.result.match('not found')) {
-            this.result = '컴파일 에러';
+          if (this.codeResult.match('not found')) {
+            this.codeResult = '컴파일 에러';
           }
         })
         .catch((err) => {
@@ -213,9 +216,9 @@ export default {
             this.$http.get(`api/solution/${num}`)
               .then((resResult) => {
             	  console.log(resResult);
-                this.result = resResult.data.result;
-                console.log(this.result);
-                if (this.result === this.items[0].outputex) {
+                this.codeResult = resResult.data.result;
+                console.log(this.codeResult);
+                if (this.codeResult === this.items[0].outputex) {
                   this.$swal({
                   	title: '정답',
                     text: '다른 문제도 풀어보세요',
@@ -242,28 +245,41 @@ export default {
             console.log(num);
           	this.$http.get(`api/solution/${num}/${inputex}`)
               .then((resResult) => {
-          		  this.result = resResult.data.result;
-          		  if (this.result === outputex) {
-          		  	console.log('정답');
+          		  this.codeResult = resResult.data.result;
+          		  if (this.codeResult === outputex) {
+              this.$swal({
+                title: '정답',
+                text: '다른 문제도 풀어보세요',
+                type: 'success',
+              })
+                .then(() => {
+                  location.href = '/problems';
+                });
+            } else {
+              this.$swal(
+                '실패',
+                '다시 도전해 보세요',
+                'error',
+                );
             }
               });
           }
-          if (this.result.match('not found')) {
-          	this.result = '컴파일 에러';
+          if (this.codeResult.match('not found')) {
+          	this.codeResult = '컴파일 에러';
           }
         })
         .catch((err) => {
           alert(err);
         });
     },
-    inputCode(e) {
-      this.code = e.target.value;
-    },
-    problemData() {
-    },
   },
 };
 </script>
-<style src="../../assets/css/solve.css" scoped></style>
+<style src="../../assets/css/solve.css" scoped>
+</style>
 <style scoped>
+  .monacoEditor{
+    width: calc(100vw - 400px) !important;
+    height: calc(100vh - 400px - 70px) !important;
+  }
 </style>
