@@ -6,11 +6,13 @@
                 <h1 class="ui header">ADMINPAGE</h1>
                 <div class="ui secondary pointing menu">
                     <a class="item" v-on:click="click_member">회원관리</a>
+                    <a class="item" v-on:click="click_nonaccount">비승인 회원관리</a>
                     <a class="item" v-on:click="click_list">개시판관리</a>
                     <a class="item" v-on:click="click_problem">문제관리</a>
                 </div>
                     <div class="twelve wide stretched column">
                         <member v-if="memberState"></member>
+                        <nonaccount v-if="nonaccountState"></nonaccount>
                         <problemmanage v-if="problemState"></problemmanage>
                         <notice v-if="listState"></notice>
                     </div>
@@ -25,6 +27,7 @@
 import member from './member.vue';
 import problemmanage from './problemmange.vue';
 import notice from './notice.vue';
+import nonaccount from './nonaccount.vue';
 
 export default {
   name: 'admin',
@@ -32,12 +35,12 @@ export default {
     member,
     problemmanage,
     notice,
+    nonaccount,
   },
   data() {
     return {
-      adminid: '',
-      adminpw: '',
       memberState: true,
+      nonaccountState: false,
       problemState: false,
       listState: false,
       adminState: false,
@@ -72,21 +75,21 @@ export default {
     }
   },
   methods: {
-    openModal() {
-      $('.adminLogin').modal({
-        blurring: true,
-      }).modal('show');
-    },
-    closeModal() {
-      $('.adminLogin').modal('hide');
-    },
     click_problem() {
       this.memberState = false;
       this.problemState = true;
       this.listState = false;
+      this.nonaccountState = false;
     },
     click_member() {
       this.memberState = true;
+      this.problemState = false;
+      this.listState = false;
+      this.nonaccountState = false;
+    },
+    click_nonaccount() {
+      this.nonaccountState = true;
+      this.memberState = false;
       this.problemState = false;
       this.listState = false;
     },
@@ -94,6 +97,7 @@ export default {
       this.memberState = false;
       this.problemState = false;
       this.listState = true;
+      this.nonaccountState = false;
     },
     // 어드민이 아닐경우
   },
