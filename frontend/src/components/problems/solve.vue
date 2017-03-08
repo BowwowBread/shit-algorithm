@@ -54,7 +54,6 @@
 </template>
 <script>
 import MonacoEditor from 'vue-monaco-editor';
-
 export default {
   name: 'solve',
   components: {
@@ -208,7 +207,6 @@ export default {
       	  const num = resSubmit.data.name;
           this.printf = this.code.match('print');
           this.scanf = this.code.match('scanf');
-
           if (this.scanf == null) {
             // printf만 있을 경우
             console.log('printf');
@@ -246,21 +244,7 @@ export default {
               .then((resResult) => {
           		  this.result = resResult.data.result;
           		  if (this.result === outputex) {
-          		  	this.$swal({
-                  	title: '정답',
-                    text: '다른 문제도 풀어보세요',
-                    type: 'success',
-                  })
-                    .then(() => {
-                      location.href = '/problems';
-                    });
-                } else {
-                  this.$swal(
-                    '실패',
-                    '다시 도전해 보세요',
-                    'error',
-                  );
-                }
+          		  	console.log('정답');
             }
               });
           }
@@ -276,12 +260,10 @@ export default {
       this.code = e.target.value;
     },
     problemData() {
-
     },
   },
 };
 </script>
 <style src="../../assets/css/solve.css" scoped></style>
 <style scoped>
-
 </style>
