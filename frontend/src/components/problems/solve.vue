@@ -246,7 +246,21 @@ export default {
               .then((resResult) => {
           		  this.result = resResult.data.result;
           		  if (this.result === outputex) {
-          		  	console.log('정답');
+          		  	this.$swal({
+                  	title: '정답',
+                    text: '다른 문제도 풀어보세요',
+                    type: 'success',
+                  })
+                    .then(() => {
+                      location.href = '/problems';
+                    });
+                } else {
+                  this.$swal(
+                    '실패',
+                    '다시 도전해 보세요',
+                    'error',
+                  );
+                }
             }
               });
           }
