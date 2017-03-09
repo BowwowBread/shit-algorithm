@@ -28,13 +28,13 @@
             </div>
             <div class="solve_main">
                 <div class="solve_input">
-                    <monaco-editor class="monacoEditor" language="c" :code="code" :editorOptions="options" @mounted="onMounted" @codeChange="onCodeChange">
+                    <monaco-editor class="monacoEditor" width="100%" language="c" :code="code" :editorOptions="options" @mounted="onMounted" @codeChange="onCodeChange">
                     </monaco-editor>
                 </div>
                 <div class="solve_footer">
                     <div class="solve_output">
                         <p>{{runMsg}}</p><br>
-                        <pre>{{result}}</pre>
+                        <pre>{{codeResult}}</pre>
                     </div>
                     <div class="solve_button">
                         <div class="solve_run" @click="codeRun">
@@ -141,6 +141,7 @@ export default {
       console.log(editor.getValue());
     },
     codeReset() {
+      this.editor.setValue('');
     	this.code = '';
     	this.runMsg = '실행 결과가 이곳에 나타납니다';
     	this.codeResult = '';
@@ -157,118 +158,87 @@ export default {
       }
       this.$http.post('/api/solution', {
       	userid: this.userid,
-        problemNum: this.items[0].num,
+        problemnum: this.items[0].num,
         inputcode: this.code,
         name: 'problem',
         lang: this.lang,
       })
         .then((resSubmit) => {
-      	  this.compileResult = resSubmit.data.result;
-          const num = resSubmit.data.name;
-          this.runState = true;
-          this.runMsg = '실행 결과 : ';
-          this.printf = this.code.match('print');
-          this.scanf = this.code.match('scanf');
-          if (this.scanf == null) {
-            // printf만 있을 경우
-            console.log('printf');
-            this.$http.get(`api/solution/${num}`)
-              .then((resResult) => {
-                console.log(resResult);
-                this.codeResult = resResult.data.result;
-                console.log(this.codeResult);
-              });
-          } else {
-// scanf 있을 경우
-            console.log('scanf');
-            const inputex = this.items[0].inputex;
-//            const inputex = '37';
-            const outputex = this.items[0].outputex;
-//            const outputex = '37';
-            console.log(inputex);
-            console.log(outputex);
-            console.log(num);
-            this.$http.get(`api/solution/${num}/${inputex}`)
-              .then((resResult) => {
-                this.codeResult = resResult.data.result;
-              });
-          }
-          if (this.codeResult.match('not found')) {
-            this.codeResult = '컴파일 에러';
-          }
+          console.log(resSubmit);
         })
+      	//   this.compileResult = resSubmit.data.result;
+          // const num = resSubmit.data.name;
+        //   this.runState = true;
+        //   this.runMsg = '실행 결과 : ';
+        //   this.printf = this.code.match('print');
+        //   this.scanf = this.code.match('scanf');
+//           if (this.scanf == null) {
+//             // printf만 있을 경우
+//             console.log('printf');
+//             this.$http.get(`api/solution/${num}`)
+//               .then((resResult) => {
+//                 console.log(resResult);
+//                 this.codeResult = resResult.data.result;
+//                 console.log(this.codeResult);
+//               });
+//           } else {
+// // scanf 있을 경우
+//             console.log('scanf');
+//             const inputex = this.items[0].inputex;
+// //            const inputex = '37';
+//             const outputex = this.items[0].outputex;
+// //            const outputex = '37';
+//             console.log(inputex);
+//             console.log(outputex);
+//             console.log(num);
+//             this.$http.get(`api/solution/${num}/${inputex}`)
+//               .then((resResult) => {
+//                 this.codeResult = resResult.data.result;
+//               });
+//           }
+//           if (this.codeResult.match('not found')) {
+//             this.codeResult = '컴파일 에러';
+//           }
         .catch((err) => {
           alert(err);
         });
     },
     codeSubmit() {
+      if (this.code.replace(/^\s*/, '') === '') {
+        this.$swal(
+          '컴파일오류',
+          '코드를 입력해주세요',
+          'error',
+        );
+        this.runMsg = 'ERROR';
+    		return;
+      }
       this.$http.post('/api/solution', {
         userid: this.userid,
-        problemNum: this.items[0].num,
+        problemnum: this.items[0].num,
         inputcode: this.code,
         name: 'problem',
         lang: this.lang,
       })
         .then((resSubmit) => {
-      	  const num = resSubmit.data.name;
-          this.printf = this.code.match('print');
-          this.scanf = this.code.match('scanf');
-          if (this.scanf == null) {
-            // printf만 있을 경우
-            console.log('printf');
-            this.$http.get(`api/solution/${num}`)
-              .then((resResult) => {
-            	  console.log(resResult);
-                this.codeResult = resResult.data.result;
-                console.log(this.codeResult);
-                if (this.codeResult === this.items[0].outputex) {
-                  this.$swal({
-                  	title: '정답',
-                    text: '다른 문제도 풀어보세요',
-                    type: 'success',
-                  })
-                    .then(() => {
-                      location.href = '/problems';
-                    });
-                } else {
-                  this.$swal(
-                    '실패',
-                    '다시 도전해 보세요',
-                    'error',
-                  );
-                }
-              });
+          const result = resSubmit.data.result;
+          if (result === 'success') {
+            this.runMsg = 'SUCCESS';
+            this.$swal({
+              title: '정답',
+              text: '다른 문제도 풀어보세요',
+              type: 'success',
+            })
+            .then(() => {
+              location.href = '/problems';
+            });
           } else {
-          	// scanf 있을 경우
-            console.log('scanf');
-            const inputex = this.items[0].inputex;
-            const outputex = this.items[0].outputex;
-            console.log(inputex);
-            console.log(outputex);
-            console.log(num);
-          	this.$http.get(`api/solution/${num}/${inputex}`)
-              .then((resResult) => {
-          		  this.codeResult = resResult.data.result;
-          		  if (this.codeResult === outputex) {
-              this.$swal({
-                title: '정답',
-                text: '다른 문제도 풀어보세요',
-                type: 'success',
-              })
-                .then(() => {
-                  location.href = '/problems';
-                });
-            } else {
-              this.$swal(
+            this.runMsg = 'FAIL';
+            this.$swal(
                 '실패',
                 '다시 도전해 보세요',
                 'error',
-                );
-            }
-              });
-          }
-          if (this.codeResult.match('not found')) {
-          	this.codeResult = '컴파일 에러';
+              );
           }
         })
         .catch((err) => {
@@ -282,7 +252,7 @@ export default {
 </style>
 <style scoped>
   .monacoEditor{
-    width: calc(100vw - 400px) !important;
+    width: auto !important;
     height: calc(100vh - 400px - 70px) !important;
   }
 </style>

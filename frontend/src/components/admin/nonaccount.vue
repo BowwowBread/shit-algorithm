@@ -33,7 +33,10 @@
     },
     methods: {
     	account(userid) {
-      this.$http.get(`api/users/account/${userid}`);
+      this.$http.get(`api/users/account/${userid}`)
+        .then((res) => {
+          console.log(res);
+        });
     },
       getMember() {
         this.$http.get('api/users/non-account')
