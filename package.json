@@ -1,8 +1,8 @@
 {
-  "name": "frontend",
+  "name": "SIGO",
   "version": "1.0.0",
-  "description": "A Vue.js project",
-  "author": "ChangJoo Park <pcjpcj2@gmail.com>",
+  "description": "SIGO Algorithm Site",
+  "author": "Junghyun Park <bowwow.bread@gmail.com>",
   "private": true,
   "scripts": {
     "dev": "node build/dev-server.js",
