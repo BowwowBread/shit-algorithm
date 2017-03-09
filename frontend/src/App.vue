@@ -24,7 +24,9 @@
                         <div class="ui two column centered grid">
                             <div class="container">
                                 <div class="culnmn">
+                                  <div class="signhead">
                                     <h1 class="ui grey header">로그인</h1>
+                                  </div>
                                     <form class="ui large form">
                                         <div class="field">
                                             <div class="ui left icon input">

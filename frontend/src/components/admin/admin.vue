@@ -1,9 +1,12 @@
 <template>
     <div id="admin">
         <div class="sigo_container">
-            <div class="adminPage" v-if="adminState">
+            <div class="adminPage" v-if="adminState"
+             style=
+             "background-color: white ;
+              color: black;">
             <div class="ui">
-                <h1 class="ui header">ADMINPAGE</h1>
+                <h1 class="ui header admin">ADMINPAGE</h1>
                 <div class="ui secondary pointing menu">
                     <a class="item" v-on:click="click_member">회원관리</a>
                     <a class="item" v-on:click="click_nonaccount">비승인 회원관리</a>
@@ -103,4 +106,5 @@ export default {
   },
 };
 </script>
-<style src="../../assets/css/admin.css"></style>
+<style src="../../assets/css/admin.css">
+</style>

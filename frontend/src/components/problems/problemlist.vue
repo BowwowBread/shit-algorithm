@@ -3,9 +3,10 @@
 <div class="problemlist">
 
     <!--문제리스트-->
-    <div class="container">
+    <div class="procontainer">
+      <div class="reverse">
         <h2 class="ui center aligned header"> 문제풀기
-            <div class="sub header">Manage your account settings and set e-mail preferences.</div>
+            <div class="sub header">문제를 풀고 실력을 키워 더 많은 것을 풀어보세요.</div>
           </h2>
         <div class="ui top attached tabular menu">
             <a class="item active" data-tab="first" id="item">문제</a>
@@ -30,14 +31,18 @@
               </div>
             </div>
           </div>
-          <div class="ui pagination menu">
-            <a href="#" class="active item"><i class="angle left icon"></i></a>
-            <a href="#" class="active item"> 1 </a>
-            <a href="#" class="active item"> 2 </a>
-            <a href="#" class="active item"> 3 </a>
-            <a href="#" class="active item"> 4 </a>
-            <a href="#" class="active item"><i class="angle right icon"></i></a>
-          </div>
+          <span id="page-span">1/10</span>
+          <a href="#"><i class="big reply icon"></i></a>
+          <a href="#"><i class="big share icon"></i></a>
+          <!-- <div class="ui pagination menu">
+            <a href="#" class="item"><i class="angle left icon"></i></a>
+            <a href="#" class="item"> 1 </a>
+            <a href="#" class="item"> 2 </a>
+            <a href="#" class="item"> 3 </a>
+            <a href="#" class="item"> 4 </a>
+            <a href="#" class="item"><i class="angle right icon"></i></a>
+          </div> -->
+        </div>
       </div>
     </div>
 </template>

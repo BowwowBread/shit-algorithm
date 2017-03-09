@@ -8,7 +8,6 @@
                 학번 : <span>{{member.studentcode}}</span><br>
                 등급 : <span>{{member.rating}}</span><br>
                 승인여부 : <span>{{member.account}}</span><br>
-
                 <br>
             </li>
             <br>
@@ -50,5 +49,4 @@ export default{
 };
 </script>
 <style scoped>
-
 </style>
