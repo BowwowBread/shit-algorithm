@@ -55,7 +55,7 @@ export default{
       memoryLimit: '',
     };
   },
-  created() {
+  beforeCreate() {
     this.fetchData();
   },
   methods: {

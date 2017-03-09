@@ -171,13 +171,13 @@
       };
     },
     created() {
-      const ROOT_URL = 'http://121.186.23.245:9999';
-      this.$http.defaults.baseURL = ROOT_URL;
-      this.$http.get('./api/users')
-        .then((resUserInfo) => {
-          this.userCount = resUserInfo.data.users.length;
-        });
-      console.log(this.userCount);
+//      const ROOT_URL = 'http://121.186.23.245:9999';
+//      this.$http.defaults.baseURL = ROOT_URL;
+//      this.$http.get('./api/users')
+//        .then((resUserInfo) => {
+//          this.userCount = resUserInfo.data.users.length;
+//        <!--});-->
+//      console.log(this.userCount);
     },
   };
 </script>

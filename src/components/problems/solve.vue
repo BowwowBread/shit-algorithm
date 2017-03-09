@@ -162,6 +162,7 @@ export default {
         inputcode: this.code,
         name: 'problem',
         lang: this.lang,
+        mode: true,
       })
         .then((resSubmit) => {
           console.log(resSubmit);

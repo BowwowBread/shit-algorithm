@@ -25,7 +25,7 @@ export default{
       members: [],
     };
   },
-  created() {
+  beforeCreate() {
     this.getMember();
   },
   methods: {
