@@ -135,10 +135,9 @@
       this.$http.defaults.baseURL = ROOT_URL;
 //      토큰 테스트
       this.userToken = this.$cookie.get('userToken');
-      console.log(this.userToken);
       if (this.userToken != null) {
         this.userToken = this.$cookie.get('userToken');
-        console.log(this.userToken);
+        this.$http.defaults.headers.common.Authorization = this.userToken;
         this.$http.get('/api/users/my-info')
           .then((resInfo) => {
             if (resInfo.status === 200) {
@@ -237,10 +236,7 @@
           .then((resSign) => {
             this.userToken = resSign.data.token;
             // 헤더 토큰 등록
-//            this.$http.defaults.headers.common.Authorization = this.userToken;
-            console.log(this.userToken);
-
-            this.$cookie.set('userToken', this.userToken, 1, { domain: '121.186.23.245' });
+            this.$http.defaults.headers.common.Authorization = this.userToken;
             // 토큰 테스트
             this.$http.get('/api/users/my-info')
               // 로그인 성공
@@ -252,6 +248,7 @@
                   this.loginState = true;
                   this.userRating = resInfo.data.user.rating;
                   // Cookie : 이름 , 내용 , 만료기간 , 도메인
+                  this.$cookie.set('userToken', this.userToken, 1);
                   // 쿠키 값 출력
                   this.$swal(
                   	'로그인 성공',

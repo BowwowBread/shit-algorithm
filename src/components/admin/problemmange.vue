@@ -55,8 +55,9 @@ export default{
       memoryLimit: '',
     };
   },
-  beforeCreate() {
+  created() {
     this.fetchData();
+    this.ratio();
   },
   methods: {
   	add() {
@@ -72,6 +73,12 @@ export default{
       memorylimit: this.memoryLimit,
     });
   },
+    ratio() {
+  		this.$http.get('api/solution')
+          .then((res) => {
+  			console.log(res);
+          });
+    },
     fetchData() {
       this.$http.get('api/problems')
         .then((res) => {

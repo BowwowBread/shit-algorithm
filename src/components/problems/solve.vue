@@ -165,7 +165,7 @@ export default {
         mode: true,
       })
         .then((resSubmit) => {
-          console.log(resSubmit);
+          this.codeResult = resSubmit.data.result;
         })
       	//   this.compileResult = resSubmit.data.result;
           // const num = resSubmit.data.name;

@@ -26,7 +26,7 @@
         members: [],
       };
     },
-    beforeCreate() {
+    created() {
       this.userToken = this.$cookie.get('userToken');
       console.log(this.userToken);
       this.getMember();
