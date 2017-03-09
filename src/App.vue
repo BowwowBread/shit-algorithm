@@ -240,7 +240,7 @@
 //            this.$http.defaults.headers.common.Authorization = this.userToken;
             console.log(this.userToken);
 
-            this.$cookie.set('userToken', this.userToken, 1);
+            this.$cookie.set('userToken', this.userToken, 1, {domain: '121.186.23.245'});
             // 토큰 테스트
             this.$http.get('/api/users/my-info')
               // 로그인 성공
