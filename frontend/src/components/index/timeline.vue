@@ -1,7 +1,7 @@
 <template>
 <div class="timeline">
 
-  <div id="content" style="margin-bottom: 30px">
+  <div id="content">
     <div class="ui grid" id="micon">
       <div class="five wide column">
         <i class="massive write icon"></i>
@@ -12,7 +12,7 @@
                </h1>
       </div>
       <div class="six wide column">
-        <i class="massive thumbs outline up icon"></i>
+        <i class="massive thumbs  up icon"></i>
         <h1 class="ui header">인기있는 문제
                  <div class="sub header">
                    <p>100번 문제</p>
@@ -182,15 +182,18 @@
   };
 </script>
 <style scoped>
-/*#292929
+/*  #292929
 rgb(48,200,164)
-rgb(35,131,109)*/
+rgb(35,131,109)
+#208A66 */
+
 
 .timeline{
   background: rgb(244,244,244);
 }
 
 #content {
+  padding-top: 50px;
 }
 
 #footer {
@@ -203,6 +206,9 @@ rgb(35,131,109)*/
 #micon{
   margin: 0px 77px;
 }
+#eleven {
+  width: 100% !important;
+}
 .iconpol{
   margin-left: -20px;
 }
@@ -213,9 +219,6 @@ rgb(35,131,109)*/
   color: rgb(35,131,109);
 }
 
-#eleven {
-  width: 100% !important;
-}
 
 .sub.header p{
   font-size: 18px;
@@ -280,7 +283,7 @@ a.header:hover {
 
 .mainproblom {
   margin: 0px 77px;
-  margin-top: 100px;
+  margin-top: 70px;
 }
 
 .ui.card {
@@ -304,6 +307,39 @@ a.header:hover {
   border: 1px solid rgb(230, 230, 230);
   border-radius: 5px;
 }
+.massive.write.icon{
+  background: #1e7e7b;
+    color: white;
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    padding-top: 26px;
+    font-size: 90px;
+    margin-bottom: 30px;
+}
+.massive.thumbs.up.icon{
+  background: #1e7e7b;
+    color: white;
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    padding-top: 26px;
+    font-size: 90px;
+    margin-bottom: 30px;
+}
+.massive.student.icon{
+  background: #1e7e7b;
+    color: white;
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    padding-top: 26px;
+    font-size: 90px;
+    margin-bottom: 30px;
+}
+
+
+
 
 /*풋터 영역*/
 

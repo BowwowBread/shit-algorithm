@@ -1,7 +1,10 @@
 <template>
     <div id="admin">
         <div class="sigo_container">
-            <div class="adminPage" v-if="adminState">
+            <div class="adminPage" v-if="adminState"
+             style=
+             "background-color: white ;
+              color: black;">
             <div class="ui">
                 <h1 class="ui header">ADMINPAGE</h1>
                 <div class="ui secondary pointing menu">
@@ -103,4 +106,5 @@ export default {
   },
 };
 </script>
-<style src="../../assets/css/admin.css"></style>
+<style src="../../assets/css/admin.css">
+</style>

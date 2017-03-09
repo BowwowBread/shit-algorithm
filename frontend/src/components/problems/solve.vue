@@ -9,10 +9,13 @@
                     {{item.name}} 문제를 풀어봅시다
                 </div>
             </div>
+            <hr id="head-hr">
             <div class="solve_sidebar">
                 <div class="sidebar_title">
                     <h3>문제 설명</h3>
+                    <hr id="sub-hr">
                 </div>
+                <hr>
                 <div class="solve_explain">
                     {{item.explanation}}
                 </div>

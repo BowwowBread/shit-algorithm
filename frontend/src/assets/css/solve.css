@@ -1,4 +1,4 @@
-
+/**/
 #solve{
     margin-top: 100px;
     height: calc(100vh - 100px);
@@ -27,14 +27,29 @@
 .solve_explain{
     padding: 30px;
     height: calc(100% - 50px - 300px);
+    border: 3px solid;
+    border-radius: 20px;
+    margin: 0px 20px 15px 20px;
+    border-color:rgb(43,113,39);
+    /*border-color:rgb(87,205,81);*/
 }
 .solve_inputex{
     height:150px;
     padding: 30px;
+    border: 3px solid;
+    border-radius: 20px;
+    margin: 0px 20px 15px 20px;
+    border-color:rgb(108,119,36);
+    /*border-color:rgb(188,205,81);*/
 }
 .solve_outputex{
     height: 150px;
     padding: 30px;
+    border: 3px solid;
+    border-radius: 20px;
+    margin: 0px 20px 15px 20px;
+    border-color:rgb(97,36,78);
+    /*border-color:rgb(205,81,167);*/
 }
 .solve_main{
     height: calc(100vh - 170px);
@@ -51,7 +66,7 @@
 }
 .solve_output{
     width: 100%;
-    padding: 50px;
+    padding: 30px;
 }
 .solve_button{
     width:200px;
@@ -67,4 +82,69 @@
 .select_lang{
   position:absolute;
   right: 30px;
+}
+.solve_sidebar h3{
+  font-size:25px;
+}
+.solve_title{
+  font-size: 30px;
+  margin-bottom: 20px;
+}
+.solve_explain{
+  font-size:17px;
+}
+.solve_output{
+  border: 2.1px solid;
+  border-radius: 10px;
+  margin: 50px 50px 50px 0px;
+  border-color: rgb(37,115,85);
+}
+.solve_run{
+  background-color: rgb(148,141,95);
+  /*background-color: rgb(223,213,146);*/
+  border-radius: 70%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 100px;
+  height: 40px;
+}
+.solve_reset{
+  background-color: rgb(142,97,145);
+  /*background-color: rgb(217,146,223);*/
+  border-radius: 70%;
+  margin-bottom: 10px;
+  width: 100px;
+  height: 40px;
+}
+.solve_submit{
+  background-color: rgb(102,152,140);
+  /*background-color: rgb(146,223,205);*/
+  border-radius: 70%;
+  width: 100px;
+  height: 40px;
+}
+.solve_run:hover{
+  background-color: rgb(208,199,141);
+  transition-duration: 0.2s;
+}
+.solve_reset:hover{
+  background-color: rgb(188,120,193);
+  transition-duration: 0.2s;
+}
+.solve_submit:hover{
+  background-color: rgb(125,198,180);
+  transition-duration: 0.2s;
+}
+#head-hr{
+  margin-top: -20px;
+  margin-bottom: 80px;
+  width: 23%;
+  border: 1px solid;
+  border-color: rgb(42,113,94);
+}
+#sub-hr{
+  margin-top: -5px;
+  width: 17%;
+  border: 1px solid;
+  border-color: rgb(42,113,103);
 }

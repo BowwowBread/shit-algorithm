@@ -1,4 +1,6 @@
 body {
+  background-color: rgb(40,40,40);
+  color: white;
 }
 
 img.medium.ui.image {
@@ -14,7 +16,7 @@ h1.ui.header {
 }
 
 .container {
-    background-color:rgb(250,250,250);
+    /*background-color:rgb(250,250,250);*/
     position: absolute;
     top: 0;
     right: 0;
