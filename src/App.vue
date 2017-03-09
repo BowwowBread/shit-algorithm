@@ -137,7 +137,7 @@
       this.userToken = this.$cookie.get('userToken');
       if (this.userToken != null) {
         this.userToken = this.$cookie.get('userToken');
-        this.$http.defaults.headers.common.Authorization = this.userToken;
+//        this.$http.defaults.headers.common.Authorization = this.userToken;
         this.$http.get('/api/users/my-info')
           .then((resInfo) => {
             if (resInfo.status === 200) {
