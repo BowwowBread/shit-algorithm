@@ -134,7 +134,6 @@
       const ROOT_URL = 'http://121.186.23.245:9999';
       this.$http.defaults.baseURL = ROOT_URL;
 //      토큰 테스트
-      this.cookieDel();
       this.userToken = this.$cookie.get('userToken');
       console.log(this.userToken);
       if (this.userToken != null) {
@@ -241,7 +240,7 @@
 //            this.$http.defaults.headers.common.Authorization = this.userToken;
             console.log(this.userToken);
 
-            this.$cookie.set('userToken', this.userToken, { expires: 1, domain: 'http://121.186.23.245' });
+            this.$cookie.set('userToken', this.userToken, 1);
             // 토큰 테스트
             this.$http.get('/api/users/my-info')
               // 로그인 성공
