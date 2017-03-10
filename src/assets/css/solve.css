@@ -13,34 +13,6 @@
 .solve_num{
 
 }
-.pageicon{
-  position: relative;
-  padding: 20px;
-}
-.big.reply.icon {
-  color: rgb(179,179,179);
-  position: absolute;
-  left: 0;
-  padding-left: 25px;
-  margin-bottom: 30px;
-}
-
-.big.share.icon {
-  color: rgb(179,179,179);
-  position: absolute;
-  right: 0;
-  padding-right: 60px;
-  margin-bottom: 30px;
-}
-
-.big.reply.icon:hover {
-  color: rgb(255,255,255);
-  /*color: rgb(121,121,121);*/
-}
-
-.big.share.icon:hover {
-  color: rgb(255,255,255);
-}
 .solve_sidebar{
     height:calc(100vh - 170px);
     width:400px;
@@ -128,7 +100,8 @@
   border-color: rgb(37,115,85);
 }
 .solve_run{
-  background-color: rgb(102,152,140);
+  background-color: rgb(148,141,95);
+  /*background-color: rgb(223,213,146);*/
   border-radius: 70%;
   margin-top: 10px;
   margin-bottom: 10px;
@@ -136,7 +109,8 @@
   height: 40px;
 }
 .solve_reset{
-  background-color: rgb(102,152,140);
+  background-color: rgb(142,97,145);
+  /*background-color: rgb(217,146,223);*/
   border-radius: 70%;
   margin-bottom: 10px;
   width: 100px;
@@ -144,16 +118,17 @@
 }
 .solve_submit{
   background-color: rgb(102,152,140);
+  /*background-color: rgb(146,223,205);*/
   border-radius: 70%;
   width: 100px;
   height: 40px;
 }
 .solve_run:hover{
-  background-color: rgb(125,198,180);
+  background-color: rgb(208,199,141);
   transition-duration: 0.2s;
 }
 .solve_reset:hover{
-  background-color: rgb(125,198,180);
+  background-color: rgb(188,120,193);
   transition-duration: 0.2s;
 }
 .solve_submit:hover{

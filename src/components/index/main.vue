@@ -8,7 +8,7 @@
           <div data-swiper-parallax="-100">
             <vue-typer
               text='대회시스템'
-              :repeat="infinity"
+              :repeat="Infinity"
               :shuffle='false'
               initial-action='typing'
               :pre-type-delay='70'
@@ -38,7 +38,7 @@
           <div data-swiper-parallax="-100">
             <vue-typer
               text='메세지2'
-              :repeat="infinity"
+              :repeat="Infinity"
               :shuffle='false'
               initial-action='typing'
               :pre-type-delay='70'
@@ -67,7 +67,7 @@
           <div data-swiper-parallax="-100">
             <vue-typer
               text='메세지3'
-              :repeat="infinity"
+              :repeat="Infinity"
               :shuffle='false'
               initial-action='typing'
               :pre-type-delay='70'

@@ -250,9 +250,7 @@
                   this.loginState = true;
                   this.userRating = resInfo.data.user.rating;
                   // Cookie : 이름 , 내용 , 만료기간 , 도메인
-                  this.$cookie.set('userName', this.username, 1);
                   this.$cookie.set('userToken', this.userToken, 1);
-                  this.$cookie.set('userRating', this.userRating, 1);
                   // 쿠키 값 출력
                   this.$swal(
                   	'로그인 성공',

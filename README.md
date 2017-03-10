@@ -2,24 +2,16 @@
 ### how to install? 
 ```
 1. git clone https://github.com/BowwowBread/shit-algorithm.git
-2. cd backend
-3. npm install 
-4. cd ../
-5. cd frontend 
-6. npm install 
+2. npm install
    ? Set-up Semantic-UI
    > Automatic
    ? Is this your project folder?
    > Yes
    ? Where should we put Semantic UI inside your project?
    > Ctrl + C
-7. cd ../
-8. npm install
 ```
 ### how to use?
 ```
-npm start (Server + Client )
-npm run client ( Client )
-npm run server ( Server )
+npm run client
  ```
    
