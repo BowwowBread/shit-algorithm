@@ -227,7 +227,9 @@
         }).modal('show');
       },
       closeModal() {
-        $('.ui.modal').modal('hide');
+          $('.ui.modal').modal({
+              blurring: false,
+          }).modal('hide');
       },
       submit() {
         if (this.signState === true) {
@@ -270,7 +272,8 @@
           .catch((err) => {
             if (err.response.data.message === 'account false') {
 //              alert('승인중입니다');
-              this.$swal(
+	            this.closeModal();
+	            this.$swal(
               	'로그인 실패',
                 '관리자의 승인을 기다려주세요',
                 'error');
@@ -319,4 +322,9 @@
   }
 
 
+</style>
+<style>
+    .dimmable{
+        position: static !important;
+    }
 </style>
