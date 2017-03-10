@@ -28,7 +28,7 @@
             </div>
             <div class="solve_main">
                 <div class="solve_input">
-                    <monaco-editor class="monacoEditor" width="100%" language="c" :code="code" :editorOptions="options" @mounted="onMounted" @codeChange="onCodeChange">
+                    <monaco-editor class="monacoEditor" width="100%" language="c" :code="code" :editorOptions="options" v-on:keydown@mounted="onMounted" @codeChange="onCodeChange">
                     </monaco-editor>
                 </div>
                 <div class="solve_footer">
@@ -173,9 +173,13 @@ export default {
           this.runMsg = '실행 결과 ';
         })
       .catch((err) => {
-	      if (err.response.data.message === 'comepail error') {
+	      if (err.response.data.result === 'compile error') {
 		    this.runMsg = '컴파일 에러';
-	      }
+		    this.codeResult = err.response.data.message;
+	      } else if (err.response.data.result === 'error') {
+	        this.runMsg = '에러';
+            this.codeResult = err.response.data.message;
+          }
       });
     },
     codeSubmit() {

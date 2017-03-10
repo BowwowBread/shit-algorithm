@@ -22,7 +22,10 @@
                                 이름 : <span>{{item.name}}</span>
                             </a>
                             <div class="description">
-                                <p>소스 : <span>{{item.source}}</span></p>
+                                <p>소스 : <span>{{item.source}}</span>
+                                성공 : <span>{{item.success}}</span>
+                                실패 : <span>{{item.fail}}</span>
+                                정답률 : <span>{{item.ratio}}</span></p>
                             </div>
                         </div>
                     </div>
@@ -53,22 +56,9 @@ export default {
     };
   },
   beforeCreate() {
-  	console.log('problem before');
 	  const ROOT_URL = 'http://121.186.23.245:9999';
 	  this.$http.defaults.baseURL = ROOT_URL;
-	  this.$http.get('api/problems')
-		  .then((res) => {
-			  let i = 0;
-			  while (i < res.data.problems.length) {
-				  this.items.push({
-					  num: res.data.problems[i].num,
-					  name: res.data.problems[i].problemName,
-					  source: res.data.problems[i].source,
-				  });
-				  i += 1;
-			  }
-			  console.log('list update');
-		  });
+
 //          토큰 테스트
     this.userToken = this.$cookie.get('userToken');
     if (this.userToken != null) {
@@ -87,6 +77,53 @@ export default {
       alert('로그인해주세요');
       location.href = '/';
     }
+    this.$http.get('api/problems')
+        .then((res) => {
+    	this.$http.get('api/solution')
+	    .then((resRatio) => {
+            let i = 0;
+	        while (i < res.data.problems.length) {
+	        	let count = 0;
+	        	let success = 0;
+	        	let fail = 0;
+	        	let ratio = 0;
+    			console.log(`${i}번`);
+    			let j = 0;
+    			while (j < resRatio.data.resolves.length) {
+    				if (i === resRatio.data.resolves[j].resolveData.problemNum) {
+//    					console.log(`${i} ${j} ${resRatio.data.resolves[j].resolveData.result}`);
+    					if (resRatio.data.resolves[j].resolveData.result === 'success') {
+    						success += 1;
+                        } else {
+    						fail += 1;
+                        }
+                        count += 1;
+                    }
+                    j += 1;
+                }
+                console.log(`${i}번문제 성공 ${success} 실패${fail} 횟수${count}`);
+    			ratio = success / count;
+    			if (isNaN(ratio)) {
+    				ratio = `${0} %`;
+                } else if (ratio === 0) {
+    				ratio = `${0} %`;
+                } else {
+    				ratio = `${ratio.toString().substring(2, 4)} %`;
+                }
+                console.log(ratio);
+                this.items.push({
+                  num: res.data.problems[i].num,
+                  name: res.data.problems[i].problemName,
+                  source: res.data.problems[i].source,
+                  success,
+                  fail,
+                  count,
+                  ratio,
+			    });
+                i += 1;
+    		}
+        });
+	});
   },
 };
 

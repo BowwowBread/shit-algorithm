@@ -27,6 +27,7 @@ module.exports = {
     'linebreak-style' : 0,
     'indent' : 0,
     'no-loop-func' : 0,
+    'no-unused-vars' : 0,
     
   },
   "settings": {
