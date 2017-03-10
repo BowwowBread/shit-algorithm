@@ -25,6 +25,7 @@ module.exports = {
     'no-mixed-spaces-and-tabs' : 0,
     'no-tabs' : 0,
     'linebreak-style' : 0,
+    'indent' : 0,
     
   },
   "settings": {

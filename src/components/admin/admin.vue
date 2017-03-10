@@ -12,12 +12,14 @@
                     <a class="item" v-on:click="click_nonaccount">비승인 회원관리</a>
                     <a class="item" v-on:click="click_list">개시판관리</a>
                     <a class="item" v-on:click="click_problem">문제관리</a>
+                    <a class="item" v-on:click="click_result">문제결과</a>
                 </div>
                     <div class="twelve wide stretched column">
                         <member v-if="memberState"></member>
                         <nonaccount v-if="nonaccountState"></nonaccount>
                         <problemmanage v-if="problemState"></problemmanage>
                         <notice v-if="listState"></notice>
+                        <problemresult v-if="problemresultState"></problemresult>
                     </div>
                 </div>
         </div>
@@ -31,6 +33,7 @@ import member from './member.vue';
 import problemmanage from './problemmange.vue';
 import notice from './notice.vue';
 import nonaccount from './nonaccount.vue';
+import problemresult from './problemresult.vue';
 
 export default {
   name: 'admin',
@@ -39,6 +42,7 @@ export default {
     problemmanage,
     notice,
     nonaccount,
+    problemresult,
   },
   data() {
     return {
@@ -47,6 +51,7 @@ export default {
       problemState: false,
       listState: false,
       adminState: false,
+      problemresultState: false,
       userRating: '',
       members: [],
       problems: [],
@@ -83,24 +88,35 @@ export default {
       this.problemState = true;
       this.listState = false;
       this.nonaccountState = false;
+      this.problemresultState = false;
     },
     click_member() {
       this.memberState = true;
       this.problemState = false;
       this.listState = false;
       this.nonaccountState = false;
+      this.problemresultState = false;
     },
     click_nonaccount() {
       this.nonaccountState = true;
       this.memberState = false;
       this.problemState = false;
       this.listState = false;
+      this.problemresultState = false;
     },
     click_list() {
       this.memberState = false;
       this.problemState = false;
       this.listState = true;
       this.nonaccountState = false;
+      this.problemresultState = false;
+    },
+    click_result() {
+      this.memberState = false;
+      this.problemState = false;
+      this.listState = false;
+      this.nonaccountState = false;
+      this.problemresultState = true;
     },
     // 어드민이 아닐경우
   },
