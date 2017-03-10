@@ -23,6 +23,8 @@
                             </a>
                             <div class="description">
                                 <p>소스 : <span>{{item.source}}</span>
+                                난이도 : <span>난이도</span>
+                                점수 : <span>{{item.score}}</span>
                                 성공 : <span>{{item.success}}</span>
                                 실패 : <span>{{item.fail}}</span>
                                 정답률 : <span>{{item.ratio}}</span></p>
@@ -74,7 +76,11 @@ export default {
           alert(error);
         });
     } else {
-      alert('로그인해주세요');
+      this.$swal(
+      	'입장 실패',
+        '로그인을 해주세요',
+        'error',
+      );
       location.href = '/';
     }
     this.$http.get('api/problems')
@@ -115,6 +121,7 @@ export default {
                   num: res.data.problems[i].num,
                   name: res.data.problems[i].problemName,
                   source: res.data.problems[i].source,
+                  score: res.data.problems[i].score,
                   success,
                   fail,
                   count,
@@ -122,8 +129,14 @@ export default {
 			    });
                 i += 1;
     		}
-        });
-	});
+        })
+          .error((err) => {
+    		alert(err);
+          });
+	})
+      .error((err) => {
+    	alert(err);
+      });
   },
 };
 

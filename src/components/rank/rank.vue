@@ -55,12 +55,32 @@ export default {
       userToken: '',
     };
   },
-  created() {
-    this.userToken = this.$cookie.get('userToken');
-    if (this.userToken == null) {
-      alert('로그인 해주세요');
-      location.href = '/';
-    }
+  beforeCreate() {
+	  const ROOT_URL = 'http://121.186.23.245:9999';
+	  this.$http.defaults.baseURL = ROOT_URL;
+
+//          토큰 테스트
+	  this.userToken = this.$cookie.get('userToken');
+	  if (this.userToken != null) {
+		  this.userToken = this.$cookie.get('userToken');
+		  this.$http.defaults.headers.common.Authorization = this.userToken;
+		  this.$http.get('/api/users/my-info')
+			  .then((resInfo) => {
+			  if (resInfo.status === 200) {
+			  this.userid = resInfo.data.user.userId;
+		  }
+	  })
+	  .catch((error) => {
+			  alert(error);
+	  });
+	  } else {
+		  this.$swal(
+			  '입장 실패',
+			  '로그인을 해주세요',
+			  'error',
+		  );
+		  location.href = '/';
+	  }
   },
 };
 </script>

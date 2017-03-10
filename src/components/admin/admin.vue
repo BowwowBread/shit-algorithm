@@ -59,27 +59,41 @@ export default {
       userToken: '',
     };
   },
-  created() {
+  beforeCreate() {
 //          토큰 테스트
     this.userToken = this.$cookie.get('userToken');
     if (this.userToken != null) {
       this.userToken = this.$cookie.get('userToken');
-      this.$http.defaults.headers.common.Authorization = this.userToken;
+	    this.$http.defaults.headers.common.Authorization = this.userToken;
       this.$http.get('/api/users/my-info')
         .then((resInfo) => {
           if (resInfo.status === 200) {
             this.userRating = resInfo.data.user.rating;
+            console.log(this.userRating);
+	          if (this.userRating === 1) {
+	          	console.log('err');
+		          this.$swal(
+			          '입장 실패',
+			          '어드민이 아닙니다',
+			          'error',
+		          );
+		          location.href = '/';
+	          } else {
+		          this.adminState = true;
+	          }
           }
         })
         .catch((error) => {
           alert(error);
+        location.href = '/';
         });
-    }
-    if (this.userRating === 1) {
-    	alert('어드민이 아닙니다');
-    	location.href = '/';
     } else {
-    	this.adminState = true;
+	    this.$swal(
+		    '입장 실패',
+		    '어드민이 아닙니다',
+		    'error',
+	    );
+	    location.href = '/';
     }
   },
   methods: {

@@ -277,6 +277,13 @@
               	'로그인 실패',
                 '관리자의 승인을 기다려주세요',
                 'error');
+            } else if (err.response.data.message === 'login fail') {
+            	this.closeModal();
+            	this.$swal(
+                '로그인 실패',
+	            '아이디 또는 비밀번호가 잘못되었습니다',
+                'error',
+                );
             }
           });
         } else {
