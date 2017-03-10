@@ -26,6 +26,7 @@ module.exports = {
     'no-tabs' : 0,
     'linebreak-style' : 0,
     'indent' : 0,
+    'no-loop-func' : 0,
     
   },
   "settings": {

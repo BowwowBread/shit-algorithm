@@ -1,6 +1,7 @@
 <template>
     <div class="probleminput">
-      <div class="addProblem">
+        <button v-on:click="openAdd">{{addMsg}}</button>
+        <div class="addProblem" v-if="addState">
         <div class="input">
         <label for="problemName">problemName : </label><input type="text" v-model="problemName" id="problemName"><br>
         <label for="source">source : </label><input type="text" v-model="source" id="source"><br>
@@ -8,13 +9,13 @@
         <label for="score">score : </label><input type="text" v-model="score" id="score"  v-on:keypress="isNumber(event)"><br>
         <label for="inputExample">inputExample : </label><input type="text" v-model="inputExample" id="inputExample"><br>
         <label for="inputExample2">inputExample2 : </label><input type="text" v-model="inputExample2" id="inputExample2"><br>        
-            <label for="outputExample">outputExample : </label><textarea v-model="outputExample" id="outputExample"></textarea><br>
-            <label for="outputExample2">outputExample2 : </label><textarea  v-model="outputExample2" id="outputExample2"></textarea><br>
+        <label for="outputExample">outputExample : </label><input type="text" v-model="outputExample" id="outputExample"><br>
+        <label for="outputExample2">outputExample2 : </label><input type="text" v-model="outputExample2" id="outputExample2"><br>
         <label for="timeLimit">timeLimit : </label><input type="text" v-model="timeLimit" id="timeLimit"  v-on:keypress="isNumber(event)"><br>
         <label for="memoryLimit">memoryLimit : </label><input type="text" v-model="memoryLimit" id="memoryLimit"  v-on:keypress="isNumber(event)"><br>
 
         </div>
-        <div class="example">
+          <div class="example" >
           <p>문제이름 :{{problemName}}</p>
           <p>소스 : {{source}}</p>
           <p>설명 : {{explanation}}</p>
@@ -28,17 +29,36 @@
         </div>
         <button v-on:click="add">문제 등록</button>
       </div>
+        <div class="list">
+        <div class="problemList">
         <ul>
-
             <li v-for="item in items">
                 <p>번호 : {{item.num}}</p><br>
                 <p>이름 : {{item.name}}</p><br>
                 <p>소스 : {{item.source}}</p><br>
+                <button v-on:click="solveListData(item.num)">제출목록</button>
+                <button v-on:click="">문제수정</button>
+                <button>문제삭제</button>
+                <br>
                 <br>
             </li>
             <br>
-
         </ul>
+        </div>
+        <div class="solveList">
+            <ul>
+                <transition-group name="sigoPage">
+                <li v-for="list in solveList" v-bind:key="list">
+                    <p>이름 : {{list.username}}</p>
+                    <p>학번 : {{list.studentcode}}</p>
+                    <p>결과 : {{list.result}}</p>
+                    <p>날짜 : {{list.date}}</p>
+                    <p>코드 : {{list.code}}</p>
+                </li>
+                </transition-group>
+            </ul>
+        </div>
+        </div>
     </div>
 </template>
 <script>
@@ -48,6 +68,7 @@ export default{
     return {
       items: [],
       problemData: [],
+      solveList: [],
       problemName: '',
       source: '',
       explanation: '',
@@ -58,13 +79,59 @@ export default{
       timeLimit: '',
       memoryLimit: '',
       score: '',
+      addState: false,
+      addMsg: '문제 등록하기',
     };
   },
   created() {
     this.fetchData();
   },
   methods: {
-	  isNumber(number) {
+  	openAdd() {
+        this.addState = !this.addState;
+        if (this.addState) {
+        	this.addMsg = '닫기';
+        } else {
+        	this.addMsg = '문제 등록하기';
+        }
+    },
+	  solveListData(num) {
+//	  	console.log(num);
+        this.solveList = [];
+  	    this.$http.get('api/solution')
+          .then((res) => {
+  	    	let i = 0;
+	          let username;
+	          let id;
+	          let studentcode;
+	          let result;
+	          let date;
+	          let code;
+	          while (i < res.data.resolves.length) {
+            	if (res.data.resolves[i].resolveData.problemNum === num) {
+                    id = res.data.resolves[i].userId;
+                    result = res.data.resolves[i].resolveData.result;
+                    date = res.data.resolves[i].resolveData.date;
+                    code = res.data.resolves[i].resolveData.code;
+            		this.$http.get(`api/users/search/${id}`)
+                      .then((userInfo) => {
+            			 username = userInfo.data.users.username;
+            			 studentcode = userInfo.data.users.studentCode;
+	                      console.log(`${username} : ${studentcode} : ${result} : ${date} : ${code}`);
+	                      this.solveList.push({
+	                      	username,
+                            studentcode,
+                            result,
+                            date,
+                            code,
+                          });
+                      });
+		            }
+                i += 1;
+            }
+          });
+    },
+    isNumber(number) {
 		  const evt = (number) || window.event;
 		  const charCode = (evt.which) ? evt.which : evt.keyCode;
 		  if ((charCode > 31 && (charCode < 48 || charCode > 57)) && charCode !== 46) {
@@ -127,6 +194,10 @@ export default{
     float:right;
     height:20px;
   }
+  textarea{
+      float:right;
+      height:20px;
+  }
   label{
     float: left;
     height:20px;
@@ -142,8 +213,26 @@ export default{
     float:left;
     margin-left:300px;
   }
-  ul{
-    clear: both;
-      margin-left:50px;
+    .list{
+        display:flex;
+        clear:both;
+    }
+    .list > div {
+        flex: 1;
+    }
+    ul{
+        margin-left:50px;
+    }
+  .sigoPage-enter-active {
+      transition: all 1s ease;
+  }
+  .sigoPage-leave-active {
+      transition: all .5s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+  }
+  .sigoPage-enter, .sigoPage-leave-to
+      /* .slide-fade-leave-active for <2.1.8 */
+  {
+      transform: translateX(100px);
+      opacity: 0;
   }
 </style>
