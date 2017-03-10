@@ -50,6 +50,10 @@
                 </div>
 
             </div>
+            <div class="pageicon">
+              <a href="#"><i class="big reply icon"></i></a>
+              <a href="#"><i class="big share icon"></i></a>
+            </div>
         </div>
 
     </div>

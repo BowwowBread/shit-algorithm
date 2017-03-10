@@ -118,11 +118,9 @@ export default {
     height: 100%;
     z-index: 3;
   }
-
   .parallax {
     height: 100%;
   }
-
   .swiper-container {
     height: 100%;
   }

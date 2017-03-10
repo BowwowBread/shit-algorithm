@@ -16,6 +16,12 @@
     .ui.modal{
         height:auto !important;
     }
+    .signhead{
+      background-color: rgb(135,89,186);
+      width: 500px;
+      margin-left: -120px;
+      margin-top: -40px;
+    }
     .container{
         height: auto;
         position: relative;

@@ -32,7 +32,9 @@ div.formdiv {
     border-bottom: 1px solid #dcdcdc;
     background-color: white;
 }
-
+.ui.header.admin{
+  /*margin-left: 40px;*/
+}
 #subdiv {
     margin-top: 30px;
 }
