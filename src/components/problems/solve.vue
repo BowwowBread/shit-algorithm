@@ -170,43 +170,13 @@ export default {
       })
         .then((resSubmit) => {
           this.codeResult = resSubmit.data.result;
+          this.runMsg = '실행 결과 ';
         })
-      	//   this.compileResult = resSubmit.data.result;
-          // const num = resSubmit.data.name;
-        //   this.runState = true;
-        //   this.runMsg = '실행 결과 : ';
-        //   this.printf = this.code.match('print');
-        //   this.scanf = this.code.match('scanf');
-//           if (this.scanf == null) {
-//             // printf만 있을 경우
-//             console.log('printf');
-//             this.$http.get(`api/solution/${num}`)
-//               .then((resResult) => {
-//                 console.log(resResult);
-//                 this.codeResult = resResult.data.result;
-//                 console.log(this.codeResult);
-//               });
-//           } else {
-// // scanf 있을 경우
-//             console.log('scanf');
-//             const inputex = this.items[0].inputex;
-// //            const inputex = '37';
-//             const outputex = this.items[0].outputex;
-// //            const outputex = '37';
-//             console.log(inputex);
-//             console.log(outputex);
-//             console.log(num);
-//             this.$http.get(`api/solution/${num}/${inputex}`)
-//               .then((resResult) => {
-//                 this.codeResult = resResult.data.result;
-//               });
-//           }
-//           if (this.codeResult.match('not found')) {
-//             this.codeResult = '컴파일 에러';
-//           }
-        .catch((err) => {
-          alert(err);
-        });
+      .catch((err) => {
+	      if (err.response.data.message === 'comepail error') {
+		    this.runMsg = '컴파일 에러';
+	      }
+      });
     },
     codeSubmit() {
       if (this.code.replace(/^\s*/, '') === '') {
