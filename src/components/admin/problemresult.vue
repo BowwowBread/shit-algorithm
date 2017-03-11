@@ -36,12 +36,13 @@
                 this.$http.defaults.headers.common.Authorization = this.userToken;
                 this.$http.get('api/solution')
 					.then((res) => {
-						let i = res.data.resolves.length - 1;
-                        while (i !== 0) {
+						let i = 0;
+                        while (i < res.data.resolves.length) {
+                        	const date = res.data.resolves[i].resolveData.date.replace('T', ', ');
 	                        this.problemData.push({
 								userid: res.data.resolves[i].userId,
 								code: res.data.resolves[i].resolveData.code,
-								date: res.data.resolves[i].resolveData.date,
+								date: date.substring(0, date.length - 8),
 								lang: res.data.resolves[i].resolveData.language,
 								memory: res.data.resolves[i].resolveData.memory,
 								num: res.data.resolves[i].resolveData.problemNum,
@@ -51,7 +52,7 @@
 	                        this.ratioData.push({
                                 [i]: res.data.resolves[i].resolveData.problemNum,
                             });
-							i -= 1;
+							i += 1;
 						}
 						console.log(res);
                         console.log(this.ratioData);
