@@ -105,6 +105,7 @@
       <transition name="sigoPage" mode="out-in">
       <router-view></router-view>
       </transition>
+        <vue-progress-bar></vue-progress-bar>
         </div>
     </div>
 </template>
@@ -133,6 +134,7 @@
       };
     },
     created() {
+	    this.$Progress.start();
       const ROOT_URL = 'http://121.186.23.245:9999';
       this.$http.defaults.baseURL = ROOT_URL;
 //      토큰 테스트
@@ -157,6 +159,7 @@
           });
       }
       window.addEventListener('scroll', this.scrollFunction);
+	    this.$Progress.finish();
     },
     destroyed() {
       window.removeEventListener('scroll', this.scrollFunction);
@@ -237,6 +240,7 @@
       },
       submit() {
         if (this.signState === true) {
+          this.$http.defaults.headers.common.Authorization = this.userToken;
           this.$http.post('api/users/signin', {
             userid: this.userid,
             password: this.password,
@@ -291,7 +295,8 @@
           });
         } else {
           // 회원가입
-          this.$http.post('/api/users/signup', {
+	        this.$http.defaults.headers.common.Authorization = this.userToken;
+	        this.$http.post('/api/users/signup', {
             username: this.username,
             userid: this.userid,
             password: this.password,

@@ -10,10 +10,16 @@ import Vue from 'vue';
 import router from './router';
 import App from './App.vue';
 import VueSweetAlert from 'vue-sweetalert';
+import VueProgressbar from 'vue-progressbar';
 
 window.$ = jquery;
 
 Vue.use(VueCookie);
+Vue.use(VueProgressbar, {
+	color: 'rgb(143, 255, 199)',
+	failedColor: 'red',
+	height: '2px',
+});
 Vue.use(Vuex);
 Vue.use(axios);
 Vue.use(VueAwesomeSwiper);
