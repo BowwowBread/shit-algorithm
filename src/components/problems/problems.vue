@@ -61,7 +61,7 @@ export default {
       loadState: true,
     };
   },
-  beforeCreate() {
+  created() {
     const ROOT_URL = 'http://121.186.23.245:9999';
     this.$http.defaults.baseURL = ROOT_URL;
     //토큰테스트
@@ -100,24 +100,25 @@ export default {
 		  .then((res) => {
 	  	    length = res.data.problems.length;
 			  //문제 결과 로드
-			  this.$http.defaults.headers.common.Authorization = this.userToken;
+              this.$http.defaults.headers.common.Authorization = this.userToken;
 			  this.$http.get('api/solution')
 				  .then((resRatio) => {
 					  //문제 개수 반복
-					  while (i < end) {
-						  const num = res.data.problems[i].num;
-						  const name = res.data.problems[i].problemName;
-						  const source = res.data.problems[i].source;
-						  const score = res.data.problems[i].score;
+                      let q = 0;
+					  while (q < 10) {
+						  const num = res.data.problems[q].num;
+						  const name = res.data.problems[q].problemName;
+						  const source = res.data.problems[q].source;
+						  const score = res.data.problems[q].score;
 						  let count = 0;
 						  let success = 0;
 						  let fail = 0;
 						  let ratio = 0;
 						  let j = 0;
 						  //문제 결과 수 반복
-						  while (j < resRatio.data.resolves.length) {
+                          while (j < resRatio.data.resolves.length) {
 							  //문제 번호 === 문제 결과 번호
-							  if (i === resRatio.data.resolves[j].resolveData.problemNum) {
+							  if (q === resRatio.data.resolves[j].resolveData.problemNum) {
 								  //문제 결과 카운트
 								  if (resRatio.data.resolves[j].resolveData.result === 'success') {
 									  success += 1;
@@ -128,7 +129,7 @@ export default {
 							  }
 							  j += 1;
 						  }
-						  //결과 수정
+											  //결과 수정
 						  ratio = success / count;
 						  if (isNaN(ratio)) {
 							  ratio = `${0} %`;
@@ -147,7 +148,7 @@ export default {
 							  count,
 							  ratio,
 						  });
-						  i += 1;
+						  q += 1;
 					  }
 				  })
 				  .catch((err) => {
