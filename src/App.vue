@@ -6,7 +6,7 @@
             </ul>
             <ul id="submn">
               <li><router-link to="/notice" :class="{menu_show_font : scrolled > 200}">공지사항</router-link></li>
-              <li><a v-on:click="problemLoginCheck" :class="{menu_show_font : scrolled > 200}">문제 풀기</a></li>
+              <li><a v-on:click="problemLoginCheck" :class="{menu_show_font : scrolled > 200}">문제풀기</a></li>
               <li><a v-on:click="rankLoginCheck" :class="{menu_show_font : scrolled > 200}">랭킹</a></li>
               <li v-if="loginState">
                 <router-link v-if="userRating == 3" to="/admin" :class="{menu_show_font : scrolled > 200}">관리자페이지 - {{username}}님</router-link>
@@ -106,6 +106,7 @@
       <transition name="sigoPage" mode="out-in">
       <router-view></router-view>
       </transition>
+        <vue-progress-bar></vue-progress-bar>
         </div>
     </div>
 </template>
@@ -134,6 +135,7 @@
       };
     },
     created() {
+	    this.$Progress.start();
       const ROOT_URL = 'http://121.186.23.245:9999';
       this.$http.defaults.baseURL = ROOT_URL;
 //      토큰 테스트
@@ -150,10 +152,15 @@
             }
           })
           .catch((error) => {
-            alert(error);
+	          this.$swal({
+			          title: '유저 조회 실패',
+			          text: error,
+			          type: 'error',
+		          });
           });
       }
       window.addEventListener('scroll', this.scrollFunction);
+	    this.$Progress.finish();
     },
     destroyed() {
       window.removeEventListener('scroll', this.scrollFunction);
@@ -228,10 +235,13 @@
         }).modal('show');
       },
       closeModal() {
-        $('.ui.modal').modal('hide');
+          $('.ui.modal').modal({
+              blurring: false,
+          }).modal('hide');
       },
       submit() {
         if (this.signState === true) {
+          this.$http.defaults.headers.common.Authorization = this.userToken;
           this.$http.post('api/users/signin', {
             userid: this.userid,
             password: this.password,
@@ -270,16 +280,24 @@
           })
           .catch((err) => {
             if (err.response.data.message === 'account false') {
-//              alert('승인중입니다');
-              this.$swal(
+	            this.closeModal();
+	            this.$swal(
               	'로그인 실패',
                 '관리자의 승인을 기다려주세요',
                 'error');
+            } else if (err.response.data.message === 'login fail') {
+            	this.closeModal();
+            	this.$swal(
+                '로그인 실패',
+	            '아이디 또는 비밀번호가 잘못되었습니다',
+                'error',
+                );
             }
           });
         } else {
           // 회원가입
-          this.$http.post('/api/users/signup', {
+	        this.$http.defaults.headers.common.Authorization = this.userToken;
+	        this.$http.post('/api/users/signup', {
             username: this.username,
             userid: this.userid,
             password: this.password,
@@ -294,7 +312,11 @@
             this.closeModal();
           })
           .catch((error) => {
-            alert(error);
+              this.$swal({
+                      title: '회원가입 실패',
+                      text: error,
+                      type: 'error',
+                  });
           });
         }
       },
@@ -320,4 +342,9 @@
   }
 
 
+</style>
+<style>
+    .dimmable{
+        position: static !important;
+    }
 </style>

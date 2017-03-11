@@ -27,15 +27,26 @@
                         </div>
                     </div>
                 </div>
+                </div>
                 <div class="ui items" v-for="item in items">
                     <div class="item">
                         <div class="content">
                             <p class="header"><span>{{item.num}}</span>번 문제</p>
-                            <a :href="'problems/' + item.num" v-on:click="" class="ui disabled header">
+                            <a :href="'problems/' + item.num" v-on:click="" class="ui disabled header"></a>
+                        <div class="content" v-on:click='result(item.num)'>
+                            <p class="header">
+                                <span>{{item.num}}</span>번 문제</p>
+                            <a  class="ui disabled header">
                                 이름 : <span>{{item.name}}</span>
                             </a>
                             <div class="description">
-                                <p>소스 : <span>{{item.source}}</span></p>
+                                <p>소스 : <span>{{item.source}}</span>
+                                난이도 : <span>난이도</span>
+                                점수 : <span>{{item.score}}</span>
+                                성공 : <span>{{item.success}}</span>
+                                실패 : <span>{{item.fail}}</span>
+                                정답률 : <span>{{item.ratio}}</span>
+                                </p>
                             </div>
                             <div class="description">
                                 <p>소스 : <span>{{item.source}}</span></p>
@@ -72,23 +83,9 @@ export default {
     };
   },
   beforeCreate() {
-  	console.log('problem before');
-	  const ROOT_URL = 'http://121.186.23.245:9999';
-	  this.$http.defaults.baseURL = ROOT_URL;
-	  this.$http.get('api/problems')
-		  .then((res) => {
-			  let i = 0;
-			  while (i < res.data.problems.length) {
-				  this.items.push({
-					  num: res.data.problems[i].num,
-					  name: res.data.problems[i].problemName,
-					  source: res.data.problems[i].source,
-				  });
-				  i += 1;
-			  }
-			  console.log('list update');
-		  });
-//          토큰 테스트
+    const ROOT_URL = 'http://121.186.23.245:9999';
+    this.$http.defaults.baseURL = ROOT_URL;
+    //토큰테스트
     this.userToken = this.$cookie.get('userToken');
     if (this.userToken != null) {
       this.userToken = this.$cookie.get('userToken');
@@ -100,12 +97,128 @@ export default {
           }
         })
         .catch((error) => {
-          alert(error);
+	        this.$swal({
+                title: '입장 실패',
+                text: '유저 조회 실패',
+                type: 'error',
+            })
+            .then(() => {
+                location.href = '/';
+            });
         });
     } else {
-      alert('로그인해주세요');
-      location.href = '/';
+	    this.$swal({
+		    title: '입장 실패',
+		    text: '로그인을 해주세요',
+		    type: 'error',
+	    })
+	    .then(() => {
+		    location.href = '/';
+        });
     }
+    //문제 로드
+	  this.$http.defaults.headers.common.Authorization = this.userToken;
+	  this.$http.get('api/problems')
+        .then((res) => {
+    	//문제 결과 로드
+        this.$http.defaults.headers.common.Authorization = this.userToken;
+        this.$http.get('api/solution')
+	    .then((resRatio) => {
+            let i = 0;
+			    //문제 개수 반복
+	        while (i < res.data.problems.length) {
+	        	let count = 0;
+	        	let success = 0;
+	        	let fail = 0;
+	        	let ratio = 0;
+    			let j = 0;
+    			const num = res.data.problems[i].num;
+    			const name = res.data.problems[i].problemName;
+    			const source = res.data.problems[i].source;
+    			const score = res.data.problems[i].score;
+    			//문제 결과 수 반복
+    			while (j < resRatio.data.resolves.length) {
+    				//문제 번호 === 문제 결과 번호
+    				if (i === resRatio.data.resolves[j].resolveData.problemNum) {
+                        //문제 결과 카운트
+    					if (resRatio.data.resolves[j].resolveData.result === 'success') {
+    						success += 1;
+                        } else {
+    						fail += 1;
+                        }
+                        count += 1;
+                    }
+                    j += 1;
+                }
+                //결과 수정
+    			ratio = success / count;
+    			if (isNaN(ratio)) {
+    				ratio = `${0} %`;
+                } else if (ratio === 0) {
+    				ratio = `${0} %`;
+                } else {
+    				ratio = `${ratio.toString().substring(2, 4)} %`;
+                }
+                this.items.push({
+                    num,
+                    name,
+                    source,
+                    score,
+                    success,
+                    fail,
+                    count,
+                    ratio,
+                });
+                i += 1;
+    		}
+        })
+          .catch((err) => {
+          this.$swal({
+                  title: '문제 기록 로드 실패',
+                  text: err,
+                  type: 'error',
+              })
+              .then(() => {
+                  location.href = '/';
+              });
+          });
+	})
+      .catch((err) => {
+	      this.$swal({
+			      title: '문제 로드 실패',
+			      text: err,
+			      type: 'error',
+		      })
+		      .then(() => {
+			      location.href = '/';
+		      });
+      });
+  },
+  methods: {
+  	result(num) {
+		  this.$http.defaults.headers.common.Authorization = this.userToken;
+		  this.$http.get(`api/solution/findsuccess/${this.userid}/${num}`)
+			  .then((resresult) => {
+				  if (resresult.data.result === true) {
+                      this.$swal(
+                          '입장 실패',
+                          '이미 푼 문제입니다',
+                          'warning',
+                      );
+                  } else {
+                      this.$router.push({
+                          path: `problems/${num}`,
+                      });
+                  }
+			  })
+			  .catch((err) => {
+				  this.$swal(
+					  '결과 조회 실패',
+					  err,
+					  'error',
+				  );
+			  });
+    },
   },
 };
 

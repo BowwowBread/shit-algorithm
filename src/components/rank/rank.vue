@@ -30,9 +30,9 @@
                     <div class="item">
                         <div class="content">
                           <div class="ui top attached tabular menu" id="pob">
-                              <p data-tab="first" id="ltemone" class="item">번호</p>
-                              <p data-tab="second" id="ltemtwo" class="item">문제 이름</p>
-                              <p data-tab="five" id="ltemthr" class="item">정답률</p>
+                              <p id="ltemone" class="item">등수</p>
+                              <p id="ltemtwo" class="item">이름</p>
+                              <p id="ltemthr" class="item">점수</p>
                           </div>
                         </div>
                     </div>
@@ -41,11 +41,9 @@
                   <div class="ui items">
                     <div class="item">
                       <div class="content">
-                        <p class="header sub"><span>1</span>등</p>
-                        <p class="ui disabled header">이름 : <span>아이티</span></p>
-                        <div class="headerliem">
-                          <p>점수 : <span>1,042</span></p>
-                        </div>
+                        <p class="header" id="pollist"><span>1</span>등</p>
+                        <p class="ui disabled header"><span>아이티</span></p>
+                          <p class="sub header" id="subder"><span>1,042</span></p>
                       </div>
                     </div>
                   </div>
@@ -74,6 +72,42 @@ export default {
             location.href = '/';
         }
     },
+  beforeCreate() {
+	  const ROOT_URL = 'http://121.186.23.245:9999';
+	  this.$http.defaults.baseURL = ROOT_URL;
+
+//          토큰 테스트
+	  this.userToken = this.$cookie.get('userToken');
+	  if (this.userToken != null) {
+		  this.userToken = this.$cookie.get('userToken');
+		  this.$http.defaults.headers.common.Authorization = this.userToken;
+		  this.$http.get('/api/users/my-info')
+			  .then((resInfo) => {
+			  if (resInfo.status === 200) {
+			  this.userid = resInfo.data.user.userId;
+		  }
+	  })
+	  .catch((error) => {
+          this.$swal({
+              title: '유저 조회 실패',
+              text: error,
+              type: 'error',
+          })
+          .then(() => {
+          location.href = '/';
+		  });
+	  });
+	  } else {
+          this.$swal({
+              title: '입장 실패',
+              text: '로그인을 해주세요',
+              type: 'error',
+          })
+          .then(() => {
+	          location.href = '/';
+          });
+	  }
+  },
 };
 </script>
 <style scoped>
@@ -110,8 +144,9 @@ export default {
     width: 250px;
     height: 200px;
     margin-right: 20px;
-    background: rgb(143, 215, 179);
     padding: 20px;
+    background: rgb(143, 215, 179);
+    display: flex;
 }
 
 .rank2 {
@@ -121,6 +156,7 @@ export default {
     margin-right: 20px;
     padding: 20px;
     background: rgb(143, 215, 179);
+    display: flex;
 }
 
 .rank3 {
@@ -129,6 +165,31 @@ export default {
     height: 130px;
     padding: 20px;
     background: rgb(143, 215, 179);
+    display: flex;
+}
+.onerank{
+  align-self: flex-end;
+  padding-left: 35px;
+  padding-bottom: 20px;
+  font-size: 25px;
+  /*font-weight: 100*/
+
+}
+.tworank{
+  align-self: flex-end;
+  padding-left: 35px;
+  padding-bottom: 20px;
+  font-size: 25px;
+  /*font-weight: 100*/
+
+}
+.thrrank{
+  align-self: flex-end;
+  padding-left: 35px;
+  padding-bottom: 20px;
+  font-size: 25px;
+  /*font-weight: 100*/
+
 }
 
 .ui.button {
@@ -155,25 +216,48 @@ export default {
     display: flex !important;
 }
 .propol{
-  padding: 20px;
-  padding-top: 0px;
 }
 #ltemone{
-  padding-left: 13px;
-  flex-grow: 2.4;
+  padding-left: 17px;
+  /*flex-grow: 1;*/
+  flex: 2;
+  justify-content: center;
+
 }
 #ltemtwo{
-  flex-grow: 0.8;
-  padding-right: 5px;
+  /*flex-grow: 2;*/
+  flex:3;
+  justify-content: center;
+
 }
 #ltemthr{
-  flex-grow: 0.9;
-  padding-left: 30px;
+  /*flex-grow: 2;*/
+  flex:5;
+  justify-content: center;
 }
-#pob .item {
+#pob p {
     margin: 0;
 }
+
 .ui.top.attached.tabular.menu{
   color: black !important
+}
+#pollist{
+flex:2;
+justify-content: center;
+display: flex;
+}
+.ui.disabled.header{
+  flex:3;
+  justify-content: center;
+  display: flex !important;
+}
+#subder{
+  flex:5;
+  justify-content: center;
+  display: flex;
+}
+.ui.items * {
+Padding: 0 !important;
 }
 </style>

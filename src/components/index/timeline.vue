@@ -151,7 +151,7 @@
           <a href="#"><i class="big google Plus icon"></i></a>
         </div>
         <div class="ccc">
-          <p>© 2016 IT Factory COIN. All rights reserved.</p>
+          <p>2017 SiGO. All rights reserved.</p>
         </div>
         <!-- <div class="oll">
             <p>© 2017 All Rights Reserved. <br> 프로젝트 이름: shit<br> 이 사이트는 저작권은 shit 한테 있고, shit의 허락을 받거나 출처를 남기며 퍼가세요.<br> seoul it high school 2017.
@@ -396,7 +396,7 @@ div.one {
 }
 
 .ccc {
-  margin-left: 40%;
+  margin-left: 42.4%;
   margin-top: 15px;
 }
 

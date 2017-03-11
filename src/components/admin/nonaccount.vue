@@ -33,13 +33,15 @@
     },
     methods: {
     	account(userid) {
-      this.$http.get(`api/users/account/${userid}`)
+        this.$http.defaults.headers.common.Authorization = this.userToken;
+        this.$http.get(`api/users/account/${userid}`)
         .then((res) => {
           console.log(res);
         });
     },
       getMember() {
-        this.$http.get('api/users/non-account')
+	      this.$http.defaults.headers.common.Authorization = this.userToken;
+	      this.$http.get('api/users/non-account')
           .then((res) => {
             let i = 0;
             while (i < res.data.users.length) {

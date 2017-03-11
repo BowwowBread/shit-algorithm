@@ -28,7 +28,7 @@
             </div>
             <div class="solve_main">
                 <div class="solve_input">
-                    <monaco-editor class="monacoEditor" width="100%" language="c" :code="code" :editorOptions="options" @mounted="onMounted" @codeChange="onCodeChange">
+                    <monaco-editor class="monacoEditor" width="100%" language="c" :code="code" :editorOptions="options" v-on:keydown@mounted="onMounted" @codeChange="onCodeChange">
                     </monaco-editor>
                 </div>
                 <div class="solve_footer">
@@ -97,28 +97,42 @@ export default {
     };
   },
   created() {
-    //      토큰 테스트
+    const ROOT_URL = 'http://121.186.23.245:9999';
+    this.$http.defaults.baseURL = ROOT_URL;
+	  //      토큰 테스트
     this.userToken = this.$cookie.get('userToken');
-    if (this.userToken != null) {
-      this.userToken = this.$cookie.get('userToken');
-//      this.$http.defaults.headers.common.Authorization = this.userToken;
-      this.$http.get('/api/users/my-info')
+	  if (this.userToken != null) {
+	    this.userToken = this.$cookie.get('userToken');
+	    this.$http.defaults.headers.common.Authorization = this.userToken;
+	    this.$http.get('/api/users/my-info')
         .then((resInfo) => {
           if (resInfo.status === 200) {
             this.userid = resInfo.data.user.userId;
           }
         })
         .catch((error) => {
-          alert(error);
+        this.$swal({
+                title: '유저 조회 실패',
+                text: error,
+                type: 'error',
+            })
+            .then(() => {
+                location.href = '/';
+            });
         });
     } else {
-    	alert('로그인해주세요');
-    	location.href = '/';
+	    this.$swal({
+		    title: '입장 실패',
+		    text: '로그인을 해주세요',
+		    type: 'error',
+	    })
+	    .then(() => {
+            location.href = '/';
+        });
     }
-    const ROOT_URL = 'http://121.186.23.245:9999';
-    this.$http.defaults.baseURL = ROOT_URL;
     const id = this.$route.params.num;
 //    const id = this.$route.params.num;
+    this.$http.defaults.headers.common.Authorization = this.userToken;
     this.$http.get(`/api/problems/${id}`)
       .then((res) => {
         this.items.push({
@@ -160,7 +174,8 @@ export default {
         this.runMsg = 'ERROR';
     		return;
       }
-      this.$http.post('/api/solution', {
+	    this.$http.defaults.headers.common.Authorization = this.userToken;
+	    this.$http.post('/api/solution', {
       	userid: this.userid,
         problemnum: this.items[0].num,
         inputcode: this.code,
@@ -170,43 +185,17 @@ export default {
       })
         .then((resSubmit) => {
           this.codeResult = resSubmit.data.result;
+          this.runMsg = '실행 결과 ';
         })
-      	//   this.compileResult = resSubmit.data.result;
-          // const num = resSubmit.data.name;
-        //   this.runState = true;
-        //   this.runMsg = '실행 결과 : ';
-        //   this.printf = this.code.match('print');
-        //   this.scanf = this.code.match('scanf');
-//           if (this.scanf == null) {
-//             // printf만 있을 경우
-//             console.log('printf');
-//             this.$http.get(`api/solution/${num}`)
-//               .then((resResult) => {
-//                 console.log(resResult);
-//                 this.codeResult = resResult.data.result;
-//                 console.log(this.codeResult);
-//               });
-//           } else {
-// // scanf 있을 경우
-//             console.log('scanf');
-//             const inputex = this.items[0].inputex;
-// //            const inputex = '37';
-//             const outputex = this.items[0].outputex;
-// //            const outputex = '37';
-//             console.log(inputex);
-//             console.log(outputex);
-//             console.log(num);
-//             this.$http.get(`api/solution/${num}/${inputex}`)
-//               .then((resResult) => {
-//                 this.codeResult = resResult.data.result;
-//               });
-//           }
-//           if (this.codeResult.match('not found')) {
-//             this.codeResult = '컴파일 에러';
-//           }
-        .catch((err) => {
-          alert(err);
-        });
+      .catch((err) => {
+	      if (err.response.data.result === 'compile error') {
+		    this.runMsg = '컴파일 에러';
+		    this.codeResult = err.response.data.message;
+	      } else if (err.response.data.result === 'error') {
+	        this.runMsg = '에러';
+            this.codeResult = err.response.data.message;
+          }
+      });
     },
     codeSubmit() {
       if (this.code.replace(/^\s*/, '') === '') {
@@ -218,7 +207,8 @@ export default {
         this.runMsg = 'ERROR';
     		return;
       }
-      this.$http.post('/api/solution', {
+	    this.$http.defaults.headers.common.Authorization = this.userToken;
+	    this.$http.post('/api/solution', {
         userid: this.userid,
         problemnum: this.items[0].num,
         inputcode: this.code,
@@ -247,7 +237,11 @@ export default {
           }
         })
         .catch((err) => {
-          alert(err);
+        this.$swal({
+                title: '문제 제출 실패',
+                text: err,
+                type: 'error',
+            });
         });
     },
   },
