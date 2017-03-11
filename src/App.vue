@@ -102,10 +102,10 @@
 
             </div>
         </div>
-      <transition name="sigoPage" mode="out-in">
+        <vue-progress-bar></vue-progress-bar>
+        <transition name="sigoPage" mode="out-in">
       <router-view></router-view>
       </transition>
-        <vue-progress-bar></vue-progress-bar>
         </div>
     </div>
 </template>
@@ -135,6 +135,19 @@
     },
     created() {
 	    this.$Progress.start();
+	    //  hook the progress bar to start before we move router-view
+	    this.$router.beforeEach((to, from, next) => {
+		    //  does the page we want to go to have a meta.progress object
+		    if (to.meta.progress !== undefined) {
+			    const meta = to.meta.progress;
+			    // parse meta tags
+			    this.$Progress.parseMeta(meta);
+		    }
+		    //  start the progress bar
+		    this.$Progress.start();
+			    //  continue to next page
+            next();
+        });
       const ROOT_URL = 'http://121.186.23.245:9999';
       this.$http.defaults.baseURL = ROOT_URL;
 //      토큰 테스트
@@ -158,8 +171,12 @@
 		          });
           });
       }
+      this.$router.afterEach((to, from) => {
+		    //  finish the progress bar
+	      this.$Progress.finish();
+      });
+      this.$Progress.finish();
       window.addEventListener('scroll', this.scrollFunction);
-	    this.$Progress.finish();
     },
     destroyed() {
       window.removeEventListener('scroll', this.scrollFunction);
@@ -271,10 +288,11 @@
               })
               // 토큰인증 실패
               .catch((err) => {
-                this.$swal(
-                  '로그인 실패',
-                  err,
-                  'error');
+            	this.$swal({
+            		title: '로그인 실패',
+                    text: err,
+                    type: 'error',
+                });
               });
           })
           .catch((err) => {
@@ -304,18 +322,19 @@
           })
           .then((res) => {
             const username = res.data.username;
-            this.$swal(
-              '회원가입 성공',
-              `안녕하세요 ${username}님`,
-              'success');
+            this.$swal({
+              title: '회원가입 성공',
+              text: `안녕하세요 ${username}님`,
+              type: 'success',
+            });
             this.closeModal();
           })
           .catch((error) => {
               this.$swal({
-                      title: '회원가입 실패',
-                      text: error,
-                      type: 'error',
-                  });
+                  title: '회원가입 실패',
+                  text: error,
+                  type: 'error',
+              });
           });
         }
       },

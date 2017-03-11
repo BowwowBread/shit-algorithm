@@ -19,6 +19,10 @@ Vue.use(VueProgressbar, {
 	color: 'rgb(143, 255, 199)',
 	failedColor: 'red',
 	height: '2px',
+	transition: {
+		speed: '.7s',
+		opacity: '1s',
+	},
 });
 Vue.use(Vuex);
 Vue.use(axios);
