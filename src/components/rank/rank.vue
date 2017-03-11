@@ -71,7 +71,14 @@ export default {
 		  }
 	  })
 	  .catch((error) => {
-			  alert(error);
+          this.$swal({
+              title: '유저 조회 실패',
+              text: error,
+              type: 'error',
+          })
+          .then(() => {
+          location.href = '/';
+		  });
 	  });
 	  } else {
           this.$swal({

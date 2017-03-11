@@ -149,7 +149,11 @@
             }
           })
           .catch((error) => {
-            alert(error);
+	          this.$swal({
+			          title: '유저 조회 실패',
+			          text: error,
+			          type: 'error',
+		          });
           });
       }
       window.addEventListener('scroll', this.scrollFunction);
@@ -271,7 +275,6 @@
           })
           .catch((err) => {
             if (err.response.data.message === 'account false') {
-//              alert('승인중입니다');
 	            this.closeModal();
 	            this.$swal(
               	'로그인 실패',
@@ -303,7 +306,11 @@
             this.closeModal();
           })
           .catch((error) => {
-            alert(error);
+              this.$swal({
+                      title: '회원가입 실패',
+                      text: error,
+                      type: 'error',
+                  });
           });
         }
       },

@@ -109,7 +109,14 @@ export default {
           }
         })
         .catch((error) => {
-          alert(error);
+        this.$swal({
+                title: '유저 조회 실패',
+                text: error,
+                type: 'error',
+            })
+            .then(() => {
+                location.href = '/';
+            });
         });
     } else {
 	    this.$swal({
@@ -117,11 +124,9 @@ export default {
 		    text: '로그인을 해주세요',
 		    type: 'error',
 	    })
-	    .then(
-		    function (result) {
-			    location.href = '/';
-		    },
-	    );
+	    .then(() => {
+            location.href = '/';
+        });
     }
     const ROOT_URL = 'http://121.186.23.245:9999';
     this.$http.defaults.baseURL = ROOT_URL;
@@ -229,7 +234,11 @@ export default {
           }
         })
         .catch((err) => {
-          alert(err);
+        this.$swal({
+                title: '문제 제출 실패',
+                text: err,
+                type: 'error',
+            });
         });
     },
   },

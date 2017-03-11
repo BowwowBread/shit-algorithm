@@ -73,7 +73,14 @@ export default {
           }
         })
         .catch((error) => {
-          alert(error);
+	        this.$swal({
+                title: '입장 실패',
+                text: '유저 조회 실패',
+                type: 'error',
+            })
+            .then(() => {
+                location.href = '/';
+            });
         });
     } else {
 	    this.$swal({
@@ -140,11 +147,25 @@ export default {
     		}
         })
           .catch((err) => {
-    		alert(err);
+          this.$swal({
+                  title: '문제 기록 로드 실패',
+                  text: err,
+                  type: 'error',
+              })
+              .then(() => {
+                  location.href = '/';
+              });
           });
 	})
       .catch((err) => {
-    	alert(err);
+	      this.$swal({
+			      title: '문제 로드 실패',
+			      text: err,
+			      type: 'error',
+		      })
+		      .then(() => {
+			      location.href = '/';
+		      });
       });
   },
   methods: {

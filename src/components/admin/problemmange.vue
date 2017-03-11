@@ -163,7 +163,11 @@ export default{
             );
         })
         .catch((err) => {
-            alert(err);
+        this.$swal({
+                title: '수정 실페',
+                text: err,
+                type: 'error',
+            });
         });
     },
     modifyData(num) {
