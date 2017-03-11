@@ -84,9 +84,15 @@ export default {
           }
         })
         .catch((error) => {
-          alert(error);
-        location.href = '/';
-        });
+		    this.$swal({
+			    title: '유저 정보 조회 실패',
+			    text: error,
+			    type: 'error',
+		    })
+		    .then(() => {
+		    location.href = '/';
+             });
+    });
     } else {
 	    this.$swal({
 		    title: '입장 실패',

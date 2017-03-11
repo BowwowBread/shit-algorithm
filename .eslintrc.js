@@ -30,6 +30,7 @@ module.exports = {
     'no-unused-vars' : 0,
     'func-names' : 0,
     'prefer-arrow-callback' : 0,
+    'spaced-comment' : 0,
     
   },
   "settings": {
