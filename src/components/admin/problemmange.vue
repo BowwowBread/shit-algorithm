@@ -60,7 +60,7 @@
         </ul>
         </div>
         <div class="solveList">
-            <transition-group name="sigoPage">
+            <transition-group name="problemmanage">
             <ul v-for="list in solveList" v-bind:key="list">
                     <li>이름 : {{list.username}}</li>
                     <li>학번 : {{list.studentcode}}</li>
@@ -375,13 +375,13 @@ export default{
     .solveList{
         min-width: 500px;
     }
-  .sigoPage-enter-active {
+  .problemmanage-enter-active {
       transition: all 1s ease;
   }
-  .sigoPage-leave-active {
+  .problemmanage-leave-active {
       transition: all .5s cubic-bezier(1.0, 0.5, 0.8, 1.0);
   }
-  .sigoPage-enter, .sigoPage-leave-to
+  .problemmanage-enter, .problemmanage-leave-to
       /* .slide-fade-leave-active for <2.1.8 */
   {
       transform: translateX(100px);
