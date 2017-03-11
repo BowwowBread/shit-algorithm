@@ -15,10 +15,10 @@
             <div class="ui bottom attached tab segment active" data-tab="first">
                 <div class="ui items" v-for="item in items">
                     <div class="item">
-                        <div class="content">
+                        <div class="content" v-on:click='result(item.num)'>
                             <p class="header">
                                 <span>{{item.num}}</span>번 문제</p>
-                            <a :href="'problems/' + item.num" v-on:click="" class="ui disabled header">
+                            <a  class="ui disabled header">
                                 이름 : <span>{{item.name}}</span>
                             </a>
                             <div class="description">
@@ -28,7 +28,7 @@
                                 성공 : <span>{{item.success}}</span>
                                 실패 : <span>{{item.fail}}</span>
                                 정답률 : <span>{{item.ratio}}</span>
-                                <span>{{item.result}}</span></p>
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -86,7 +86,6 @@ export default {
         });
     }
     //문제 로드
-
     this.$http.get('api/problems')
         .then((res) => {
     	//문제 결과 로드
@@ -104,8 +103,6 @@ export default {
     			const name = res.data.problems[i].problemName;
     			const source = res.data.problems[i].source;
     			const score = res.data.problems[i].score;
-    			let result = '';
-
     			//문제 결과 수 반복
     			while (j < resRatio.data.resolves.length) {
     				//문제 번호 === 문제 결과 번호
@@ -129,51 +126,51 @@ export default {
                 } else {
     				ratio = `${ratio.toString().substring(2, 4)} %`;
                 }
-                this.$http.get(`api/solution/findsuccess/${this.userid}/${i}`)
-                  .then((resresult) => {
-    				if (resresult.data.result) {
-    					result = '이미 푼 문제입니다';
-                    }
-                    this.items.push({
-	                    num,
-	                    name,
-	                    source,
-	                    score,
-	                    success,
-	                    fail,
-	                    count,
-	                    ratio,
-                    	result,
-                    });
-                  })
-                  .catch((err) => {
-    				this.$swal(
-    					'결과 조회 실패',
-                        err,
-                        'error',
-                    );
-                  });
-                //데이터 등록
-//                this.items.push({
-//                  num: res.data.problems[i].num,
-//                  name: res.data.problems[i].problemName,
-//                  source: res.data.problems[i].source,
-//                  score: res.data.problems[i].score,
-//                  success,
-//                  fail,
-//                  count,
-//                  ratio,
-//			    });
+                this.items.push({
+                    num,
+                    name,
+                    source,
+                    score,
+                    success,
+                    fail,
+                    count,
+                    ratio,
+                });
                 i += 1;
     		}
         })
-          .error((err) => {
+          .catch((err) => {
     		alert(err);
           });
 	})
-      .error((err) => {
+      .catch((err) => {
     	alert(err);
       });
+  },
+  methods: {
+  	result(num) {
+		  this.$http.get(`api/solution/findsuccess/${this.userid}/${num}`)
+			  .then((resresult) => {
+				  if (resresult.data.result === true) {
+                      this.$swal(
+                          '입장 실패',
+                          '이미 푼 문제입니다',
+                          'warning',
+                      );
+                  } else {
+                      this.$router.push({
+                          path: `problems/${num}`,
+                      });
+                  }
+			  })
+			  .catch((err) => {
+				  this.$swal(
+					  '결과 조회 실패',
+					  err,
+					  'error',
+				  );
+			  });
+    },
   },
 };
 
