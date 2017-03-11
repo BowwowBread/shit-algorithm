@@ -267,6 +267,10 @@ export default {
                           '이미 푼 문제입니다',
                           'warning',
                       );
+                  } else {
+	                  this.$router.push({
+		                  path: `problems/${num}`,
+	                  });
                   }
 			  })
 			  .catch((err) => {

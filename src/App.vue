@@ -288,7 +288,8 @@
               })
               // 토큰인증 실패
               .catch((err) => {
-            	this.$swal({
+	              this.closeModal();
+	              this.$swal({
             		title: '로그인 실패',
                     text: err,
                     type: 'error',
@@ -321,16 +322,17 @@
             studentcode: this.studentcode,
           })
           .then((res) => {
-            const username = res.data.username;
+	          this.closeModal();
+	          const username = res.data.username;
             this.$swal({
               title: '회원가입 성공',
               text: `안녕하세요 ${username}님`,
               type: 'success',
             });
-            this.closeModal();
           })
           .catch((error) => {
-              this.$swal({
+	          this.closeModal();
+	          this.$swal({
                   title: '회원가입 실패',
                   text: error,
                   type: 'error',
