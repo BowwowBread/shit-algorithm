@@ -17,7 +17,7 @@
         height:auto !important;
     }
     .signhead{
-      background-color: rgb(135,89,186);
+      /*background-color: rgb(135,89,186);*/
       width: 500px;
       margin-left: -120px;
       margin-top: -40px;
@@ -29,6 +29,7 @@
         margin-left: 200px;
         margin-top: -170px;
         background-color: white;
+        border-radius: 15px;
     }
     .close.icon{
       margin-top: -180px;
@@ -83,6 +84,15 @@
     }
     .ui.button.black.signButton{
       margin: 0px;
+      background-color: #035B57;
+    }
+    .ui.button.black.signButton:hover{
+      margin: 0px;
+      background-color: #004945;
+    }
+    .ui.button.black.signButton:active{
+      margin: 0px;
+      background-color: #01413E;
     }
     .ui.two.column.centered.grid{
       position: absolute;

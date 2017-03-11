@@ -47,6 +47,7 @@
                                     <button v-on:click="signState = false" class="ui button black signButton">
                                         회원가입하기
                                     </button>
+                                    <!-- <p>배경을 누르면 나가집니다.</p> -->
                                 </div>
                             </div>
                         </div>
