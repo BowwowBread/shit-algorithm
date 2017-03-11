@@ -49,7 +49,7 @@
 
 <script>
 export default {
-  name: 'index',
+  name: 'rank',
   data() {
     return {
       userToken: '',

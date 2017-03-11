@@ -61,7 +61,7 @@ export default {
   },
   beforeCreate() {
 //          토큰 테스트
-    this.userToken = this.$cookie.get('userToken');
+	  this.userToken = this.$cookie.get('userToken');
     if (this.userToken != null) {
       this.$http.defaults.headers.common.Authorization = this.userToken;
       this.$http.get('/api/users/my-info')

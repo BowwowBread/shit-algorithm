@@ -3,13 +3,11 @@
         <ul>
 
             <li v-for="member in members">
-                <!--아이디: <span>{{member.userid}}</span><br>-->
+                아이디: <span>{{member.userid}}</span><br>
                 이름: <span>{{member.username}}</span><br>
                 학번 : <span>{{member.studentcode}}</span><br>
-                <!--등급 : <span>{{member.rating}}</span><br>-->
-                <!--승인여부 : <span>{{member.account}}</span><br>-->
                 점수 : <span>{{member.score}}</span><br>
-
+                <button v-on:click="deleteUser(member.userid)">유저 삭제</button>
                 <br>
             </li>
             <br>
@@ -31,6 +29,23 @@ export default{
       this.getMember();
   },
   methods: {
+  	deleteuser(userid) {
+        this.$http.get(`api/users/${userid}`)
+          .then((res) => {
+        	this.$swal({
+        		title: '유저 삭제 성공',
+                text: `${userid}님의 계정이 삭제되었습니다`,
+                type: 'success',
+            });
+          })
+          .catch((err) => {
+        	this.$swal({
+        	    title: '유저 삭제 실패',
+                text: err,
+                type: 'error',
+            });
+          });
+    },
 //            문제리스트
     getMember() {
 	    this.userToken = this.$cookie.get('userToken');
@@ -43,8 +58,6 @@ export default{
               userid: res.data.users[i].userId,
               username: res.data.users[i].username,
               studentcode: res.data.users[i].studentCode,
-              rating: res.data.users[i].rating,
-              account: res.data.users[i].account,
               score: res.data.users[i].score,
             });
             i += 1;

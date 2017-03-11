@@ -119,6 +119,7 @@ export default{
 		    type: 'question',
 		    showCancelButton: true,
 		    confirmButtonText: '삭제',
+            cancelButtonText: '취소',
 	    })
           .then(() => {
 	          this.userToken = this.$cookie.get('userToken');

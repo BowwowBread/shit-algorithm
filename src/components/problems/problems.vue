@@ -103,15 +103,16 @@ export default {
             let i = 0;
 			    //문제 개수 반복
 	        while (i < res.data.problems.length) {
-	        	let count = 0;
+                const num = res.data.problems[i].num;
+                const name = res.data.problems[i].problemName;
+                const source = res.data.problems[i].source;
+                const score = res.data.problems[i].score;
+                let count = 0;
 	        	let success = 0;
 	        	let fail = 0;
 	        	let ratio = 0;
     			let j = 0;
-    			const num = res.data.problems[i].num;
-    			const name = res.data.problems[i].problemName;
-    			const source = res.data.problems[i].source;
-    			const score = res.data.problems[i].score;
+
     			//문제 결과 수 반복
     			while (j < resRatio.data.resolves.length) {
     				//문제 번호 === 문제 결과 번호
@@ -175,16 +176,12 @@ export default {
 		  this.$http.defaults.headers.common.Authorization = this.userToken;
 		  this.$http.get(`api/solution/findsuccess/${this.userid}/${num}`)
 			  .then((resresult) => {
-				  if (resresult.data.result === true) {
+                  if (resresult.data.result === true) {
                       this.$swal(
                           '입장 실패',
                           '이미 푼 문제입니다',
                           'warning',
                       );
-                  } else {
-                      this.$router.push({
-                          path: `problems/${num}`,
-                      });
                   }
 			  })
 			  .catch((err) => {
