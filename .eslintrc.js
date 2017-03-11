@@ -28,6 +28,8 @@ module.exports = {
     'indent' : 0,
     'no-loop-func' : 0,
     'no-unused-vars' : 0,
+    'func-names' : 0,
+    'prefer-arrow-callback' : 0,
     
   },
   "settings": {

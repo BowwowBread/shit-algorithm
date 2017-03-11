@@ -112,8 +112,16 @@ export default {
           alert(error);
         });
     } else {
-    	alert('로그인해주세요');
-    	location.href = '/';
+	    this.$swal({
+		    title: '입장 실패',
+		    text: '로그인을 해주세요',
+		    type: 'error',
+	    })
+	    .then(
+		    function (result) {
+			    location.href = '/';
+		    },
+	    );
     }
     const ROOT_URL = 'http://121.186.23.245:9999';
     this.$http.defaults.baseURL = ROOT_URL;

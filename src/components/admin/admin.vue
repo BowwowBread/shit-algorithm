@@ -69,15 +69,15 @@ export default {
         .then((resInfo) => {
           if (resInfo.status === 200) {
             this.userRating = resInfo.data.user.rating;
-            console.log(this.userRating);
 	          if (this.userRating === 1) {
-	          	console.log('err');
-		          this.$swal(
-			          '입장 실패',
-			          '어드민이 아닙니다',
-			          'error',
-		          );
-		          location.href = '/';
+                  this.$swal({
+                      title: '입장 실패',
+                      text: '어드민이 아닙니다',
+                      type: 'error',
+                  })
+                  .then(() => {
+                      location.href = '/';
+		          });
 	          } else {
 		          this.adminState = true;
 	          }
@@ -88,12 +88,14 @@ export default {
         location.href = '/';
         });
     } else {
-	    this.$swal(
-		    '입장 실패',
-		    '어드민이 아닙니다',
-		    'error',
-	    );
-	    location.href = '/';
+	    this.$swal({
+		    title: '입장 실패',
+		    text: '로그인을 해주세요',
+		    type: 'error',
+	    })
+	    .then(() => {
+		    location.href = '/';
+         });
     }
   },
   methods: {

@@ -5,8 +5,7 @@ import Admin from '../components/admin/admin.vue';
 import Problems from '../components/problems/problems.vue';
 import Rank from '../components/rank/rank.vue';
 import Solve from '../components/problems/solve.vue';
-
-// import auth from '../../modules/auth';
+import Mypage from '../components/mypage/mypage.vue';
 
 Vue.use(Router);
 
@@ -38,6 +37,11 @@ export default new Router({
       path: '/problems/:num',
       name: 'solve',
       component: Solve,
+    },
+    {
+      path: '/mypage',
+      name: 'mypage',
+      component: Mypage,
     },
   ],
 });

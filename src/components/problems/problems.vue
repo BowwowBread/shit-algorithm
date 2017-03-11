@@ -76,17 +76,20 @@ export default {
           alert(error);
         });
     } else {
-      this.$swal(
-      	'입장 실패',
-        '로그인을 해주세요',
-        'error',
-      );
-      location.href = '/';
+	    this.$swal({
+		    title: '입장 실패',
+		    text: '로그인을 해주세요',
+		    type: 'error',
+	    })
+	    .then(() => {
+		    location.href = '/';
+        });
     }
     this.$http.get('api/problems')
         .then((res) => {
     	this.$http.get('api/solution')
 	    .then((resRatio) => {
+    		console.log(resRatio);
             let i = 0;
 	        while (i < res.data.problems.length) {
 	        	let count = 0;

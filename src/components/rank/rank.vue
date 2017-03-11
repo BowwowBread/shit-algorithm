@@ -74,12 +74,14 @@ export default {
 			  alert(error);
 	  });
 	  } else {
-		  this.$swal(
-			  '입장 실패',
-			  '로그인을 해주세요',
-			  'error',
-		  );
-		  location.href = '/';
+          this.$swal({
+              title: '입장 실패',
+              text: '로그인을 해주세요',
+              type: 'error',
+          })
+          .then(() => {
+	          location.href = '/';
+          });
 	  }
   },
 };
