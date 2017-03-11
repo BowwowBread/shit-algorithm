@@ -32,7 +32,9 @@
 		},
 		methods: {
 			ratio() {
-				this.$http.get('api/solution')
+                this.userToken = this.$cookie.get('userToken');
+                this.$http.defaults.headers.common.Authorization = this.userToken;
+                this.$http.get('api/solution')
 					.then((res) => {
 						let i = res.data.resolves.length - 1;
                         while (i !== 0) {

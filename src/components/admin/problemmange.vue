@@ -98,7 +98,10 @@ export default{
     };
   },
   created() {
-    this.fetchData();
+      //토큰테스트
+      this.userToken = this.$cookie.get('userToken');
+	  this.$http.defaults.headers.common.Authorization = this.userToken;
+	  this.fetchData();
   },
   methods: {
   	openAdd() {
@@ -116,33 +119,37 @@ export default{
 		    type: 'question',
 		    showCancelButton: true,
 		    confirmButtonText: '삭제',
-	    }).then(() => {
-	    	this.$http.delete(`api/problems/${num}`)
+	    })
+          .then(() => {
+	          this.userToken = this.$cookie.get('userToken');
+	          this.$http.defaults.headers.common.Authorization = this.userToken;
+            this.$http.delete(`api/problems/${num}`)
               .then(() => {
-	              this.$swal(
-		              '삭제 완료',
-		              `${num}번 문제를 삭제하셨습니다`,
-		              'success',
-	              );
+	              this.$swal({
+                      title: '삭제 완료',
+                      test: `${num}번 문제를 삭제하셨습니다`,
+                      type: 'success',
+                    });
               })
               .catch((err) => {
-	              this.$swal(
-		              '삭제 실패',
-		              err,
-		              'fail',
-	              );
+	              this.$swal({
+		              title: '삭제 실패',
+		              text: err,
+		              type: 'error',
+	              });
               });
 	    })
           .catch(() => {
-	          this.$swal(
-		          '삭제 실패',
-		          err,
-		          'fail',
-	          );
+	          this.$swal({
+			          title: '삭제 실패',
+			          text: err,
+			          type: 'error',
+		          });
           });
     },
     modify() {
-    this.$http.put('api/problems', {
+	    this.$http.defaults.headers.common.Authorization = this.userToken;
+	    this.$http.put('api/problems', {
             problemnum: this.problemNum,
             problemname: this.problemName,
             source: this.source,
@@ -156,11 +163,11 @@ export default{
             score: this.score,
         })
         .then(() => {
-            this.$swal(
-                '수정 성공',
-                '문제를 수정하였습니다',
-                'success',
-            );
+	        this.$swal({
+		        title: '수정 성공',
+		        text: '문제를 수정하였습니다',
+		        type: 'success',
+	        });
         })
         .catch((err) => {
         this.$swal({
@@ -171,10 +178,10 @@ export default{
         });
     },
     modifyData(num) {
-        this.$http.get(`api/problems/${num}`)
+	    this.$http.defaults.headers.common.Authorization = this.userToken;
+	    this.$http.get(`api/problems/${num}`)
         .then((res) => {
         	this.modifyState = !this.modifyState;
-        	console.log(res);
         	this.problemName = res.data.problem.problemName;
         	this.source = res.data.problem.source;
         	this.inputExample = res.data.problem.problemData.inputExample;
@@ -186,21 +193,19 @@ export default{
 	        this.problemNum = res.data.problem.num;
 	        this.score = res.data.problem.score;
 	        this.explanation = res.data.problem.explanation;
-	        console.log(this.problemNum);
-	        console.log(num);
           })
           .catch((err) => {
-	          this.$swal(
-		          '문제 조회 실패',
-		          err,
-		          'fail',
-	          );
+	          this.$swal({
+		          title: '문제 조회 실패',
+		          text: err,
+		          type: 'error',
+	          });
           });
     },
 	  solveListData(num) {
-//	  	console.log(num);
         this.solveList = [];
-  	    this.$http.get('api/solution')
+        this.$http.defaults.headers.common.Authorization = this.userToken;
+        this.$http.get('api/solution')
           .then((res) => {
   	    	let i = 0;
 	          let username;
@@ -215,11 +220,11 @@ export default{
                     result = res.data.resolves[i].resolveData.result;
                     date = res.data.resolves[i].resolveData.date;
                     code = res.data.resolves[i].resolveData.code;
-            		this.$http.get(`api/users/search/${id}`)
+                    this.$http.defaults.headers.common.Authorization = this.userToken;
+                    this.$http.get(`api/users/search/${id}`)
                       .then((userInfo) => {
             			 username = userInfo.data.users.username;
             			 studentcode = userInfo.data.users.studentCode;
-	                      console.log(`${username} : ${studentcode} : ${result} : ${date} : ${code}`);
 	                      this.solveList.push({
 	                      	username,
                             studentcode,
@@ -233,11 +238,11 @@ export default{
             }
           })
           .catch((err) => {
-	          this.$swal(
-		          '결과 로드 실패',
-		          err,
-		          'fail',
-	          );
+	          this.$swal({
+		          title: '결과 로드 실패',
+		          text: err,
+		          type: 'error',
+	          });
           });
     },
     isNumber(number) {
@@ -245,14 +250,13 @@ export default{
 		  const charCode = (evt.which) ? evt.which : evt.keyCode;
 		  if ((charCode > 31 && (charCode < 48 || charCode > 57)) && charCode !== 46) {
 			  evt.preventDefault();
-			  console.log('if');
 			  return false;
 		  }
-			  console.log('else');
 			  return true;
 	  },
   	add() {
-    this.$http.post('api/problems', {
+      this.$http.defaults.headers.common.Authorization = this.userToken;
+      this.$http.post('api/problems', {
       problemname: this.problemName,
       source: this.source,
       explanation: this.explanation,
@@ -272,15 +276,18 @@ export default{
 	      );
       })
       .catch((err) => {
-	      this.$swal(
-		      '등록 실패',
-		      err,
-		      'fail',
-	      );
+	      this.$swal({
+		      title: '등록 실패',
+		      text: err,
+		      type: 'error',
+	      });
       });
   },
     fetchData() {
-      this.$http.get('api/problems')
+	    //토큰테스트
+	    this.userToken = this.$cookie.get('userToken');
+	    this.$http.defaults.headers.common.Authorization = this.userToken;
+	    this.$http.get('api/problems')
         .then((res) => {
           let i = 0;
           while (i < res.data.problems.length) {
@@ -293,11 +300,11 @@ export default{
           }
         })
         .catch((err) => {
-	        this.$swal(
-		        '문제 로드 실패',
-		        err,
-		        'fail',
-	        );
+	        this.$swal({
+		        title: '문제 로드 실패',
+		        text: err,
+		        type: 'error',
+	        });
         });
     },
   },

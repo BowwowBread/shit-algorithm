@@ -93,10 +93,12 @@ export default {
         });
     }
     //문제 로드
-    this.$http.get('api/problems')
+	  this.$http.defaults.headers.common.Authorization = this.userToken;
+	  this.$http.get('api/problems')
         .then((res) => {
     	//문제 결과 로드
-    	this.$http.get('api/solution')
+        this.$http.defaults.headers.common.Authorization = this.userToken;
+        this.$http.get('api/solution')
 	    .then((resRatio) => {
             let i = 0;
 			    //문제 개수 반복
@@ -170,6 +172,7 @@ export default {
   },
   methods: {
   	result(num) {
+		  this.$http.defaults.headers.common.Authorization = this.userToken;
 		  this.$http.get(`api/solution/findsuccess/${this.userid}/${num}`)
 			  .then((resresult) => {
 				  if (resresult.data.result === true) {

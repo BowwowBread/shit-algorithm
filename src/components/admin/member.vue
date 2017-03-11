@@ -27,12 +27,15 @@ export default{
     };
   },
   created() {
-    this.getMember();
+	  //토큰테스트
+      this.getMember();
   },
   methods: {
 //            문제리스트
     getMember() {
-      this.$http.get('api/users')
+	    this.userToken = this.$cookie.get('userToken');
+	    this.$http.defaults.headers.common.Authorization = this.userToken;
+	    this.$http.get('api/users')
         .then((res) => {
           let i = 0;
           while (i < res.data.users.length) {
@@ -46,7 +49,14 @@ export default{
             });
             i += 1;
           }
-        });
+        })
+          .catch((err) => {
+	          this.$swal({
+			          title: '유저 로드 실패',
+			          text: err,
+			          type: 'error',
+		          });
+          });
     },
   },
 };

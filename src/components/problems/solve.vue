@@ -97,12 +97,14 @@ export default {
     };
   },
   created() {
-    //      토큰 테스트
+    const ROOT_URL = 'http://121.186.23.245:9999';
+    this.$http.defaults.baseURL = ROOT_URL;
+	  //      토큰 테스트
     this.userToken = this.$cookie.get('userToken');
-    if (this.userToken != null) {
-      this.userToken = this.$cookie.get('userToken');
-//      this.$http.defaults.headers.common.Authorization = this.userToken;
-      this.$http.get('/api/users/my-info')
+	  if (this.userToken != null) {
+	    this.userToken = this.$cookie.get('userToken');
+	    this.$http.defaults.headers.common.Authorization = this.userToken;
+	    this.$http.get('/api/users/my-info')
         .then((resInfo) => {
           if (resInfo.status === 200) {
             this.userid = resInfo.data.user.userId;
@@ -128,10 +130,9 @@ export default {
             location.href = '/';
         });
     }
-    const ROOT_URL = 'http://121.186.23.245:9999';
-    this.$http.defaults.baseURL = ROOT_URL;
     const id = this.$route.params.num;
 //    const id = this.$route.params.num;
+    this.$http.defaults.headers.common.Authorization = this.userToken;
     this.$http.get(`/api/problems/${id}`)
       .then((res) => {
         this.items.push({
@@ -173,7 +174,8 @@ export default {
         this.runMsg = 'ERROR';
     		return;
       }
-      this.$http.post('/api/solution', {
+	    this.$http.defaults.headers.common.Authorization = this.userToken;
+	    this.$http.post('/api/solution', {
       	userid: this.userid,
         problemnum: this.items[0].num,
         inputcode: this.code,
@@ -205,7 +207,8 @@ export default {
         this.runMsg = 'ERROR';
     		return;
       }
-      this.$http.post('/api/solution', {
+	    this.$http.defaults.headers.common.Authorization = this.userToken;
+	    this.$http.post('/api/solution', {
         userid: this.userid,
         problemnum: this.items[0].num,
         inputcode: this.code,
