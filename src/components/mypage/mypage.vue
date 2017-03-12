@@ -3,8 +3,8 @@
         <div class='myinfo'>
             <ul>
                 <li>
-                    <p>이름</p>
-                    <p>학번</p>
+                    <p>이름 {{username}}</p>
+                    <p>학번 {{studentcode}}</p>
                 </li>
             </ul>
         </div>
@@ -16,9 +16,14 @@
 export default {
     name: 'index',
     data() {
-        return {
-            userToken: '',
-        };
+      return {
+        userToken: '',
+        userid: '',
+        username: '',
+        studentcode: '',
+        successCount: 0,
+        recentProblem: [],
+      };
     },
     beforeCreate() {
 	    const ROOT_URL = 'http://121.186.23.245:9999';
@@ -31,9 +36,37 @@ export default {
 		    this.$http.defaults.headers.common.Authorization = this.userToken;
 		    this.$http.get('/api/users/my-info')
 		    .then((resInfo) => {
-			    if (resInfo.status === 200) {
-				    this.userid = resInfo.data.user.userId;
-			    }
+                this.userid = resInfo.data.user.userId;
+                this.username = resInfo.data.user.username;
+                this.studentcode = resInfo.data.user.studentCode;
+                this.$http.get('api/solution')
+                  .then((res) => {
+                    let i = 0;
+                    while (i < res.data.resolves.length) {
+                      this.$http.get(`api/solution/findsuccess/${this.userid}/${i}`)
+                        .then((resFind) => {
+                            if (resFind.data.result === 'true') {
+                              this.successCount += 1;
+                            }
+                        })
+                        .catch((err) => {
+                            this.$swal({
+                            title: '문제 정답 로드 실패',
+                            text: err,
+                            type: 'error',
+                          });
+                      });
+                      i += 1;
+                    }
+                    console.log(this.successCount);
+                })
+                  .catch((err) => {
+                    this.$swal({
+                       title: '문제 결과 로드 실패',
+                       text: err,
+                       type: 'error',
+                    });
+                });
 		    })
 		    .catch((error) => {
                 this.$swal({

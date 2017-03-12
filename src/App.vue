@@ -73,25 +73,25 @@
                                         <div class="field">
                                             <div class="ui left icon input">
                                                 <i class="user icon"></i>
-                                                <input type="text" name="userid" placeholder="아이디" v-model="userid">
+                                                <input type="text" name="userid" placeholder="아이디" v-model="userid" v-on:keydown.enter="submit">
                                             </div>
                                         </div>
                                         <div class="field">
                                             <div class="ui left icon input">
                                                 <i class="lock icon"></i>
-                                                <input type="password" name="password" placeholder="비밀번호" v-model="password">
+                                                <input type="password" name="password" placeholder="비밀번호" v-model="password"v-on:keydown.enter="submit">
                                             </div>
                                         </div>
                                         <div class="field">
                                             <div class="ui left icon input">
                                                 <i class="user icon"></i>
-                                                <input type="text" name="username" placeholder="이름" v-model="username">
+                                                <input type="text" name="username" placeholder="이름" v-model="username"v-on:keydown.enter="submit">
                                             </div>
                                         </div>
                                         <div class="field">
                                             <div class="ui left icon input">
                                                 <i class="student icon"></i>
-                                                <input type="text" name="studentcode" placeholder="학번" v-model="studentcode" v-on:keypress="isNumber(event)">
+                                                <input type="text" name="studentcode" placeholder="학번" v-model="studentcode" v-on:keydown.enter="submit" v-on:keypress="isNumber(event)">
 
                                             </div>
                                         </div>
@@ -328,6 +328,8 @@
             	errMsg = '아이디 또는 비밀번호가 잘못되었습니다';
             } else if (err.response.data.message === 'validation error') {
 	            errMsg = '정보를 모두 입력해주세요';
+            } else if (err.response.data.message === 'fail rating excess') {
+                errMsg = '비밀번호를 자주틀려 확인 정보를 입력해주세요';
             }
               this.closeModal();
 	          this.$swal({
