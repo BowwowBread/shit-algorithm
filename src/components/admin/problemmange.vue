@@ -42,7 +42,6 @@
                 <br>
                 <br>
                 <div class="modify" v-if="item.num == problemNum && modifyState">
-                    <label for="problemNum">problemNum : </label><input type="text" v-model="problemNum" id="problemNum"><br>
                     <label for="problemName">problemName : </label><input type="text" v-model="problemName" id="problemName"><br>
                     <label for="source">source : </label><input type="text" v-model="source" id="source"><br>
                     <label for="explanation">explanation : </label><input type="text" v-model="explanation" id="explanation"><br>
@@ -60,7 +59,7 @@
         </ul>
         </div>
         <div class="solveList">
-            <transition-group name="sigoPage">
+            <transition-group name="problemmanage">
             <ul v-for="list in solveList" v-bind:key="list">
                     <li>이름 : {{list.username}}</li>
                     <li>학번 : {{list.studentcode}}</li>
@@ -95,6 +94,7 @@ export default{
       addState: false,
       addMsg: '문제 등록하기',
       modifyState: false,
+      lastNum: 0,
     };
   },
   created() {
@@ -119,6 +119,7 @@ export default{
 		    type: 'question',
 		    showCancelButton: true,
 		    confirmButtonText: '삭제',
+            cancelButtonText: '취소',
 	    })
           .then(() => {
 	          this.userToken = this.$cookie.get('userToken');
@@ -274,11 +275,20 @@ export default{
 		      '문제를 등록하였습니다',
 		      'success',
 	      );
+	      this.items.push({
+	      	num: this.lastNum + 1,
+            name: this.problemName,
+            source: this.source,
+          });
       })
       .catch((err) => {
+      	let errMsg;
+      	if (err.response.data.message === 'validation error') {
+      		errMsg = '정보가 부족합니다';
+        }
 	      this.$swal({
 		      title: '등록 실패',
-		      text: err,
+		      text: errMsg,
 		      type: 'error',
 	      });
       });
@@ -296,6 +306,7 @@ export default{
               name: res.data.problems[i].problemName,
               source: res.data.problems[i].source,
             });
+            this.lastNum = res.data.problems[i].num;
             i += 1;
           }
         })
@@ -373,14 +384,23 @@ export default{
     }
     .solveList{
         min-width: 500px;
+        position: fixed;
+        top: 200px;
+        left: 50%;
+        overflow: scroll;
+        border-left: 1px solid red;
     }
-  .sigoPage-enter-active {
+    .problemList{
+        width: 50% !important;
+        position:relative;
+    }
+  .problemmanage-enter-active {
       transition: all 1s ease;
   }
-  .sigoPage-leave-active {
+  .problemmanage-leave-active {
       transition: all .5s cubic-bezier(1.0, 0.5, 0.8, 1.0);
   }
-  .sigoPage-enter, .sigoPage-leave-to
+  .problemmanage-enter, .problemmanage-leave-to
       /* .slide-fade-leave-active for <2.1.8 */
   {
       transform: translateX(100px);

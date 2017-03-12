@@ -1,4 +1,4 @@
-/*8dc7a3*/
+ㄹ녀ㅠ/*8dc7a3*/
 * {
   margin: 0;
   padding: 0;
@@ -42,7 +42,7 @@ body{
 .ui.center.aligned.header .sub.header{
   color: white;
   font-weight: 100;
-  /*margin-top: 10px;*/
+  margin-top: 10px;
   font-weight: 100
 }
 .item{
@@ -67,4 +67,138 @@ body{
 
 .big.share.icon:hover {
   color: rgb(255,255,255);
+}
+
+
+.ui.button {
+    width: 100%;
+    height: 40px;
+    background-color: rgb(242, 242, 242);
+    margin-bottom: 60px;
+}
+
+.ui.button:hover {
+    background-color: rgb(224, 224, 224)
+}
+
+.huge.chevron.circle.up.icon {
+    color: rgb(179, 179, 179);
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    margin: 15px;
+}
+
+.huge.chevron.circle.down.icon {
+    color: rgb(179, 179, 179);
+    position: relative;
+    bottom: 0;
+    margin: 15px;
+    margin-left: 47%;
+}
+
+.huge.chevron.circle.up.icon:hover {
+    color: rgb(255, 255, 255);
+}
+
+.huge.chevron.circle.down.icon:hover {
+    color: rgb(255, 255, 255);
+}
+
+.content {
+    display: flex !important;
+}
+.content.in {
+    /*display: flex !important;*/
+    /*flex-grow: -0.9;*/
+}
+
+#listpol-head {
+    flex-grow: 1;
+    padding-left: 13px;
+}
+
+.ui.disabled.header {
+  margin: 0 !important;
+    flex-grow: 0.2;
+    padding-right: 5px;
+}
+.ui.disabled.header span{
+  margin-right: 150px;
+}
+
+.description {
+    flex-grow: 1;
+    margin: 0 !important;
+    color: black;
+}
+
+.ui.center.aligned.header {
+    margin-bottom: 60px;
+}
+
+.ui.items {
+    font-size: 13px;
+}
+
+.propol {
+    padding: 20px;
+    padding-top: 0px;
+}
+
+#ltemone {
+    padding-left: 13px;
+    flex-grow: 2.4;
+}
+
+#ltemtwo {
+    flex-grow: 0.8;
+    padding-right: 5px;
+}
+
+#ltemthr {
+    flex-grow: 0.9;
+    padding-left: 30px;
+}
+
+#ltemfou {
+    flex-grow: 0.8;
+}
+
+#ltemfiv {
+    flex-grow: 0.8;
+}
+
+#ltemsix {
+    flex-grow: 1.1;
+    margin-right: 24px;
+}
+
+#pob .item {
+    margin: 0;
+}
+
+#pob {
+    color: black;
+}
+
+.problemlist-enter-active {
+    transition: all 2s ease;
+}
+
+.problemlist-leave-active {
+    transition: all .5s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+
+.problemlist-enter,
+.problemlist-leave-to
+/* .slide-fade-leave-active for <2.1.8 */
+
+{
+    transform: translateX(-50px);
+    opacity: 0;
+}
+
+.ui.bottom * {
+    overflow: hidden;
 }

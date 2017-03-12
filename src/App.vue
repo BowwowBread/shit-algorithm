@@ -6,7 +6,7 @@
             </ul>
             <ul id="submn">
               <li><router-link to="/notice" :class="{menu_show_font : scrolled > 200}">공지사항</router-link></li>
-              <li><a v-on:click="problemLoginCheck" :class="{menu_show_font : scrolled > 200}">문제풀기</a></li>
+              <li><a v-on:click="problemLoginCheck" :class="{menu_show_font : scrolled > 200}">문제</a></li>
               <li><a v-on:click="rankLoginCheck" :class="{menu_show_font : scrolled > 200}">랭킹</a></li>
               <li v-if="loginState">
                 <router-link v-if="userRating == 3" to="/admin" :class="{menu_show_font : scrolled > 200}">관리자페이지 - {{username}}님</router-link>
@@ -18,7 +18,9 @@
         </div>
         <div v-if="loginState == false" id="sign">
             <div class="ui modal">
+              <div class="close con">
                 <i class="close icon" v-on:click="closeModal"></i>
+              </div>
                 <div class="login_form" v-if="signState">
                     <div class="description">
                         <div class="ui two column centered grid">
@@ -103,10 +105,10 @@
 
             </div>
         </div>
-      <transition name="sigoPage" mode="out-in">
+        <vue-progress-bar></vue-progress-bar>
+        <transition name="sigoPage" mode="out-in">
       <router-view></router-view>
       </transition>
-        <vue-progress-bar></vue-progress-bar>
         </div>
     </div>
 </template>
@@ -136,6 +138,19 @@
     },
     created() {
 	    this.$Progress.start();
+	    //  hook the progress bar to start before we move router-view
+	    this.$router.beforeEach((to, from, next) => {
+		    //  does the page we want to go to have a meta.progress object
+		    if (to.meta.progress !== undefined) {
+			    const meta = to.meta.progress;
+			    // parse meta tags
+			    this.$Progress.parseMeta(meta);
+		    }
+		    //  start the progress bar
+		    this.$Progress.start();
+			    //  continue to next page
+            next();
+        });
       const ROOT_URL = 'http://121.186.23.245:9999';
       this.$http.defaults.baseURL = ROOT_URL;
 //      토큰 테스트
@@ -159,8 +174,12 @@
 		          });
           });
       }
+      this.$router.afterEach((to, from) => {
+		    //  finish the progress bar
+	      this.$Progress.finish();
+      });
+      this.$Progress.finish();
       window.addEventListener('scroll', this.scrollFunction);
-	    this.$Progress.finish();
     },
     destroyed() {
       window.removeEventListener('scroll', this.scrollFunction);
@@ -240,7 +259,8 @@
           }).modal('hide');
       },
       submit() {
-        if (this.signState === true) {
+      	  let errMsg;
+	      if (this.signState === true) {
           this.$http.defaults.headers.common.Authorization = this.userToken;
           this.$http.post('api/users/signin', {
             userid: this.userid,
@@ -272,27 +292,28 @@
               })
               // 토큰인증 실패
               .catch((err) => {
-                this.$swal(
-                  '로그인 실패',
-                  err,
-                  'error');
+	              this.closeModal();
+	              this.$swal({
+            		title: '로그인 실패',
+                    text: err,
+                    type: 'error',
+                });
               });
           })
           .catch((err) => {
             if (err.response.data.message === 'account false') {
-	            this.closeModal();
-	            this.$swal(
-              	'로그인 실패',
-                '관리자의 승인을 기다려주세요',
-                'error');
+	            errMsg = '관리자의 승인을 기다려주세요';
             } else if (err.response.data.message === 'login fail') {
-            	this.closeModal();
-            	this.$swal(
-                '로그인 실패',
-	            '아이디 또는 비밀번호가 잘못되었습니다',
-                'error',
-                );
+            	errMsg = '아이디 또는 비밀번호가 잘못되었습니다';
+            } else if (err.response.data.message === 'validation error') {
+	            errMsg = '정보를 모두 입력해주세요';
             }
+              this.closeModal();
+	          this.$swal({
+		          title: '로그인 실패',
+		          text: errMsg,
+		          type: 'error',
+	          });
           });
         } else {
           // 회원가입
@@ -304,19 +325,24 @@
             studentcode: this.studentcode,
           })
           .then((res) => {
-            const username = res.data.username;
-            this.$swal(
-              '회원가입 성공',
-              `안녕하세요 ${username}님`,
-              'success');
-            this.closeModal();
+	          this.closeModal();
+	          const username = res.data.username;
+            this.$swal({
+              title: '회원가입 성공',
+              text: `안녕하세요 ${username}님`,
+              type: 'success',
+            });
           })
           .catch((error) => {
-              this.$swal({
-                      title: '회원가입 실패',
-                      text: error,
-                      type: 'error',
-                  });
+	          this.closeModal();
+	          if (error.response.data.message === 'validation error') {
+	          	errMsg = '정보를 모두 입력해주세요';
+              }
+	          this.$swal({
+                  title: '회원가입 실패',
+                  text: errMsg,
+                  type: 'error',
+              });
           });
         }
       },
@@ -347,4 +373,23 @@
     .dimmable{
         position: static !important;
     }
+    
+    /*.close.con{
+      display: flex;
+      justify-content: flex-end;
+      width: 700px;
+      height: 200px;
+    }
+    .close.icon{
+      margin: 0 !important;
+      padding: 0 !important;
+      width: 0;
+      height: 0;
+    }
+    .ui.modal>.close{
+      top:0;
+      right: 0;
+      width: 0;
+      height: 0;
+    }*/
 </style>

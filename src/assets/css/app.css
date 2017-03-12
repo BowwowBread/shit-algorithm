@@ -31,9 +31,26 @@
         background-color: white;
         border-radius: 15px;
     }
-    .close.icon{
+    /*.close.icon{
       margin-top: -180px;
       margin-right: 170px;
+    }*/
+    .ui.modal{
+      box-shadow: none;
+      /*box-shadow: 1px 3px 3px 0 rgba(0,0,0,.2), 1px 3px 15px 2px rgba(0,0,0,.2);*/
+    }
+    .close.con{
+      display: flex !important;
+      width: 700px !important;
+      height: 220px !important;
+      justify-content: flex-end !important;
+    }
+    .ui.modal>.close{
+      position: none !important;
+      right: 0 !important;
+    }
+    .ui.modal.transition.visible.active{
+      background-color: transparent !important;
     }
     .culnmn{
         padding: 30px 120px 30px 120px;

@@ -72,6 +72,7 @@ export default {
             location.href = '/';
         }
     },
+
   beforeCreate() {
 	  const ROOT_URL = 'http://121.186.23.245:9999';
 	  this.$http.defaults.baseURL = ROOT_URL;
@@ -141,9 +142,8 @@ export default {
 
 .rank1 {
     text-align: center;
-    width: 250px;
-    height: 200px;
-    margin-right: 20px;
+    width: 220px;
+    height: 140px;
     padding: 20px;
     background: rgb(143, 215, 179);
     display: flex;
@@ -151,9 +151,8 @@ export default {
 
 .rank2 {
     text-align: center;
-    width: 250px;
-    height: 300px;
-    margin-right: 20px;
+    width: 220px;
+    height: 270px;
     padding: 20px;
     background: rgb(143, 215, 179);
     display: flex;
@@ -161,8 +160,8 @@ export default {
 
 .rank3 {
     text-align: center;
-    width: 250px;
-    height: 130px;
+    width: 220px;
+    height: 140px;
     padding: 20px;
     background: rgb(143, 215, 179);
     display: flex;
