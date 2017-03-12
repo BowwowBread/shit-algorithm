@@ -40,6 +40,17 @@
                                                 <input type="password" name="password" placeholder="비밀번호" v-model="password" v-on:keydown.enter="submit">
                                             </div>
                                         </div>
+                                        <div class="field">
+                                            <div class="keyimage">
+                                                <img :src="keyPath" alt="keyImage">
+                                            </div>
+                                        </div>
+                                        <div class="field">
+                                            <div class="ui left icon input">
+                                                <i class="lock icon"></i>
+                                                <input type="text" name="userKey"  v-model="userKey" v-on:keydown.enter="submit">
+                                            </div>
+                                        </div>
                                         <button type="button" v-on:click="submit" class="ui fluid large teal submit button submitButton">
                                             로그인
                                         </button>
@@ -58,7 +69,6 @@
                             <div class="container">
                                 <div class="culnmn">
                                     <h1 class="ui grey header">회원가입</h1>
-
                                     <form class="ui large form">
                                         <div class="field">
                                             <div class="ui left icon input">
@@ -131,6 +141,9 @@
         solveMenu: false,
         on: false,
         userCount: 0,
+        key: '',
+        keyPath: '',
+        userKey: '',
       };
     },
     created() {
@@ -249,6 +262,19 @@
         $('.ui.modal').modal({
           blurring: true,
         }).modal('show');
+        this.$http.get('api/users/captcha')
+          .then((res) => {
+            this.key = res.data.key;
+            this.keyPath = res.data.path;
+          })
+          .catch((err) => {
+            this.closeModal();
+            this.$swal({
+              title: '키코드 로드 실패',
+              text: err,
+              type: 'error',
+            });
+          });
       },
       closeModal() {
           $('.ui.modal').modal({

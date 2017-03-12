@@ -38,7 +38,7 @@
                 <p>소스 : {{item.source}}</p><br>
                 <button v-on:click="solveListData(item.num)">제출목록</button>
                 <button v-on:click="modifyData(item.num)">문제수정</button>
-                <button v-on:click="deleteData(item.num)">문제삭제</button>
+                <button v-on:click="deleteData(item.num, item)">문제삭제</button>
                 <br>
                 <br>
                 <div class="modify" v-if="item.num == problemNum && modifyState">
@@ -112,7 +112,7 @@ export default{
         	this.addMsg = '문제 등록하기';
         }
     },
-    deleteData(num) {
+    deleteData(num, item) {
 	    this.$swal({
 		    title: '문제 삭제',
 		    text: '정말로 삭제하시겠습니까?',
@@ -128,9 +128,10 @@ export default{
               .then(() => {
 	              this.$swal({
                       title: '삭제 완료',
-                      test: `${num}번 문제를 삭제하셨습니다`,
+                      text: `${num}번 문제를 삭제하셨습니다`,
                       type: 'success',
                     });
+                this.items.splice(this.items.indexOf(item), 1);
               })
               .catch((err) => {
 	              this.$swal({

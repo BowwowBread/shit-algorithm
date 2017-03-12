@@ -105,7 +105,11 @@ export default {
 				  .then((resRatio) => {
 					  //문제 개수 반복
                       let q = 0;
-					  while (q < 10) {
+                      let p = 10;
+                      if (length < 10) {
+                        p = length;
+                      }
+					  while (q < p) {
 						  const num = res.data.problems[q].num;
 						  const name = res.data.problems[q].problemName;
 						  const source = res.data.problems[q].source;
