@@ -66,7 +66,6 @@ export default {
       this.$http.defaults.headers.common.Authorization = this.userToken;
       this.$http.get('/api/users/my-info')
         .then((resInfo) => {
-          if (resInfo.status === 200) {
             this.userRating = resInfo.data.user.rating;
 	          if (this.userRating === 1) {
                   this.$swal({
@@ -80,7 +79,6 @@ export default {
 	          } else {
 		          this.adminState = true;
 	          }
-          }
         })
         .catch((error) => {
 		    this.$swal({

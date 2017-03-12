@@ -170,11 +170,9 @@
         this.$http.defaults.headers.common.Authorization = this.userToken;
         this.$http.get('/api/users/my-info')
           .then((resInfo) => {
-            if (resInfo.status === 200) {
               this.userRating = resInfo.data.user.rating;
               this.username = resInfo.data.user.username;
               this.loginState = true;
-            }
           })
           .catch((error) => {
 	          this.$swal({
@@ -262,19 +260,19 @@
         $('.ui.modal').modal({
           blurring: true,
         }).modal('show');
-        this.$http.get('api/users/captcha')
-          .then((res) => {
-            this.key = res.data.key;
-            this.keyPath = res.data.path;
-          })
-          .catch((err) => {
-            this.closeModal();
-            this.$swal({
-              title: '키코드 로드 실패',
-              text: err,
-              type: 'error',
-            });
-          });
+//        this.$http.get('api/users/captcha')
+//          .then((res) => {
+//            this.key = res.data.key;
+//            this.keyPath = res.data.path;
+//          })
+//          .catch((err) => {
+//            this.closeModal();
+//            this.$swal({
+//              title: '키코드 로드 실패',
+//              text: err,
+//              type: 'error',
+//            });
+//          });
       },
       closeModal() {
           $('.ui.modal').modal({

@@ -106,9 +106,7 @@ export default {
 	    this.$http.defaults.headers.common.Authorization = this.userToken;
 	    this.$http.get('/api/users/my-info')
         .then((resInfo) => {
-          if (resInfo.status === 200) {
             this.userid = resInfo.data.user.userId;
-          }
         })
         .catch((error) => {
         this.$swal({

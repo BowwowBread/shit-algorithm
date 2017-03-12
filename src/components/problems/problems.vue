@@ -71,9 +71,7 @@ export default {
       this.$http.defaults.headers.common.Authorization = this.userToken;
       this.$http.get('/api/users/my-info')
         .then((resInfo) => {
-          if (resInfo.status === 200) {
             this.userid = resInfo.data.user.userId;
-          }
         })
         .catch((error) => {
 	        this.$swal({
@@ -104,16 +102,14 @@ export default {
 			  this.$http.get('api/solution')
 				  .then((resRatio) => {
 					  //문제 개수 반복
-                      let q = 0;
-                      let p = 10;
                       if (length < 10) {
-                        p = length;
+                        end = length;
                       }
-					  while (q < p) {
-						  const num = res.data.problems[q].num;
-						  const name = res.data.problems[q].problemName;
-						  const source = res.data.problems[q].source;
-						  const score = res.data.problems[q].score;
+					  while (i < end) {
+						  const num = res.data.problems[i].num;
+						  const name = res.data.problems[i].problemName;
+						  const source = res.data.problems[i].source;
+						  const score = res.data.problems[i].score;
 						  let count = 0;
 						  let success = 0;
 						  let fail = 0;
@@ -122,7 +118,7 @@ export default {
 						  //문제 결과 수 반복
                           while (j < resRatio.data.resolves.length) {
 							  //문제 번호 === 문제 결과 번호
-							  if (q === resRatio.data.resolves[j].resolveData.problemNum) {
+							  if (i === resRatio.data.resolves[j].resolveData.problemNum) {
 								  //문제 결과 카운트
 								  if (resRatio.data.resolves[j].resolveData.result === 'success') {
 									  success += 1;
@@ -152,7 +148,7 @@ export default {
 							  count,
 							  ratio,
 						  });
-						  q += 1;
+						  i += 1;
 					  }
 				  })
 				  .catch((err) => {
