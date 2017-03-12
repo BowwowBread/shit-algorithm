@@ -7,7 +7,7 @@
                 이름: <span>{{member.username}}</span><br>
                 학번 : <span>{{member.studentcode}}</span><br>
                 점수 : <span>{{member.score}}</span><br>
-                <button v-on:click="deleteUser(member.userid)">유저 삭제</button>
+                <button v-on:click="deleteuser(member.userid, member)">유저 삭제</button>
                 <br>
             </li>
             <br>
@@ -29,22 +29,40 @@ export default{
       this.getMember();
   },
   methods: {
-  	deleteuser(userid) {
-        this.$http.get(`api/users/${userid}`)
-          .then((res) => {
-        	this.$swal({
-        		title: '유저 삭제 성공',
-                text: `${userid}님의 계정이 삭제되었습니다`,
-                type: 'success',
-            });
-          })
-          .catch((err) => {
-        	this.$swal({
-        	    title: '유저 삭제 실패',
-                text: err,
-                type: 'error',
-            });
-          });
+  	deleteuser(userid, member) {
+		  this.$swal({
+				  title: '문제 삭제',
+				  text: '정말로 삭제하시겠습니까?',
+				  type: 'question',
+				  showCancelButton: true,
+				  confirmButtonText: '삭제',
+				  cancelButtonText: '취소',
+			  })
+			  .then(() => {
+                  this.$http.delete(`api/users/${userid}`)
+                        .then(() => {
+						  this.$swal({
+							  title: '삭제 완료',
+							  text: `${userid} 님의 계정이 삭제되었습니다`,
+							  type: 'success',
+						  });
+                          this.members.splice(this.members.indexOf(member), 1);
+                        })
+					  .catch((err) => {
+						  this.$swal({
+							  title: '삭제 실패',
+							  text: err,
+							  type: 'error',
+						  });
+					  });
+			  })
+			  .catch(() => {
+				  this.$swal({
+					  title: '삭제 실패',
+                      text: err,
+					  type: 'error',
+				  });
+			  });
     },
 //            문제리스트
     getMember() {

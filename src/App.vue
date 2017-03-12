@@ -256,7 +256,7 @@
           }).modal('hide');
       },
       submit() {
-	      let errmsg;
+      	  let errMsg;
 	      if (this.signState === true) {
           this.$http.defaults.headers.common.Authorization = this.userToken;
           this.$http.post('api/users/signin', {
@@ -299,16 +299,16 @@
           })
           .catch((err) => {
             if (err.response.data.message === 'account false') {
-	            errmsg = '관리자의 승인을 기다려주세요';
+	            errMsg = '관리자의 승인을 기다려주세요';
             } else if (err.response.data.message === 'login fail') {
-            	errmsg = '아이디 또는 비밀번호가 잘못되었습니다';
+            	errMsg = '아이디 또는 비밀번호가 잘못되었습니다';
             } else if (err.response.data.message === 'validation error') {
-	            errmsg = '정보를 모두 입력해주세요';
+	            errMsg = '정보를 모두 입력해주세요';
             }
               this.closeModal();
 	          this.$swal({
 		          title: '로그인 실패',
-		          text: errmsg,
+		          text: errMsg,
 		          type: 'error',
 	          });
           });
@@ -333,11 +333,11 @@
           .catch((error) => {
 	          this.closeModal();
 	          if (error.response.data.message === 'validation error') {
-	          	errmsg = '정보를 모두 입력해주세요';
+	          	errMsg = '정보를 모두 입력해주세요';
               }
 	          this.$swal({
                   title: '회원가입 실패',
-                  text: errmsg,
+                  text: errMsg,
                   type: 'error',
               });
           });

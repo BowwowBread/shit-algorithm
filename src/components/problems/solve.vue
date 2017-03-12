@@ -23,12 +23,12 @@
                     {{item.inputex}}
                 </div>
                 <div class="solve_outputex">
-                    {{item.outputex}}
+                    <pre>{{item.outputex}}</pre>
                 </div>
             </div>
             <div class="solve_main">
-                <div class="solve_input">
-                    <monaco-editor class="monacoEditor" width="100%" language="c" :code="code" :editorOptions="options" v-on:keydown@mounted="onMounted" @codeChange="onCodeChange">
+                <div class="solve_input" v-on:keydown.enter="enter">
+                    <monaco-editor class="monacoEditor" width="100%" language="c" :code="code" :editorOptions="options"  @mounted="onMounted" @codeChange="onCodeChange">
                     </monaco-editor>
                 </div>
                 <div class="solve_footer">
@@ -86,7 +86,7 @@ export default {
         cursorBlinking: 'smooth',
         fontSize: 15,
         fontWeight: 'lighter',
-        lineHeight: 30,
+        lineHeight: 15,
         mouseWheelScrollSensitivity: 2,
         mouseWheelZoom: true,
         parameterHints: true,
@@ -151,12 +151,20 @@ export default {
     this.solveMenu = false;
   },
   methods: {
+  	enter() {
+//		  const line = this.editor.getPosition();
+//		  const endcolumn = this.editor.getSelection().endColumn;
+//		  const range = new monaco.Range(line.lineNumber, endcolumn, line.lineNumber, endcolumn);
+//		  const text = '￦n';
+//		  const linechange = { range, text, forceMoveMarkers: true };
+//		  this.editor.executeEdits('code', [linechange]);
+    },
     onMounted(editor) {
       this.editor = editor;
     },
     onCodeChange(editor) {
       this.code = editor.getValue();
-      console.log(editor.getValue());
+      console.log(this.code);
     },
     codeReset() {
       this.editor.setValue('');
