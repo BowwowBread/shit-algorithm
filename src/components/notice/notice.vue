@@ -8,7 +8,24 @@
       name: 'notice',
       data() {
         return {
+          notices: [],
         };
+      },
+      created() {
+        this.$http.get('api/notices')
+          .then((res) => {
+            let i = 0;
+            while (i < res.data.notices.length) {
+              this.notices.push({
+                num: res.data.notices[i].num,
+                noticename: res.data.notices[i],
+              });
+              i += 1;
+            }
+          })
+          .catch((err) => {
+            alert(err);
+          });
       },
     };
 </script>

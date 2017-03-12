@@ -20,7 +20,7 @@
                     <p>내용 : {{notice.content}}</p><br>
                     <p>타입 : {{notice.type}}</p><br>
                     <button v-on:click="modifyNotice(notice.num)">공자수정</button>
-                    <button v-on:click="deleteNotice(notice.num)">공지삭제</button>
+                    <button v-on:click="deleteNotice(notice.num, notice)">공지삭제</button>
                     <div class="noticeModify" v-if="notice.num == num && noticeModify">
                         <label for="name">name : </label><input type="name" v-model="name" id="name" ><br>
                         <label for="content">content : </label><input type="content" v-model="content" id="content"><br>
@@ -110,7 +110,7 @@ export default{
           });
         });
     },
-    deleteNotice(num) {
+    deleteNotice(num, notice) {
       this.$swal({
           title: '문제 삭제',
           text: '정말로 삭제하시겠습니까?',
@@ -127,6 +127,7 @@ export default{
                 test: `${num}번 공지를 삭제하셨습니다`,
                 type: 'success',
               });
+              this.noticeList.splice(this.noticeList.indexOf(notice), 1);
             })
             .catch((err) => {
               this.$swal({
