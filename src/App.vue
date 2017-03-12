@@ -42,6 +42,17 @@
                                                 <input type="password" name="password" placeholder="비밀번호" v-model="password" v-on:keydown.enter="submit">
                                             </div>
                                         </div>
+                                        <div class="field">
+                                            <div class="keyimage">
+                                                <img :src="keyPath" alt="keyImage">
+                                            </div>
+                                        </div>
+                                        <div class="field">
+                                            <div class="ui left icon input">
+                                                <i class="lock icon"></i>
+                                                <input type="text" name="inputKey"  v-model="inputKey" v-on:keydown.enter="submit">
+                                            </div>
+                                        </div>
                                         <button type="button" v-on:click="submit" class="ui fluid large teal submit button submitButton">
                                             로그인
                                         </button>
@@ -61,30 +72,29 @@
                             <div class="container">
                                 <div class="culnmn">
                                     <h1 class="ui grey header">회원가입</h1>
-
                                     <form class="ui large form">
                                         <div class="field">
                                             <div class="ui left icon input">
                                                 <i class="user icon"></i>
-                                                <input type="text" name="userid" placeholder="아이디" v-model="userid">
+                                                <input type="text" name="userid" placeholder="아이디" v-model="userid" v-on:keydown.enter="submit">
                                             </div>
                                         </div>
                                         <div class="field">
                                             <div class="ui left icon input">
                                                 <i class="lock icon"></i>
-                                                <input type="password" name="password" placeholder="비밀번호" v-model="password">
+                                                <input type="password" name="password" placeholder="비밀번호" v-model="password"v-on:keydown.enter="submit">
                                             </div>
                                         </div>
                                         <div class="field">
                                             <div class="ui left icon input">
                                                 <i class="user icon"></i>
-                                                <input type="text" name="username" placeholder="이름" v-model="username">
+                                                <input type="text" name="username" placeholder="이름" v-model="username"v-on:keydown.enter="submit">
                                             </div>
                                         </div>
                                         <div class="field">
                                             <div class="ui left icon input">
                                                 <i class="student icon"></i>
-                                                <input type="text" name="studentcode" placeholder="학번" v-model="studentcode" v-on:keypress="isNumber(event)">
+                                                <input type="text" name="studentcode" placeholder="학번" v-model="studentcode" v-on:keydown.enter="submit" v-on:keypress="isNumber(event)">
 
                                             </div>
                                         </div>
@@ -134,6 +144,9 @@
         solveMenu: false,
         on: false,
         userCount: 0,
+        key: '',
+        keyPath: '',
+        userKey: '',
       };
     },
     created() {
@@ -160,11 +173,9 @@
         this.$http.defaults.headers.common.Authorization = this.userToken;
         this.$http.get('/api/users/my-info')
           .then((resInfo) => {
-            if (resInfo.status === 200) {
               this.userRating = resInfo.data.user.rating;
               this.username = resInfo.data.user.username;
               this.loginState = true;
-            }
           })
           .catch((error) => {
 	          this.$swal({
@@ -249,104 +260,124 @@
       },
       // 폼 모달
       openModal() {
-        $('.ui.modal').modal({
-          blurring: true,
-        }).modal('show');
-      },
-      closeModal() {
-          $('.ui.modal').modal({
-              blurring: false,
-          }).modal('hide');
-      },
-      submit() {
-      	  let errMsg;
-	      if (this.signState === true) {
-          this.$http.defaults.headers.common.Authorization = this.userToken;
-          this.$http.post('api/users/signin', {
-            userid: this.userid,
-            password: this.password,
-          })
-          .then((resSign) => {
-            this.userToken = resSign.data.token;
-            // 헤더 토큰 등록
-            this.$http.defaults.headers.common.Authorization = this.userToken;
-            // 토큰 테스트
-            this.$http.get('/api/users/my-info')
-              // 로그인 성공
-              .then((resInfo) => {
-                if (resInfo.status === 200) {
-                  this.loginState = true;
-                  this.username = resInfo.data.user.username;
-                  this.closeModal();
-                  this.loginState = true;
-                  this.userRating = resInfo.data.user.rating;
-                  // Cookie : 이름 , 내용 , 만료기간 , 도메인
-                  this.$cookie.set('userToken', this.userToken, 1);
-                  // 쿠키 값 출력
-                  this.$swal(
-                  	'로그인 성공',
-                    '안녕하세요!',
-                    'success',
-                  );
-                }
-              })
-              // 토큰인증 실패
-              .catch((err) => {
-	              this.closeModal();
-	              this.$swal({
-            		title: '로그인 실패',
-                    text: err,
-                    type: 'error',
-                });
-              });
+        $('.ui.modal').modal('show');
+        this.$http.get('api/users/captcha')
+          .then((res) => {
+            this.key = res.data.key;
+            this.keyPath = res.data.path;
           })
           .catch((err) => {
-            if (err.response.data.message === 'account false') {
-	            errMsg = '관리자의 승인을 기다려주세요';
-            } else if (err.response.data.message === 'login fail') {
-            	errMsg = '아이디 또는 비밀번호가 잘못되었습니다';
-            } else if (err.response.data.message === 'validation error') {
-	            errMsg = '정보를 모두 입력해주세요';
-            }
-              this.closeModal();
-	          this.$swal({
-		          title: '로그인 실패',
-		          text: errMsg,
-		          type: 'error',
-	          });
-          });
-        } else {
-          // 회원가입
-	        this.$http.defaults.headers.common.Authorization = this.userToken;
-	        this.$http.post('/api/users/signup', {
-            username: this.username,
-            userid: this.userid,
-            password: this.password,
-            studentcode: this.studentcode,
-          })
-          .then((res) => {
-	          this.closeModal();
-	          const username = res.data.username;
+            this.closeModal();
             this.$swal({
-              title: '회원가입 성공',
-              text: `안녕하세요 ${username}님`,
-              type: 'success',
+              title: '키코드 로드 실패',
+              text: err,
+              type: 'error',
             });
-          })
-          .catch((error) => {
-	          this.closeModal();
-	          if (error.response.data.message === 'validation error') {
-	          	errMsg = '정보를 모두 입력해주세요';
-              }
-	          this.$swal({
-                  title: '회원가입 실패',
-                  text: errMsg,
-                  type: 'error',
-              });
           });
-        }
       },
-    },
+      closeModal() {
+          $('.ui.modal').modal('hide');
+      },
+      submit() {
+        let errMsg;
+        this.$http.get(`api/users/captcha/${this.key}/${this.inputKey}`)
+          .then((res) => {
+            console.log(res);
+            if (this.signState === true) {
+              this.$http.post('api/users/signin', {
+                userid: this.userid,
+                password: this.password,
+              })
+              .then((resSign) => {
+                this.userToken = resSign.data.token;
+                // 헤더 토큰 등록
+                this.$http.defaults.headers.common.Authorization = this.userToken;
+                // 토큰 테스트
+                this.$http.get('/api/users/my-info')
+                  // 로그인 성공
+                  .then((resInfo) => {
+                    if (resInfo.status === 200) {
+                      this.loginState = true;
+                      this.username = resInfo.data.user.username;
+                      this.closeModal();
+                      this.loginState = true;
+                      this.userRating = resInfo.data.user.rating;
+                      // Cookie : 이름 , 내용 , 만료기간 , 도메인
+                      this.$cookie.set('userToken', this.userToken, 1);
+                      // 쿠키 값 출력
+                      this.$swal(
+                        '로그인 성공',
+                        '안녕하세요!',
+                        'success',
+                      );
+                    }
+                  })
+                  // 토큰인증 실패
+                  .catch((err) => {
+                      this.closeModal();
+                      this.$swal({
+                        title: '로그인 실패',
+                        text: err,
+                        type: 'error',
+                    });
+                  });
+              })
+              .catch((err) => {
+                if (err.response.data.message === 'account false') {
+                    errMsg = '관리자의 승인을 기다려주세요';
+                } else if (err.response.data.message === 'login fail') {
+                    errMsg = '아이디 또는 비밀번호가 잘못되었습니다';
+                } else if (err.response.data.message === 'validation error') {
+                    errMsg = '정보를 모두 입력해주세요';
+                } else if (err.response.data.message === 'fail rating excess') {
+                    errMsg = '비밀번호를 자주틀려 확인 정보를 입력해주세요';
+                }
+                  this.$swal({
+                      title: '로그인 실패',
+                      text: errMsg,
+                      type: 'error',
+                  });
+              });
+            } else {
+              // 회원가입
+                this.$http.defaults.headers.common.Authorization = this.userToken;
+                this.$http.post('/api/users/signup', {
+                username: this.username,
+                userid: this.userid,
+                password: this.password,
+                studentcode: this.studentcode,
+              })
+              .then((resRegister) => {
+                  this.closeModal();
+                  const username = resRegister.data.username;
+                this.$swal({
+                  title: '회원가입 성공',
+                  text: `안녕하세요 ${username}님`,
+                  type: 'success',
+                });
+              })
+              .catch((error) => {
+                this.closeModal();
+                if (error.response.data.message === 'validation error') {
+                  errMsg = '정보를 모두 입력해주세요';
+                  }
+                  this.$swal({
+                    title: '회원가입 실패',
+                    text: errMsg,
+                    type: 'error',
+                  });
+              });
+            }
+          })
+          .catch((err) => {
+            this.$swal({
+              title: '캡챠 로드 실패',
+              text: err,
+              type: 'error',
+            });
+          });
+      },
+  },
   };
 </script>
 

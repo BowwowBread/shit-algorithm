@@ -18,8 +18,19 @@
                     <p>번호 : {{notice.num}}</p><br>
                     <p>제목 : {{notice.name}}</p><br>
                     <p>내용 : {{notice.content}}</p><br>
+                    <p>타입 : {{notice.type}}</p><br>
                     <button v-on:click="modifyNotice(notice.num)">공자수정</button>
-                    <button v-on:click="deleteNotice(notice.num)">공지삭제</button>
+                    <button v-on:click="deleteNotice(notice.num, notice)">공지삭제</button>
+                    <div class="noticeModify" v-if="notice.num == num && noticeModify">
+                        <label for="name">name : </label><input type="name" v-model="name" id="name" ><br>
+                        <label for="content">content : </label><input type="content" v-model="content" id="content"><br>
+                        <label for="type">type : </label>
+                        <select v-model="type">
+                            <option value="notice">공지</option>
+                            <option value="news">뉴스</option>
+                        </select>
+                        <button v-on:click="modify">수정하기</button>
+                    </div>
                     <br>
                     <br>
                 </li>
@@ -37,15 +48,43 @@ export default{
       noticeAddState: false,
       noticeMsg: '공지 등록하기',
       name: '',
+      num: '',
       content: '',
       type: 'notice',
       noticeList: [],
+      noticeModify: false,
     };
   },
-  create() {
+  created() {
     this.loadNotice();
   },
   methods: {
+    modify() {
+      this.$http.put('api/notices', {
+          num: this.num,
+          noticename: this.problemNum,
+          contents: this.problemName,
+          type: this.source,
+        })
+        .then(() => {
+          this.$swal({
+            title: '수정 성공',
+            text: '공지를 수정하였습니다',
+            type: 'success',
+          });
+        })
+        .catch((err) => {
+          let errMsgs;
+          if (err.response.data.message === 'validation error') {
+            errMsgs = '모든 정보를 입력해주세요';
+          }
+          this.$swal({
+            title: '수정 실페',
+            text: errMsgs,
+            type: 'error',
+          });
+        });
+    },
     noticeAdd() {
       this.noticeAddState = !this.noticeAddState;
       if (this.noticeAddState) {
@@ -55,19 +94,23 @@ export default{
       }
     },
     modifyNotice(num) {
-      this.$http.put('api/notices', {
-        num,
-        noticename: this.name,
-        contents: this.content,
-      })
-        .then(() => {
-          this.$swal(
-            '수정 성공',
-            '공지를 수정하였습니다',
-          );
+      this.$http.get(`api/notices/${num}`)
+        .then((res) => {
+          this.noticeModify = !this.noticeModify;
+          this.num = res.data.notices.num;
+          this.noticename = res.data.notices.noticename;
+          this.explanation = res.data.notices.contents;
+          this.type = res.data.notices.type;
+        })
+        .catch((err) => {
+          this.$swal({
+            title: '문제 조회 실패',
+            text: err,
+            type: 'error',
+          });
         });
     },
-    deleteNotice(num) {
+    deleteNotice(num, notice) {
       this.$swal({
           title: '문제 삭제',
           text: '정말로 삭제하시겠습니까?',
@@ -84,6 +127,7 @@ export default{
                 test: `${num}번 공지를 삭제하셨습니다`,
                 type: 'success',
               });
+              this.noticeList.splice(this.noticeList.indexOf(notice), 1);
             })
             .catch((err) => {
               this.$swal({
@@ -105,10 +149,19 @@ export default{
       this.$http.get('api/notices')
         .then((res) => {
           let i = 0;
-          while (i < res.data.length) {
+          console.log(res);
+          while (i < res.data.notices.length) {
             this.noticeList.push({
-              name: res.data.noticename,
-              content: res.data.contents,
+              name: res.data.notices[i].noticeName,
+              content: res.data.notices[i].contents,
+              type: res.data.notices[i].type,
+              num: res.data.notices[i].num,
+            });
+            this.noticeList.push({
+              name: this.name,
+              content: this.content,
+              type: this.type,
+              num: this.num,
             });
             i += 1;
           }
@@ -126,6 +179,7 @@ export default{
         noticename: this.name,
         contents: this.content,
         type: this.type,
+        num: this.num,
       })
         .then(() => {
             this.$swal(
@@ -134,8 +188,10 @@ export default{
               'success',
             );
             this.noticeList.push({
+              num: this.num,
               name: this.name,
               content: this.content,
+              type: this.type,
             });
         })
         .catch((err) => {
