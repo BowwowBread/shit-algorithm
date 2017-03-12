@@ -3,6 +3,7 @@
         <button v-on:click="openAdd">{{addMsg}}</button>
         <div class="addProblem" v-if="addState">
         <div class="input">
+
         <label for="problemName">problemName : </label><input type="text" v-model="problemName" id="problemName"><br>
         <label for="source">source : </label><input type="text" v-model="source" id="source"><br>
         <label for="explanation">explanation : </label><input type="text" v-model="explanation" id="explanation"><br>
@@ -28,6 +29,10 @@
           <p>메모리 : {{memoryLimit}}</p>
         </div>
         <button v-on:click="add">문제 등록</button>
+            <select v-model="problemType">
+                <option value="normal">일반</option>
+                <option value="contest">대회</option>
+            </select>
       </div>
         <div class="list">
         <div class="problemList">
@@ -52,6 +57,11 @@
                     <label for="outputExample2">outputExample2 : </label><input type="text" v-model="outputExample2" id="outputExample2"><br>
                     <label for="timeLimit">timeLimit : </label><input type="text" v-model="timeLimit" id="timeLimit"  v-on:keypress="isNumber(event)"><br>
                     <label for="memoryLimit">memoryLimit : </label><input type="text" v-model="memoryLimit" id="memoryLimit"  v-on:keypress="isNumber(event)"><br>
+                    <label for="type">type : </label>
+                    <select v-model="problemType">
+                    <option value="normal">일반</option>
+                    <option value="contest">대회</option>
+                    </select>
                     <button v-on:click="modify">수정하기</button>
                 </div>
             </li>
@@ -95,6 +105,7 @@ export default{
       addMsg: '문제 등록하기',
       modifyState: false,
       lastNum: 0,
+      problemType: 'normal',
     };
   },
   created() {
@@ -172,9 +183,13 @@ export default{
 	        });
         })
         .catch((err) => {
+	      let errMsgs;
+	      if (err.response.data.message === 'validation error') {
+	        errMsgs = '모든 정보를 입력해주세요';
+          }
         this.$swal({
                 title: '수정 실페',
-                text: err,
+                text: errMsgs,
                 type: 'error',
             });
         });
@@ -195,6 +210,7 @@ export default{
 	        this.problemNum = res.data.problem.num;
 	        this.score = res.data.problem.score;
 	        this.explanation = res.data.problem.explanation;
+	        this.type = res.data.problem.type;
           })
           .catch((err) => {
 	          this.$swal({
@@ -259,6 +275,7 @@ export default{
   	add() {
       this.$http.defaults.headers.common.Authorization = this.userToken;
       this.$http.post('api/problems', {
+      type: this.problemType,
       problemname: this.problemName,
       source: this.source,
       explanation: this.explanation,
@@ -362,7 +379,12 @@ export default{
       max-width: 300px;
   }
   .modify button{
-      float: left;
+      clear: both;
+  }
+  .modify select{
+      margin-left: 20px;
+      float: right;
+      min-width: 150px;
   }
   .example{
     width:300px;
