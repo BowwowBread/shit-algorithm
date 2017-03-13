@@ -53,6 +53,7 @@ export default{
       type: 'notice',
       noticeList: [],
       noticeModify: false,
+      lastNotice: 0,
     };
   },
   created() {
@@ -146,6 +147,7 @@ export default{
         });
     },
     loadNotice() {
+      console.log('load');
       this.$http.get('api/notices')
         .then((res) => {
           let i = 0;
@@ -157,12 +159,15 @@ export default{
               type: res.data.notices[i].type,
               num: res.data.notices[i].num,
             });
+            console.log(i);
+            console.log(res.data.notices[i].num);
             this.noticeList.push({
               name: this.name,
               content: this.content,
               type: this.type,
               num: this.num,
             });
+            this.lastNotice = res.data.notices[i].num;
             i += 1;
           }
         })
@@ -175,11 +180,11 @@ export default{
         });
     },
     addNotice() {
+      console.log('add');
       this.$http.post('api/notices', {
         noticename: this.name,
         contents: this.content,
         type: this.type,
-        num: this.num,
       })
         .then(() => {
             this.$swal(
@@ -188,7 +193,7 @@ export default{
               'success',
             );
             this.noticeList.push({
-              num: this.num,
+              num: this.lastNotice + 1,
               name: this.name,
               content: this.content,
               type: this.type,

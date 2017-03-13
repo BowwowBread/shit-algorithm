@@ -6,7 +6,7 @@
             </ul>
             <ul id="submn">
               <li><router-link to="/notice" :class="{menu_show_font : scrolled > 200}">공지사항</router-link></li>
-              <li><a v-on:click="problemLoginCheck" :class="{menu_show_font : scrolled > 200}">문제</a></li>
+              <li><a v-on:click="problemLoginCheck" :class="{menu_show_font : scrolled > 200}">리스트</a></li>
               <li><a v-on:click="rankLoginCheck" :class="{menu_show_font : scrolled > 200}">랭킹</a></li>
               <li v-if="loginState">
                 <router-link v-if="userRating == 3" to="/admin" :class="{menu_show_font : scrolled > 200}">관리자페이지 - {{username}}님</router-link>
@@ -18,9 +18,7 @@
         </div>
         <div v-if="loginState == false" id="sign">
             <div class="ui modal">
-              <div class="close con">
                 <i class="close icon" v-on:click="closeModal"></i>
-              </div>
                 <div class="login_form" v-if="signState">
                     <div class="description">
                         <div class="ui two column centered grid">
@@ -60,7 +58,6 @@
                                     <button v-on:click="signState = false" class="ui button black signButton">
                                         회원가입하기
                                     </button>
-                                    <!-- <p>배경을 누르면 나가집니다.</p> -->
                                 </div>
                             </div>
                         </div>
@@ -146,7 +143,7 @@
         userCount: 0,
         key: '',
         keyPath: '',
-        userKey: '',
+        inputKey: '',
       };
     },
     created() {
@@ -261,28 +258,28 @@
       // 폼 모달
       openModal() {
         $('.ui.modal').modal('show');
-        // this.$http.get('api/users/captcha')
-        //   .then((res) => {
-        //     this.key = res.data.key;
-        //     this.keyPath = res.data.path;
-        //   })
-        //   .catch((err) => {
-        //     this.closeModal();
-        //     this.$swal({
-        //       title: '키코드 로드 실패',
-        //       text: err,
-        //       type: 'error',
-        //     });
-        //   });
+//        this.$http.get('api/users/captcha')
+//          .then((res) => {
+//            this.key = res.data.key;
+//            this.keyPath = res.data.path;
+//          })
+//          .catch((err) => {
+//            this.closeModal();
+//            this.$swal({
+//              title: '키코드 로드 실패',
+//              text: err,
+//              type: 'error',
+//            });
+//          });
       },
       closeModal() {
           $('.ui.modal').modal('hide');
       },
       submit() {
         let errMsg;
-        // this.$http.get(`api/users/captcha/${this.key}/${this.inputKey}`)
-        //   .then((res) => {
-        //     console.log(res);
+//        this.$http.get(`api/users/captcha/${this.key}/${this.inputKey}`)
+//          .then((res) => {
+//            console.log(res);
             if (this.signState === true) {
               this.$http.post('api/users/signin', {
                 userid: this.userid,
@@ -368,14 +365,14 @@
                   });
               });
             }
-          // })
-          // .catch((err) => {
-          //   this.$swal({
-          //     title: '캡챠 로드 실패',
-          //     text: err,
-          //     type: 'error',
-          //   });
-          // });
+//          })
+//          .catch((err) => {
+//            this.$swal({
+//              title: '캡챠 로드 실패',
+//              text: err,
+//              type: 'error',
+//            });
+//          });
       },
   },
   };
@@ -404,23 +401,4 @@
     .dimmable{
         position: static !important;
     }
-
-    /*.close.con{
-      display: flex;
-      justify-content: flex-end;
-      width: 700px;
-      height: 200px;
-    }
-    .close.icon{
-      margin: 0 !important;
-      padding: 0 !important;
-      width: 0;
-      height: 0;
-    }
-    .ui.modal>.close{
-      top:0;
-      right: 0;
-      width: 0;
-      height: 0;
-    }*/
 </style>
