@@ -12,9 +12,11 @@ import App from './App.vue';
 import VueSweetAlert from 'vue-sweetalert';
 import VueProgressbar from 'vue-progressbar';
 import 'babel-polyfill';
+import lodash from 'lodash';
 
 window.$ = jquery;
 
+Vue.use(lodash);
 Vue.use(VueCookie);
 Vue.use(VueProgressbar, {
 	color: 'rgb(143, 255, 199)',

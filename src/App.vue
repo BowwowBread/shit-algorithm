@@ -356,7 +356,7 @@
               .catch((error) => {
                 this.closeModal();
                 if (error.response.data.message === 'validation error') {
-                  errMsg = '정보를 모두 입력해주세요';
+                  errMsg = '정보를 제대로 기입해주세요';
                   }
                   this.$swal({
                     title: '회원가입 실패',

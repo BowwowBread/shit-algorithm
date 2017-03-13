@@ -10,9 +10,10 @@
                 <a class="item" data-tab="third">단계</a>
                 <a class="item" data-tab="four">최근 문제</a>
                 <a class="item" data-tab="five">기타</a>
+                <button v-on:click="shuffle">Shuffle</button>
             </div>
-            <div class="ui bottom attached tab segment active" data-tab="first">
-                <transition-group name="problemlist">
+            <div class="ui bottom attached tab segment active" :style="{ 'max-height': lineheight + 'px' }" data-tab="first">
+                <transition-group name="flip-list, problemlist" tag="ul">
                 <div class="ui items" v-for="item in items" v-bind:key="item">
                     <div class="item">
                         <div class="content" v-on:click='result(item.num)'>
@@ -58,6 +59,7 @@ export default {
       items: [],
       loadState: true,
       entering: false,
+      lineheight: 0,
     };
   },
   created() {
@@ -118,6 +120,7 @@ export default {
                     } else if (ratio !== 0) {
                       ratio = `${parseInt(ratio * 100, 10)} %`;
                     }
+                    this.lineheight = 45 * i;
                     this.items.push({
                       num,
                       name,
@@ -176,6 +179,9 @@ export default {
     }
   },
   methods: {
+    shuffle() {
+      this.items = _.shuffle(this.items);
+    },
   	loadList() {
 		  //문제 로드
       this.$http.defaults.headers.common.Authorization = this.userToken;
@@ -225,6 +231,8 @@ export default {
 							  } else {
 								  ratio = `${ratio.toString().substring(2, 4)} %`;
 							  }
+							  this.lineheight = 45 * i;
+							  console.log(this.lineheight);
 							  this.items.push({
 								  num,
 								  name,

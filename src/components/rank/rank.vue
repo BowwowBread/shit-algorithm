@@ -29,7 +29,7 @@
               <div class="ui items">
                     <div class="item">
                         <div class="content">
-                          <div class="ui top attached tabular menu" id="pob">
+                          <div class="ui top attached tabular menu" id="pob" >
                               <p id="ltemone" class="item">등수</p>
                               <p id="ltemtwo" class="item">이름</p>
                               <p id="ltemthr" class="item">점수</p>
@@ -37,13 +37,13 @@
                         </div>
                     </div>
                 </div>
-                <div class="propol">
+                <div class="propol" v-for="(user, rank) in users">
                   <div class="ui items">
                     <div class="item">
-                      <div class="content">
-                        <p class="header" id="pollist"><span>1</span>등</p>
-                        <p class="ui disabled header"><span>아이티</span></p>
-                          <p class="sub header" id="subder"><span>1,042</span></p>
+                      <div class="content" >
+                        <p class="header" id="pollist"><span>{{rank}}</span>등</p>
+                        <p class="ui disabled header"><span>{{user.name}}</span></p>
+                          <p class="sub header" id="subder"><span>{{user.score}}</span></p>
                       </div>
                     </div>
                   </div>
@@ -59,19 +59,20 @@
 
 <script>
 export default {
-    name: 'rank',
-    data() {
-        return {
-            userToken: '',
-        };
-    },
-    created() {
-        this.userToken = this.$cookie.get('userToken');
-        if (this.userToken == null) {
-            alert('로그인 해주세요');
-            location.href = '/';
-        }
-    },
+  name: 'rank',
+  data() {
+    return {
+      userToken: '',
+      users: [],
+    };
+  },
+  created() {
+    this.userToken = this.$cookie.get('userToken');
+    if (this.userToken == null) {
+      alert('로그인 해주세요');
+      location.href = '/';
+    }
+  },
 
   beforeCreate() {
     const ROOT_URL = 'http://121.186.23.245:9999';
@@ -85,19 +86,26 @@ export default {
         this.$http.get('/api/users/my-info')
           .then((resInfo) => {
             this.userid = resInfo.data.user.userId;
-            this.$http.get('api/users');
-//              .then((res) => {
-////                console.log(res);
-////                let length = res.data.users.length;
-////                let i = 0;
-////                while (i < length) {
-////
-////                  i += 1;
-////                }
-//              })
-//              .catch((err) => {
-//                console.log(err);
-//              });
+            this.$http.get('api/users')
+              .then((res) => {
+              console.log(res);
+                const length = res.data.users.length;
+                let i = 0;
+                while (i < length) {
+                  this.users.push({
+                    name: res.data.users[i].username,
+                    score: res.data.users[i].score,
+                  });
+                  i += 1;
+                }
+                  const sort = 'score';
+                  this.users.sort(function (a, b) {
+                    return b[sort] - a[sort];
+                  });
+              })
+              .catch((err) => {
+                console.log(err);
+              });
 	  })
 	  .catch((error) => {
           this.$swal({

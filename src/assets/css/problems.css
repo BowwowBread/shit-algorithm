@@ -202,4 +202,15 @@ body{
 .ui.bottom * {
     overflow: hidden;
 }
+.flip-list-move {
+    transition: all .1s;
+    display: inline-block;
+    margin-right: 10px;
+}
+.flip-list{
+    transition: all .1s;
+}
+.ui.bottom.attached.tab.segment.active{
+    overflow:hidden;
+}
 
