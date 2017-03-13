@@ -12,7 +12,7 @@
                 <a class="item" data-tab="five">기타</a>
                 <button v-on:click="shuffle">Shuffle</button>
             </div>
-            <div class="ui bottom attached tab segment active" :style="{ 'max-height': lineheight + 'px' }" data-tab="first">
+            <div class="ui bottom attached tab segment active" :style="{ 'max-height': lineheight + 'px' , 'min-height' : lineheight + 'px'}" data-tab="first">
                 <transition-group name="flip-list, problemlist" tag="ul">
                 <div class="ui items" v-for="item in items" v-bind:key="item">
                     <div class="item">

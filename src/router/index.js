@@ -8,6 +8,8 @@ import Solve from '../components/problems/solve.vue';
 import Mypage from '../components/mypage/mypage.vue';
 import Notice from '../components/notice/notice.vue';
 import openNotice from '../components/notice/opennotice.vue';
+import notFound from '../components/404/404.vue';
+
 
 Vue.use(Router);
 
@@ -54,6 +56,11 @@ export default new Router({
       path: '/notices/:num',
       name: 'openNotice',
       component: openNotice,
+    },
+    {
+      path: '*',
+      name: '404',
+      component: notFound,
     },
   ],
 });
