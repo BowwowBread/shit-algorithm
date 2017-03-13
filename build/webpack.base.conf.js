@@ -4,7 +4,7 @@ var config = require('../config')
 var vueLoaderConfig = require('./vue-loader.conf')
 var eslintFriendlyFormatter = require('eslint-friendly-formatter')
 require('babel-polyfill');
-
+require('es6-promise').polyfill();
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }

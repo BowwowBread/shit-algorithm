@@ -99,7 +99,7 @@ export default {
 	  this.$http.get('api/problems')
 		  .then((res) => {
 	  	    length = res.data.problems.length;
-			  //문제 결과 로드
+    //문제 결과 로드
               this.$http.defaults.headers.common.Authorization = this.userToken;
 			  this.$http.get('api/solution')
 				  .then((resRatio) => {
@@ -140,7 +140,7 @@ export default {
 						  } else if (ratio !== 0) {
 						  	  ratio = `${parseInt(ratio * 100, 10)} %`;
                           }
-						  this.items.push({
+                        this.items.push({
 							  num,
 							  name,
 							  source,
@@ -178,7 +178,7 @@ export default {
   methods: {
   	loadList() {
 		  //문제 로드
-		  this.$http.defaults.headers.common.Authorization = this.userToken;
+      this.$http.defaults.headers.common.Authorization = this.userToken;
 		  this.$http.get('api/problems')
 			  .then((res) => {
 				  i = end;
