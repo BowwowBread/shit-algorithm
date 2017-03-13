@@ -62,6 +62,8 @@ export default {
     };
   },
   created() {
+    i = 0;
+    end = 10;
     const ROOT_URL = 'http://121.186.23.245:9999';
     this.$http.defaults.baseURL = ROOT_URL;
     //토큰테스트

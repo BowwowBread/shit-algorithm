@@ -151,21 +151,12 @@ export default{
       this.$http.get('api/notices')
         .then((res) => {
           let i = 0;
-          console.log(res);
           while (i < res.data.notices.length) {
             this.noticeList.push({
               name: res.data.notices[i].noticeName,
               content: res.data.notices[i].contents,
               type: res.data.notices[i].type,
               num: res.data.notices[i].num,
-            });
-            console.log(i);
-            console.log(res.data.notices[i].num);
-            this.noticeList.push({
-              name: this.name,
-              content: this.content,
-              type: this.type,
-              num: this.num,
             });
             this.lastNotice = res.data.notices[i].num;
             i += 1;
