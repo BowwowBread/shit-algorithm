@@ -1,5 +1,4 @@
 <template>
-<<<<<<< HEAD
 <div id='mypage'>
     <div class='myinfo'>
         <div id="userpage">
@@ -37,8 +36,10 @@
                       </div>
                 </div>
             </div>
-=======
-    <div id='mypage'>
+            </div>
+            </div>
+            </div>
+    <!-- <div id='mypage'>
         <div class='myinfo'>
             <ul>
                 <li>
@@ -46,10 +47,8 @@
                     <p>학번 {{studentcode}}</p>
                 </li>
             </ul>
->>>>>>> 28248b49dda9afc37af3c3167998f0aa841f8a54
         </div>
-    </div>
-</div>
+    </div> -->
 </template>
 
 <script>
@@ -66,36 +65,9 @@ export default {
       };
     },
     beforeCreate() {
-        const ROOT_URL = 'http://121.186.23.245:9999';
-        this.$http.defaults.baseURL = ROOT_URL;
+	    const ROOT_URL = 'http://121.186.23.245:9999';
+	    this.$http.defaults.baseURL = ROOT_URL;
 
-<<<<<<< HEAD
-        //          토큰 테스트
-        this.userToken = this.$cookie.get('userToken');
-        if (this.userToken != null) {
-            this.userToken = this.$cookie.get('userToken');
-            this.$http.defaults.headers.common.Authorization = this.userToken;
-            this.$http.get('/api/users/my-info')
-                .then((resInfo) => {
-                    if (resInfo.status === 200) {
-                        this.userid = resInfo.data.user.userId;
-                    }
-                })
-                .catch((error) => {
-                    this.$swal({
-                            title: '유저 조회 실패',
-                            text: error,
-                            type: 'error',
-                        })
-                        .then(() => {
-                            location.href = '/';
-                        });
-                });
-        } else {
-            this.$swal({
-                    title: '입장 실패',
-                    text: '로그인을 해주세요',
-=======
 //          토큰 테스트
 	    this.userToken = this.$cookie.get('userToken');
 	    if (this.userToken != null) {
@@ -139,12 +111,21 @@ export default {
                 this.$swal({
                     title: '유저 조회 실패',
                     text: error,
->>>>>>> 28248b49dda9afc37af3c3167998f0aa841f8a54
                     type: 'error',
                 })
                 .then(() => {
                     location.href = '/';
                 });
+		    });
+	    } else {
+            this.$swal({
+                title: '입장 실패',
+                text: '로그인을 해주세요',
+                type: 'error',
+            })
+            .then(() => {
+                location.href = '/';
+            });
         }
     },
 };

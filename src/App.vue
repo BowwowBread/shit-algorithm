@@ -261,28 +261,28 @@
       // 폼 모달
       openModal() {
         $('.ui.modal').modal('show');
-        this.$http.get('api/users/captcha')
-          .then((res) => {
-            this.key = res.data.key;
-            this.keyPath = res.data.path;
-          })
-          .catch((err) => {
-            this.closeModal();
-            this.$swal({
-              title: '키코드 로드 실패',
-              text: err,
-              type: 'error',
-            });
-          });
+        // this.$http.get('api/users/captcha')
+        //   .then((res) => {
+        //     this.key = res.data.key;
+        //     this.keyPath = res.data.path;
+        //   })
+        //   .catch((err) => {
+        //     this.closeModal();
+        //     this.$swal({
+        //       title: '키코드 로드 실패',
+        //       text: err,
+        //       type: 'error',
+        //     });
+        //   });
       },
       closeModal() {
           $('.ui.modal').modal('hide');
       },
       submit() {
         let errMsg;
-        this.$http.get(`api/users/captcha/${this.key}/${this.inputKey}`)
-          .then((res) => {
-            console.log(res);
+        // this.$http.get(`api/users/captcha/${this.key}/${this.inputKey}`)
+        //   .then((res) => {
+        //     console.log(res);
             if (this.signState === true) {
               this.$http.post('api/users/signin', {
                 userid: this.userid,
@@ -368,14 +368,14 @@
                   });
               });
             }
-          })
-          .catch((err) => {
-            this.$swal({
-              title: '캡챠 로드 실패',
-              text: err,
-              type: 'error',
-            });
-          });
+          // })
+          // .catch((err) => {
+          //   this.$swal({
+          //     title: '캡챠 로드 실패',
+          //     text: err,
+          //     type: 'error',
+          //   });
+          // });
       },
   },
   };
@@ -404,7 +404,7 @@
     .dimmable{
         position: static !important;
     }
-    
+
     /*.close.con{
       display: flex;
       justify-content: flex-end;
