@@ -7,6 +7,7 @@ import Rank from '../components/rank/rank.vue';
 import Solve from '../components/problems/solve.vue';
 import Mypage from '../components/mypage/mypage.vue';
 import Notice from '../components/notice/notice.vue';
+import openNotice from '../components/notice/opennotice.vue';
 
 Vue.use(Router);
 
@@ -48,6 +49,11 @@ export default new Router({
       path: '/notice',
       name: 'notice',
       component: Notice,
+    },
+    {
+      path: '/notice/:num',
+      name: 'openNotice',
+      component: openNotice,
     },
   ],
 });
