@@ -1,6 +1,9 @@
 <template>
     <div class="openNotice">
-        openNotice{{noticenum}}
+        <p>번호 : {{num}}</p>
+        <p>제목 : {{name}}</p>
+        <p>내용 : {{contents}}</p>
+        <p>날짜 : {{date}}</p>
     </div>
 </template>
 <script>
@@ -8,7 +11,10 @@
       name: 'openNotice',
       data() {
         return {
-            noticenum: '',
+          num: '',
+          name: '',
+          contents: '',
+          date: '',
         };
       },
       created() {
@@ -17,7 +23,10 @@
         console.log(num);
         this.$http.get(`api/notices/${num}`)
           .then((res) => {
-            console.log(res);
+              this.num = res.data.notice.num;
+              this.name = res.data.notice.noticeName;
+              this.contents = res.data.notice.contents;
+              this.date = res.data.notice.date;
           })
           .catch((err) => {
             console.log(err);

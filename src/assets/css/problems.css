@@ -183,8 +183,8 @@ body{
 }
 
 .problemlist-enter-active {
-    transition: all 2s ease;
-}
+     transition: all 2s ease;
+ }
 
 .problemlist-leave-active {
     transition: all .5s cubic-bezier(1.0, 0.5, 0.8, 1.0);
@@ -192,10 +192,10 @@ body{
 
 .problemlist-enter,
 .problemlist-leave-to
-/* .slide-fade-leave-active for <2.1.8 */
+    /* .slide-fade-leave-active for <2.1.8 */
 
 {
-    transform: translateX(-50px);
+    transform: translateY(-100px);
     opacity: 0;
 }
 

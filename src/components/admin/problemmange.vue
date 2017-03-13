@@ -9,9 +9,9 @@
         <label for="explanation">explanation : </label><input type="text" v-model="explanation" id="explanation"><br>
         <label for="score">score : </label><input type="text" v-model="score" id="score"  v-on:keypress="isNumber(event)"><br>
         <label for="inputExample">inputExample : </label><input type="text" v-model="inputExample" id="inputExample"><br>
-        <label for="inputExample2">inputExample2 : </label><input type="text" v-model="inputExample2" id="inputExample2"><br>        
-        <label for="outputExample">outputExample : </label><input type="text" v-model="outputExample" id="outputExample"><br>
-        <label for="outputExample2">outputExample2 : </label><input type="text" v-model="outputExample2" id="outputExample2"><br>
+        <label for="inputExample2">inputExample2 : </label><input type="text" v-model="inputExample2" id="inputExample2"><br>
+            <label for="outputExample">outputExample : </label><textarea type="text" v-model="outputExample" id="outputExample"></textarea><br>
+            <label for="outputExample2">outputExample2 : </label><textarea type="text" v-model="outputExample2" id="outputExample2"></textarea><br>
         <label for="timeLimit">timeLimit : </label><input type="text" v-model="timeLimit" id="timeLimit"  v-on:keypress="isNumber(event)"><br>
         <label for="memoryLimit">memoryLimit : </label><input type="text" v-model="memoryLimit" id="memoryLimit"  v-on:keypress="isNumber(event)"><br>
 

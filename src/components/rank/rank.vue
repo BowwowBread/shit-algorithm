@@ -74,19 +74,30 @@ export default {
     },
 
   beforeCreate() {
-	  const ROOT_URL = 'http://121.186.23.245:9999';
-	  this.$http.defaults.baseURL = ROOT_URL;
+    const ROOT_URL = 'http://121.186.23.245:9999';
+    this.$http.defaults.baseURL = ROOT_URL;
 
 //          토큰 테스트
-	  this.userToken = this.$cookie.get('userToken');
+    this.userToken = this.$cookie.get('userToken');
 	  if (this.userToken != null) {
-		  this.userToken = this.$cookie.get('userToken');
-		  this.$http.defaults.headers.common.Authorization = this.userToken;
-		  this.$http.get('/api/users/my-info')
-			  .then((resInfo) => {
-			  if (resInfo.status === 200) {
-			  this.userid = resInfo.data.user.userId;
-		  }
+        this.userToken = this.$cookie.get('userToken');
+        this.$http.defaults.headers.common.Authorization = this.userToken;
+        this.$http.get('/api/users/my-info')
+          .then((resInfo) => {
+            this.userid = resInfo.data.user.userId;
+            this.$http.get('api/users');
+//              .then((res) => {
+////                console.log(res);
+////                let length = res.data.users.length;
+////                let i = 0;
+////                while (i < length) {
+////
+////                  i += 1;
+////                }
+//              })
+//              .catch((err) => {
+//                console.log(err);
+//              });
 	  })
 	  .catch((error) => {
           this.$swal({

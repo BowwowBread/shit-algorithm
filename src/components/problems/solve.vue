@@ -56,9 +56,7 @@
               <a href="#"><i class="big reply icon"></i></a>
             </div>
         </div>
-
     </div>
-
 </template>
 <script>
 import MonacoEditor from 'vue-monaco-editor';
@@ -107,7 +105,22 @@ export default {
 	    this.$http.defaults.headers.common.Authorization = this.userToken;
 	    this.$http.get('/api/users/my-info')
         .then((resInfo) => {
-            this.userid = resInfo.data.user.userId;
+          this.userid = resInfo.data.user.userId;
+          const id = this.$route.params.num;
+          this.$http.defaults.headers.common.Authorization = this.userToken;
+          this.$http.get(`/api/problems/${id}`)
+          .then((res) => {
+              this.items.push({
+              num: res.data.problem.num,
+              name: res.data.problem.problemName,
+              source: res.data.problem.source,
+              explanation: res.data.problem.explanation,
+              inputex: res.data.problem.problemData.inputExample,
+              outputex: res.data.problem.problemData.outputExample,
+              time: res.data.problem.problemData.timeLimit,
+              memorylimit: res.data.problem.problemData.memoryLimit,
+            });
+          });
         })
         .catch((error) => {
         this.$swal({
@@ -129,22 +142,6 @@ export default {
             location.href = '/';
         });
     }
-    const id = this.$route.params.num;
-//    const id = this.$route.params.num;
-    this.$http.defaults.headers.common.Authorization = this.userToken;
-    this.$http.get(`/api/problems/${id}`)
-      .then((res) => {
-        this.items.push({
-          num: res.data.problem.num,
-          name: res.data.problem.problemName,
-          source: res.data.problem.source,
-          explanation: res.data.problem.explanation,
-          inputex: res.data.problem.problemData.inputExample,
-          outputex: res.data.problem.problemData.outputExample,
-          time: res.data.problem.problemData.timeLimit,
-          memorylimit: res.data.problem.problemData.memoryLimit,
-        });
-      });
   },
   destroy() {
     this.solveMenu = false;

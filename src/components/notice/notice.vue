@@ -48,7 +48,9 @@
       },
       methods: {
         open(num) {
-          alert('open');
+          this.$router.push({
+            path: `notices/${num}`,
+          });
         },
       },
     };
