@@ -40,17 +40,6 @@
                                                 <input type="password" name="password" placeholder="비밀번호" v-model="password" v-on:keydown.enter="submit">
                                             </div>
                                         </div>
-                                        <div class="field">
-                                            <div class="keyimage">
-                                                <img :src="keyPath" alt="keyImage">
-                                            </div>
-                                        </div>
-                                        <div class="field">
-                                            <div class="ui left icon input">
-                                                <i class="lock icon"></i>
-                                                <input type="text" name="inputKey"  v-model="inputKey" v-on:keydown.enter="submit">
-                                            </div>
-                                        </div>
                                         <button type="button" v-on:click="submit" class="ui fluid large teal submit button submitButton">
                                             로그인
                                         </button>
@@ -141,9 +130,6 @@
         solveMenu: false,
         on: false,
         userCount: 0,
-        key: '',
-        keyPath: '',
-        inputKey: '',
       };
     },
     created() {
@@ -258,28 +244,12 @@
       // 폼 모달
       openModal() {
         $('.ui.modal').modal('show');
-//        this.$http.get('api/users/captcha')
-//          .then((res) => {
-//            this.key = res.data.key;
-//            this.keyPath = res.data.path;
-//          })
-//          .catch((err) => {
-//            this.closeModal();
-//            this.$swal({
-//              title: '키코드 로드 실패',
-//              text: err,
-//              type: 'error',
-//            });
-//          });
       },
       closeModal() {
           $('.ui.modal').modal('hide');
       },
       submit() {
         let errMsg;
-//        this.$http.get(`api/users/captcha/${this.key}/${this.inputKey}`)
-//          .then((res) => {
-//            console.log(res);
             if (this.signState === true) {
               this.$http.post('api/users/signin', {
                 userid: this.userid,
@@ -328,6 +298,8 @@
                     errMsg = '정보를 모두 입력해주세요';
                 } else if (err.response.data.message === 'fail rating excess') {
                     errMsg = '비밀번호를 자주틀려 확인 정보를 입력해주세요';
+                } else if (err.response.data.message === 'fail rating excess') {
+                    errMsg = '5회 이상 틀려 확인정보를 입력해 주세요';
                 }
                   this.$swal({
                       title: '로그인 실패',
@@ -365,14 +337,6 @@
                   });
               });
             }
-//          })
-//          .catch((err) => {
-//            this.$swal({
-//              title: '캡챠 로드 실패',
-//              text: err,
-//              type: 'error',
-//            });
-//          });
       },
   },
   };

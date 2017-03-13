@@ -98,14 +98,14 @@ export default{
       this.$http.get(`api/notices/${num}`)
         .then((res) => {
           this.noticeModify = !this.noticeModify;
-          this.num = res.data.notices.num;
-          this.noticename = res.data.notices.noticename;
-          this.explanation = res.data.notices.contents;
-          this.type = res.data.notices.type;
+          this.num = res.data.notice.num;
+          this.name = res.data.notice.noticeName;
+          this.content = res.data.notice.contents;
+          this.type = res.data.notice.type;
         })
         .catch((err) => {
           this.$swal({
-            title: '문제 조회 실패',
+            title: '공지 조회 실패',
             text: err,
             type: 'error',
           });
