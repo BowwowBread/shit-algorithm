@@ -174,6 +174,7 @@ export default{
             timelimit: this.timeLimit,
             memorylimit: this.memoryLimit,
             score: this.score,
+            type: this.type,
         })
         .then(() => {
 	        this.$swal({

@@ -31,7 +31,7 @@ export default{
   methods: {
   	deleteuser(userid, member) {
 		  this.$swal({
-				  title: '문제 삭제',
+				  title: '유저 삭제',
 				  text: '정말로 삭제하시겠습니까?',
 				  type: 'question',
 				  showCancelButton: true,

@@ -42,17 +42,6 @@
                                                 <input type="password" name="password" placeholder="비밀번호" v-model="password" v-on:keydown.enter="submit">
                                             </div>
                                         </div>
-                                        <div class="field">
-                                            <div class="keyimage">
-                                                <img :src="keyPath" alt="keyImage">
-                                            </div>
-                                        </div>
-                                        <div class="field">
-                                            <div class="ui left icon input">
-                                                <i class="lock icon"></i>
-                                                <input type="text" name="inputKey"  v-model="inputKey" v-on:keydown.enter="submit">
-                                            </div>
-                                        </div>
                                         <button type="button" v-on:click="submit" class="ui fluid large teal submit button submitButton">
                                             로그인
                                         </button>
@@ -96,9 +85,24 @@
                                             <div class="ui left icon input">
                                                 <i class="student icon"></i>
                                                 <input type="text" name="studentcode" placeholder="학번" v-model="studentcode" v-on:keydown.enter="submit" v-on:keypress="isNumber(event)">
-
                                             </div>
                                         </div>
+                                        <div class="field">
+                                            <div class="ul left icon input">
+                                                <div class="lock icon">
+                                                    <vue-recaptcha sitekey="6LejvBgUAAAAAE_F7SjXLPzPiyroAqAdXvBhk7IG"></vue-recaptcha>
+                                                    <!--<vueRecaptcha-->
+                                                            <!--ref="recaptcha"-->
+                                                            <!--@verify="onVerify"-->
+                                                            <!--@expired="onExpired"-->
+                                                            <!--:sitekey="opts.sitekey"-->
+                                                            <!--:options="opts">-->
+                                                    <!--</vueRecaptcha>-->
+                                                    <button @click="resetRecaptcha"> Reset ReCAPTCHA </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="html_element" ></div>
                                         <div v-on:click="submit" v-on:keyup.enter="submit" class="ui fluid large teal submit button submitButton">
                                             회원가입
                                         </div>
@@ -125,9 +129,10 @@
 </template>
 
 <script>
+  import VueRecaptcha from 'vue-recaptcha';
 
   export default {
-    name: 'sigo',
+    components: { VueRecaptcha },
     data() {
       return {
         loginState: false,
@@ -144,10 +149,11 @@
         scrollMenu: false,
         solveMenu: false,
         on: false,
+        infoSubmit: false,
         userCount: 0,
-        key: '',
-        keyPath: '',
-        inputKey: '',
+        opts: {
+          sitekey: '6LejvBgUAAAAAE_F7SjXLPzPiyroAqAdXvBhk7IG',
+        },
       };
     },
     created() {
@@ -167,6 +173,7 @@
         });
       const ROOT_URL = 'http://121.186.23.245:9999';
       this.$http.defaults.baseURL = ROOT_URL;
+
 //      토큰 테스트
       this.userToken = this.$cookie.get('userToken');
       if (this.userToken != null) {
@@ -262,28 +269,24 @@
       // 폼 모달
       openModal() {
         $('.ui.modal').modal('show');
-//        this.$http.get('api/users/captcha')
-//          .then((res) => {
-//            this.key = res.data.key;
-//            this.keyPath = res.data.path;
-//          })
-//          .catch((err) => {
-//            this.closeModal();
-//            this.$swal({
-//              title: '키코드 로드 실패',
-//              text: err,
-//              type: 'error',
-//            });
-//          });
       },
       closeModal() {
           $('.ui.modal').modal('hide');
       },
+      onloadCallback() {
+        alert('grecaptcha is ready!');
+      },
+      onVerify(response) {
+        console.log(`Verify:  + ${response}`);
+      },
+      onExpired() {
+        console.log('Expired');
+      },
+      resetRecaptcha() {
+        this.$refs.recaptcha.reset(); // Direct call reset method
+      },
       submit() {
         let errMsg;
-//        this.$http.get(`api/users/captcha/${this.key}/${this.inputKey}`)
-//          .then((res) => {
-//            console.log(res);
             if (this.signState === true) {
               this.$http.post('api/users/signin', {
                 userid: this.userid,
@@ -332,6 +335,9 @@
                     errMsg = '정보를 모두 입력해주세요';
                 } else if (err.response.data.message === 'fail rating excess') {
                     errMsg = '비밀번호를 자주틀려 확인 정보를 입력해주세요';
+                } else if (err.response.data.message === 'fail rating excess') {
+                    errMsg = '5회 이상 틀려 확인정보를 입력해 주세요';
+                    this.infoSubmit = true;
                 }
                   this.$swal({
                       title: '로그인 실패',
@@ -339,6 +345,37 @@
                       type: 'error',
                   });
               });
+              if (this.infoSubmit === true) {
+                alert('ss');
+                this.$swal.setDefaults({
+                  input: 'text',
+                  confirmButtonText: 'Next &rarr;',
+                  showCancelButton: true,
+                  animation: false,
+                  progressSteps: ['1', '2', '3'],
+                });
+                const steps = [
+                  {
+                    title: 'Question 1',
+                    text: 'Chaining swal2 modals is easy',
+                  },
+                  'Question 2',
+                  'Question 3',
+                ];
+                this.$swal.queue(steps).then(function (result) {
+                  this.$swal.resetDefaults();
+                  this.$swal({
+                    title: 'All done!',
+                    html: `Your answers: <pre> +
+                                  JSON.stringify(result) +
+                                  </pre>`,
+                    confirmButtonText: 'Lovely!',
+                    showCancelButton: false,
+                  });
+                }, function () {
+                  this.$swal.resetDefaults();
+                });
+              }
             } else {
               // 회원가입
                 this.$http.defaults.headers.common.Authorization = this.userToken;
@@ -369,14 +406,6 @@
                   });
               });
             }
-//          })
-//          .catch((err) => {
-//            this.$swal({
-//              title: '캡챠 로드 실패',
-//              text: err,
-//              type: 'error',
-//            });
-//          });
       },
   },
   };

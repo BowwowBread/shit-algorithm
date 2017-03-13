@@ -38,11 +38,17 @@
         this.$http.get(`api/users/account/${userid}`)
         .then((res) => {
           console.log(res);
+          this.$swal({
+            title: '승인 완료',
+            text: `${userid}님을 승인하였습니다`,
+            type: 'success',
+          });
+          this.members.splice(this.members.indexOf(member), 1);
         });
     },
       deletenonuser(userid, member) {
 	      this.$swal({
-			      title: '문제 삭제',
+			      title: '유저 삭제',
 			      text: '정말로 삭제하시겠습니까?',
 			      type: 'question',
 			      showCancelButton: true,
@@ -54,7 +60,7 @@
 		      .then(() => {
                 this.$swal({
                   title: '삭제 완료',
-                  test: `${userid}님의 계정이 삭제되었습니다`,
+                  text: `${userid}님의 계정이 삭제되었습니다`,
                   type: 'success',
 	             });
 	      this.members.splice(this.members.indexOf(member), 1);

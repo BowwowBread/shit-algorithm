@@ -26,6 +26,7 @@
                     </div>
                 </div>
             </div>
+<<<<<<< HEAD
             <div class="ui items">
                 <transition-group name="problemlist">
                     <div class="ui items" v-for="item in items" v-bind:key="item">
@@ -47,6 +48,26 @@
                                         </p>
                                     </div>
                                 </div>
+=======
+            <div class="ui bottom attached tab segment active" :style="{ 'max-height': lineheight + 'px' , 'min-height' : lineheight + 'px'}" data-tab="first">
+                <transition-group name="flip-list, problemlist" tag="ul">
+                <div class="ui items" v-for="item in items" v-bind:key="item">
+                    <div class="item">
+                        <div class="content" v-on:click='result(item.num)'>
+                            <p class="header">
+                                <span>{{item.num}}</span>번 문제</p>
+                            <a  class="ui disabled header">
+                                이름 : <span>{{item.name}}</span>
+                            </a>
+                            <div class="description">
+                                <p>소스 : <span>{{item.source}}</span>
+                                난이도 : <span>난이도</span>
+                                점수 : <span>{{item.score}}</span>
+                                성공 : <span>{{item.success}}</span>
+                                실패 : <span>{{item.fail}}</span>
+                                정답률 : <span>{{item.ratio}}</span>
+                                </p>
+>>>>>>> f6498dcb6cace2b9ef5cf7bbb458d897b92e1eac
                             </div>
                         </div>
                     </div>

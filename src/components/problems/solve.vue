@@ -20,11 +20,11 @@
                     {{item.explanation}}
                 </div>
                 <div class="solve_inputex">
-                  <p>입력 값</p>
-                    {{item.inputex}}
+                  <p>입력 값 예제</p>
+                    <pre>{{item.inputex}}</pre>
                 </div>
                 <div class="solve_outputex">
-                  <p>출력 값</p>
+                  <p>출력 값 예제</p>
                     <pre>{{item.outputex}}</pre>
                 </div>
             </div>
