@@ -288,22 +288,5 @@ export default {
 };
 
 </script>
-<style src="../../assets/css/problems.css" scoped></style>
-<style scoped>
-    .problemlist-enter-active {
-        transition: all 2s ease;
-    }
-    .problemlist-leave-active {
-        transition: all .5s cubic-bezier(1.0, 0.5, 0.8, 1.0);
-    }
-    .problemlist-enter, .problemlist-leave-to
-        /* .slide-fade-leave-active for <2.1.8 */
-    {
-        transform: translateX(-50px);
-        opacity: 0;
-    }
-    .ui.bottom *{
-        overflow:hidden;
-    }
+<style src="../../assets/css/problems.css"></style>
 
-</style>

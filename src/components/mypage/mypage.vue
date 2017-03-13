@@ -131,32 +131,7 @@ export default {
 };
 </script>
 <style scoped>
-hr{
-  width: 376px;
-  border-color: rgba(214,214,214,.43);
-  margin-left: -15px;
-}
-.ui.link.cards{
-  height: 700px;
-  border-radius: 5px;
-  padding: 50px;
-}
-.usps {
-    margin-top: 170px;
-    padding: 0px 130px 40px 130px;
-}
-.header{
-  font-size: 30px !important;
-  font-weight: 400 !important;
-  margin: 10px 0px -5px 15px;
-}
-.description {
-    font-size: 17px;
-    padding-left: 16px;
-}
-.card{
-  width: 375px !important;
-  height: 300px;
-  box-shadow: 2px 3px 5px 0 rgba(0,0,0,0.26) !important;
-}
+
 </style>
+<style src="../../assets/css/mypage.css"></style>
+

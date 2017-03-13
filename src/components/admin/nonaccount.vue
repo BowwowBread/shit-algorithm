@@ -95,6 +95,5 @@
     },
   };
 </script>
-<style scoped>
+<style src="../../assets/css/nonaccount.css"></style>
 
-</style>

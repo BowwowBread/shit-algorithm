@@ -256,9 +256,4 @@ export default {
 </script>
 <style src="../../assets/css/solve.css" scoped>
 </style>
-<style scoped>
-  .monacoEditor{
-    width: auto !important;
-    height: calc(100vh - 400px - 70px) !important;
-  }
-</style>
+

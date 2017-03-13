@@ -53,22 +53,4 @@
       },
     };
 </script>
-<style src="../../assets/css/notice.css" scoped></style>
-<style scoped>
-    *{
-        margin:0;
-        padding:0;
-    }
-    .noticelist-enter-active {
-        transition: all 2s ease;
-    }
-    .noticelist-leave-active {
-        transition: all .5s cubic-bezier(1.0, 0.5, 0.8, 1.0);
-    }
-    .noticelist-enter, .noticelist-leave-to
-        /* .slide-fade-leave-active for <2.1.8 */
-    {
-        transform: translateX(-50px);
-        opacity: 0;
-    }
-</style>
+<style src="../../assets/css/notice.css"></style>

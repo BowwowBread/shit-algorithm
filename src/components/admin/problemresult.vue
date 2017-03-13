@@ -62,13 +62,7 @@
 	};
 </script>
 <style scoped>
-    *{
-        margin:0;
-        padding:0;
-    }
 
-    ul{
-        clear: both;
-        margin-left:50px;
-    }
 </style>
+<style src="../../assets/css/problemresult.css"></style>
+
