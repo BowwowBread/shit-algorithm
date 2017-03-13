@@ -1,0 +1,89 @@
+*{
+    margin:0;
+    padding:0;
+}
+.input{
+    float: left;
+    height:200px;
+    min-width:300px;
+}
+input{
+    float:right;
+    height:20px;
+    display: block;
+}
+textarea{
+    float:right;
+    height:20px;
+}
+label{
+    float: left;
+    height:20px;
+    text-align: right;
+    width: 100px;
+    display: block;
+}
+.input{
+    margin-left:20px;
+    float: left;
+}
+.addProblem{
+    min-width: 1000px;
+}
+.modify{
+    clear: both;
+    width: 50%;
+    min-width:300px;
+    max-width: 300px;
+}
+.modify button{
+    clear: both;
+}
+.modify select{
+    margin-left: 20px;
+    float: right;
+    min-width: 150px;
+}
+.example{
+    width:300px;
+    height:200px;
+    float:left;
+    margin-left:300px;
+}
+.list{
+    display:flex;
+    clear:both;
+}
+.list > div {
+    flex: 1;
+}
+ul{
+    margin-left:50px;
+}
+li{
+    margin-top: 50px;
+}
+.solveList{
+    min-width: 500px;
+    position: fixed;
+    top: 200px;
+    left: 50%;
+    overflow: scroll;
+    border-left: 1px solid red;
+}
+.problemList{
+    width: 50% !important;
+    position:relative;
+}
+.problemmanage-enter-active {
+    transition: all 1s ease;
+}
+.problemmanage-leave-active {
+    transition: all .5s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.problemmanage-enter, .problemmanage-leave-to
+    /* .slide-fade-leave-active for <2.1.8 */
+{
+    transform: translateX(100px);
+    opacity: 0;
+}

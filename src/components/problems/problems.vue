@@ -276,7 +276,7 @@ export default {
 	                  });
                   }
 			  })
-			  .catch((err) => {
+			  .cssatch((err) => {
 				  this.$swal(
 					  '결과 조회 실패',
 					  err,
