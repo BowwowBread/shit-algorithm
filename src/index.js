@@ -11,6 +11,7 @@ import router from './router';
 import App from './App.vue';
 import VueSweetAlert from 'vue-sweetalert';
 import VueProgressbar from 'vue-progressbar';
+import 'babel-polyfill';
 
 window.$ = jquery;
 
