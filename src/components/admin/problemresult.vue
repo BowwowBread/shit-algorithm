@@ -64,5 +64,5 @@
 <style scoped>
 
 </style>
-<style src="../../assets/css/problemresult.css"></style>
+<style src="../../assets/css/problemresult.css" scoped></style>
 

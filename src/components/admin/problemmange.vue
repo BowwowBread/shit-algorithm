@@ -339,4 +339,4 @@ export default{
   },
 };
 </script>
-<style src="../../assets/css/problemmanage.css"></style>
+<style src="../../assets/css/problemmanage.css" scoped></style>

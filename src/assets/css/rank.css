@@ -1,0 +1,147 @@
+.ranksys {
+    /*background: rgb(167,42,222);*/
+    margin-top: 170px;
+    padding: 0px 130px 40px 130px;
+}
+
+.huge.chevron.circle.up.icon {
+    color: rgb(179, 179, 179);
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    margin: 15px;
+}
+
+.huge.chevron.circle.up.icon:hover {
+    color: rgb(255, 255, 255);
+}
+
+
+.rank-top {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    margin-top: 100px;
+    color: black;
+    font-size: 30px;
+}
+
+.rank1 {
+    text-align: center;
+    width: 220px;
+    height: 140px;
+    padding: 20px;
+    background: rgb(143, 215, 179);
+    display: flex;
+}
+
+.rank2 {
+    text-align: center;
+    width: 220px;
+    height: 270px;
+    padding: 20px;
+    background: rgb(143, 215, 179);
+    display: flex;
+}
+
+.rank3 {
+    text-align: center;
+    width: 220px;
+    height: 140px;
+    padding: 20px;
+    background: rgb(143, 215, 179);
+    display: flex;
+}
+.onerank{
+    align-self: flex-end;
+    padding-left: 35px;
+    padding-bottom: 20px;
+    font-size: 25px;
+    /*font-weight: 100*/
+
+}
+.tworank{
+    align-self: flex-end;
+    padding-left: 35px;
+    padding-bottom: 20px;
+    font-size: 25px;
+    /*font-weight: 100*/
+
+}
+.thrrank{
+    align-self: flex-end;
+    padding-left: 35px;
+    padding-bottom: 20px;
+    font-size: 25px;
+    /*font-weight: 100*/
+
+}
+
+.ui.button {
+    width: 100%;
+    height: 40px;
+    background-color: rgb(242, 242, 242)
+}
+
+.ui.button:hover {
+    background-color: rgb(224, 224, 224)
+}
+
+#rankhead {
+    color: white;
+    font-weight: 100
+}
+
+#rankhead .sub.header {
+    color: white;
+    margin-top: 10px;
+}
+
+.content {
+    display: flex !important;
+}
+.propol{
+}
+#ltemone{
+    padding-left: 17px;
+    /*flex-grow: 1;*/
+    flex: 2;
+    justify-content: center;
+
+}
+#ltemtwo{
+    /*flex-grow: 2;*/
+    flex:3;
+    justify-content: center;
+
+}
+#ltemthr{
+    /*flex-grow: 2;*/
+    flex:5;
+    justify-content: center;
+}
+#pob p {
+    margin: 0;
+}
+
+.ui.top.attached.tabular.menu{
+    color: black !important
+}
+#pollist{
+    flex:2;
+    justify-content: center;
+    display: flex;
+}
+.ui.disabled.header{
+    flex:3;
+    justify-content: center;
+    display: flex !important;
+}
+#subder{
+    flex:5;
+    justify-content: center;
+    display: flex;
+}
+.ui.items * {
+    Padding: 0 !important;
+}

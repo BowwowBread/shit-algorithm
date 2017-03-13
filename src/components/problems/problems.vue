@@ -288,5 +288,5 @@ export default {
 };
 
 </script>
-<style src="../../assets/css/problems.css"></style>
+<style src="../../assets/css/problems.css" scoped></style>
 

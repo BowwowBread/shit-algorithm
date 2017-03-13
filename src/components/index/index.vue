@@ -27,4 +27,4 @@ export default {
   },
 };
 </script>
-<style src="../../assets/css/index.css"></style>
+<style src="../../assets/css/index.css" scoped></style>

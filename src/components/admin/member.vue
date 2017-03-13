@@ -92,5 +92,5 @@ export default{
   },
 };
 </script>
-<style src="../../assets/css/member.css"></style>
+<style src="../../assets/css/member.css" scoped></style>
 

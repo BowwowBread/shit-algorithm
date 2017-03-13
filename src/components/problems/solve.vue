@@ -254,6 +254,5 @@ export default {
   },
 };
 </script>
-<style src="../../assets/css/solve.css" scoped>
-</style>
+<style src="../../assets/css/solve.css" scoped></style>
 

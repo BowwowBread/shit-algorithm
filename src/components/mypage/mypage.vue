@@ -133,5 +133,5 @@ export default {
 <style scoped>
 
 </style>
-<style src="../../assets/css/mypage.css"></style>
+<style src="../../assets/css/mypage.css" scoped></style>
 

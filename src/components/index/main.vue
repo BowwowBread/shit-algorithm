@@ -112,5 +112,17 @@ export default {
   },
 };
 </script>
-<style src="../../assets/css/main.css"></style>
+<style>
+  .typed{
+    color: #fff !important;
+    font-size: 200%;
+  }
+  .vue-typer .custom.caret {
+    display: none;
+  }
+  .vue-typer span {
+    color: white !important;
+  }
+</style>
+<style src="../../assets/css/main.css" scoped></style>
 

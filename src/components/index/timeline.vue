@@ -181,5 +181,5 @@
     },
   };
 </script>
-<style src="../../assets/css/timeline.css"></style>
+<style src="../../assets/css/timeline.css" scoped></style>
 

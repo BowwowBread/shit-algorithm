@@ -53,4 +53,4 @@
       },
     };
 </script>
-<style src="../../assets/css/notice.css"></style>
+<style src="../../assets/css/notice.css" scopeds></style>

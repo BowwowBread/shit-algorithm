@@ -3,13 +3,19 @@ var utils = require('./utils')
 var config = require('../config')
 var vueLoaderConfig = require('./vue-loader.conf')
 var eslintFriendlyFormatter = require('eslint-friendly-formatter')
+require('babel-polyfill');
 
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
 
 module.exports = {
-  entry: './src/index.js',
+  entry: {
+    main: [
+      'babel-polyfill',
+      './src/index.js'
+    ]
+  },
   output: {
     path: config.build.assetsRoot,
     filename: 'client.js',

@@ -205,5 +205,5 @@ export default{
   },
 };
 </script>
-<style src="../../assets/css/noticemanage.css"></style>
+<style src="../../assets/css/noticemanage.css" scoped></style>
 
