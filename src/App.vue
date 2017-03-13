@@ -81,9 +81,19 @@
                                             <div class="ui left icon input">
                                                 <i class="student icon"></i>
                                                 <input type="text" name="studentcode" placeholder="학번" v-model="studentcode" v-on:keydown.enter="submit" v-on:keypress="isNumber(event)">
-
                                             </div>
                                         </div>
+                                        <div class="field">
+                                            <div class="ul left icon input">
+                                                <div class="lock icon">
+                                                    <form action="?" method="POST">
+                                                        <div class="g-recaptcha" data-sitekey="your_site_key"></div>
+                                                        <input type="submit" value="Submit">
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="html_element" ></div>
                                         <div v-on:click="submit" v-on:keyup.enter="submit" class="ui fluid large teal submit button submitButton">
                                             회원가입
                                         </div>
@@ -110,7 +120,6 @@
 </template>
 
 <script>
-
   export default {
     name: 'sigo',
     data() {
@@ -247,6 +256,9 @@
       },
       closeModal() {
           $('.ui.modal').modal('hide');
+      },
+      onloadCallback() {
+        alert('grecaptcha is ready!');
       },
       submit() {
         let errMsg;
