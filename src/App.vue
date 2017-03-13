@@ -18,7 +18,9 @@
         </div>
         <div v-if="loginState == false" id="sign">
             <div class="ui modal">
+              <div class="conclo">
                 <i class="close icon" v-on:click="closeModal"></i>
+              </div>
                 <div class="login_form" v-if="signState">
                     <div class="description">
                         <div class="ui two column centered grid">
@@ -68,7 +70,9 @@
                         <div class="ui two column centered grid">
                             <div class="container">
                                 <div class="culnmn">
+                                  <div class="signhead">
                                     <h1 class="ui grey header">회원가입</h1>
+                                  </div>
                                     <form class="ui large form">
                                         <div class="field">
                                             <div class="ui left icon input">
@@ -377,4 +381,8 @@
   },
   };
 </script>
-<style src="./assets/css/app.css" scoped></style>
+<style src="./assets/css/app.css" scoped>
+/*body{
+  background-color: rgb(40,40,40);
+}*/
+</style>

@@ -1,6 +1,6 @@
 body {
-  background-color: rgb(40,40,40);
-  color: white;
+  background-color: rgb(40,40,40) !important;
+  /*color: white;*/
 }
 
 img.medium.ui.image {
@@ -26,6 +26,7 @@ h1.ui.header {
     align-items: center;
     justify-content: center;
 }
+
 div.formdiv {
     padding: 30px;
     border-bottom: 1px solid #dcdcdc;

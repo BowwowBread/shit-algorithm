@@ -6,22 +6,31 @@
         <div class="sub header">1등을 목표로 문제를 풀면서 친구들을 이겨보세요!</div>
       </h2>
             <div class="rank-top">
-                <div class="rank1">
-                    <div class="onerank">
-                        2등 : 아이티
-                    </div>
-                </div>
-                <div class="rank2">
-                    <div class="tworank">
-                        1등 : 솔루션
-                    </div>
-                </div>
-                <div class="rank3">
-                    <div class="thrrank">
-                        3등 : 시스템
-                    </div>
-                </div>
+        <div class="rank1">
+            <div class="rankge1">
+                <img src="image1.jpg">
             </div>
+            <p class="rant1">Seil</p>
+            <hr>
+            <p class="rant2">MASTER</p>
+        </div>
+        <div class="rank2">
+            <div class="rankge2">
+                <img src="image1.jpg">
+            </div>
+            <p class="rant1">Pices</p>
+            <hr>
+            <p class="rant2">KING</p>
+        </div>
+        <div class="rank3">
+            <div class="rankge3">
+                <img src="image1.jpg">
+            </div>
+            <p class="rant1">Center</p>
+            <hr>
+            <p class="rant2">HERO</p>
+        </div>
+    </div>
             <div class="ui top attached tabular menu">
                 <a class="item active" data-tab="first" id="item">순위</a>
             </div>
@@ -130,4 +139,5 @@ export default {
   },
 };
 </script>
+<!-- <style scoped></style> -->
 <style src="../../assets/css/rank.css" scoped></style>
