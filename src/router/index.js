@@ -8,7 +8,7 @@ import Solve from '../components/problems/solve.vue';
 import Mypage from '../components/mypage/mypage.vue';
 import Notice from '../components/notice/notice.vue';
 import openNotice from '../components/notice/opennotice.vue';
-import notFound from '../components/404/404.vue';
+import notFound from '../components/notfound/notfound.vue';
 
 
 Vue.use(Router);
@@ -58,9 +58,13 @@ export default new Router({
       component: openNotice,
     },
     {
-      path: '*',
+      path: '/404',
       name: '404',
       component: notFound,
+    },
+    {
+      path: '/*',
+      redirect: { name: '404' },
     },
   ],
 });
