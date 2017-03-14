@@ -185,9 +185,6 @@ export default {
 			  .then((res) => {
 				  i = end;
                   end += 10;
-                  console.log(i);
-                  console.log(length);
-                  console.log(end);
                   if (i / 10 === parseInt(length / 10, 10)) {
                   	end = length;
                   	this.loadState = false;

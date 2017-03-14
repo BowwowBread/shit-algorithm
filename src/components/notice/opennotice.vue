@@ -1,5 +1,5 @@
 <template>
-    <div class="openNotice">
+    <div class="openNotice" v-i="entering">
         <p>번호 : {{num}}</p>
         <p>제목 : {{name}}</p>
         <p>내용 : {{contents}}</p>
@@ -15,6 +15,7 @@
           name: '',
           contents: '',
           date: '',
+          entering: false,
         };
       },
       created() {
@@ -26,6 +27,7 @@
               this.name = res.data.notice.noticeName;
               this.contents = res.data.notice.contents;
               this.date = res.data.notice.date;
+              this.entering = true;
           })
           .catch((err) => {
             console.log(err);

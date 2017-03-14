@@ -1,5 +1,5 @@
 <template>
-    <div class="noticemanage">
+    <div class="noticemanage" v-if="enteringNoticemanage">
         <button v-on:click="noticeAdd">{{noticeMsg}}</button>
         <div class="addNotice" v-if="noticeAddState">
             <div class="inputNotice">
@@ -54,6 +54,7 @@ export default{
       noticeList: [],
       noticeModify: false,
       lastNotice: 0,
+      enteringNoticemanage: false,
     };
   },
   created() {
@@ -161,6 +162,7 @@ export default{
             this.lastNotice = res.data.notices[i].num;
             i += 1;
           }
+          this.enteringNoticemanage = true;
         })
         .catch((err) => {
           this.$swal({

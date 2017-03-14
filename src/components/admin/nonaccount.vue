@@ -1,8 +1,6 @@
 <template>
-  <div class="nonaccount">
-    nonaccount
+  <div class="nonaccount" v-if="enteringNon">
     <ul>
-
       <li v-for="member in members">
         아이디: <span>{{member.userid}}</span><br>
         이름: <span>{{member.username}}</span><br>
@@ -25,6 +23,7 @@
     data() {
       return {
         members: [],
+        entering: false,
       };
     },
     created() {
@@ -96,6 +95,7 @@
               });
               i += 1;
             }
+            this.enteringNon = true;
           });
       },
     },

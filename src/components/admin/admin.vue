@@ -1,5 +1,5 @@
 <template>
-    <div id="admin">
+    <div id="admin" v-if="entering">
         <div class="sigo_container">
             <div class="adminPage" v-if="adminState"
              style=
@@ -46,6 +46,7 @@ export default {
   },
   data() {
     return {
+      entering: false,
       memberState: true,
       nonaccountState: false,
       problemState: false,
@@ -78,6 +79,7 @@ export default {
 		          });
 	          } else {
 		          this.adminState = true;
+		          this.entering = true;
 	          }
         })
         .catch((error) => {

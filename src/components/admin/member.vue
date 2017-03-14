@@ -1,5 +1,5 @@
 <template>
-    <div class="member">
+    <div class="member" v-if="enteringMember">
         <ul>
 
             <li v-for="member in members">
@@ -22,6 +22,7 @@ export default{
   data() {
     return {
       members: [],
+      enteringMember: false,
     };
   },
   created() {
@@ -80,7 +81,8 @@ export default{
             });
             i += 1;
           }
-        })
+      this.enteringMember = true;
+    })
           .catch((err) => {
 	          this.$swal({
 			          title: '유저 로드 실패',

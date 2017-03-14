@@ -1,5 +1,5 @@
 <template>
-<div id='mypage'>
+<div id='mypage' v-if="entering">
     <div class='myinfo'>
         <div id="userpage">
             <div class="usps">
@@ -62,6 +62,7 @@ export default {
         studentcode: '',
         successCount: 0,
         recentProblem: [],
+        entering: false,
       };
     },
     beforeCreate() {
@@ -75,31 +76,14 @@ export default {
                 this.userid = resInfo.data.user.userId;
                 this.username = resInfo.data.user.username;
                 this.studentcode = resInfo.data.user.studentCode;
-                this.$http.get('solution')
+                this.$http.get(`solution/resultsuccess/${userid}`)
                   .then((res) => {
-                    let i = 0;
-                    while (i < res.data.resolves.length) {
-                      this.$http.get(`solution/findsuccess/${this.userid}/${i}`)
-                        .then((resFind) => {
-                            console.log(resFind);
-                            if (resFind.data.result === 'true') {
-                              this.successCount += 1;
-                            }
-                        })
-                        .catch((err) => {
-                            this.$swal({
-                            title: '문제 정답 로드 실패',
-                            text: err,
-                            type: 'error',
-                          });
-                      });
-                      i += 1;
-                    }
-                    console.log(this.successCount);
+                    console.log(res);
+                    this.entering = true;
                 })
                   .catch((err) => {
                     this.$swal({
-                       title: '문제 결과 로드 실패',
+                       title: '문제 정답 로드 실패',
                        text: err,
                        type: 'error',
                     });

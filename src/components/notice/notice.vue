@@ -1,5 +1,5 @@
 <template>
-    <div id="notice">
+    <div id="notice" v-if="entering">
       <div class="noticen">
           <div class="not-main">
               <h2 class="ui center aligned header" id="not-head"> 공지사항
@@ -43,6 +43,7 @@
       data() {
         return {
           notices: [],
+          entering: false,
         };
       },
       created() {
@@ -60,6 +61,7 @@
             }
             i += 1;
           }
+          this.entering = true;
         })
       .catch((err) => {
           alert(err);

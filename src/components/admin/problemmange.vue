@@ -1,5 +1,5 @@
 <template>
-    <div class="probleminput">
+    <div class="probleminput" v-if="enteringProblemmanage">
         <button v-on:click="openAdd">{{addMsg}}</button>
         <div class="addProblem" v-if="addState">
         <div class="input">
@@ -106,6 +106,7 @@ export default{
       modifyState: false,
       lastNum: 0,
       problemType: 'normal',
+      enteringProblemmanage: false,
     };
   },
   created() {
@@ -328,6 +329,7 @@ export default{
             this.lastNum = res.data.problems[i].num;
             i += 1;
           }
+          this.enteringProblemmanage = true;
         })
         .catch((err) => {
 	        this.$swal({

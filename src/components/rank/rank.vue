@@ -1,5 +1,5 @@
 <template>
-<div id="index">
+<div id="index" v-if="entering">
     <div class="ranksys">
         <div class="rank-main">
             <h2 class="ui center aligned header" id="rankhead"> 랭킹 시스템
@@ -59,7 +59,7 @@
                 </div>
             </div>
             <a href="#"><i class="huge chevron circle up icon"></i></a>
-            <button class="ui button"><i class="large chevron down icon"></i></button>
+            <button class="ui button" v-if="loadState" v-on:click="loadList"><i class="large chevron down icon"></i></button>
         </div>
     </div>
 </div>
@@ -67,12 +67,17 @@
 </template>
 
 <script>
+  let i = 0;
+  let end = 10;
+  let length;
 export default {
   name: 'rank',
   data() {
     return {
       userToken: '',
       users: [],
+      loadState: true,
+      entering: false,
     };
   },
   created() {
@@ -94,9 +99,11 @@ export default {
             this.$http.get('users')
               .then((res) => {
               console.log(res);
-                const length = res.data.users.length;
-                let i = 0;
-                while (i < length) {
+                length = res.data.users.length;
+                if (length < 10) {
+                  end = length;
+                }
+                while (i < end) {
                   this.users.push({
                     name: res.data.users[i].username,
                     score: res.data.users[i].score,
@@ -107,6 +114,7 @@ export default {
                   this.users.sort(function (a, b) {
                     return b[sort] - a[sort];
                   });
+                  this.entering = true;
               })
               .catch((err) => {
                 console.log(err);
@@ -132,6 +140,36 @@ export default {
 	          location.href = '/';
           });
 	  }
+  },
+  methods: {
+    loadList() {
+      this.$http.get('users')
+        .then((res) => {
+          console.log(res);
+          i = end;
+          end += 10;
+          if (i / 10 === parseInt(length / 10, 10)) {
+            end = length;
+            this.loadState = false;
+          } else if (end === length) {
+            this.loadState = false;
+          }
+          while (i < end) {
+            this.users.push({
+              name: res.data.users[i].username,
+              score: res.data.users[i].score,
+            });
+            i += 1;
+          }
+          const sort = 'score';
+          this.users.sort(function (a, b) {
+            return b[sort] - a[sort];
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
   },
 };
 </script>
