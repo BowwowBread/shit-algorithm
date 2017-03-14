@@ -344,34 +344,8 @@
                   })
                     .then(() => {
                       if (this.infoSubmit === true) {
-                        this.$swal.setDefaults({
-                          input: 'text',
-                          confirmButtonText: 'Next &rarr;',
-                          showCancelButton: true,
-                          animation: false,
-                          progressSteps: ['1', '2', '3'],
-                        });
-                        const steps = [
-                          {
-                            title: 'Question 1',
-                            text: 'Chaining swal2 modals is easy',
-                          },
-                          'Question 2',
-                          'Question 3',
-                        ];
-                        this.$swal.queue(steps).then(function (result) {
-                          this.$swal.resetDefaults();
-                          this.$swal({
-                            title: 'All done!',
-                            html: `Your answers: <pre> +
-                                  JSON.stringify(result) +
-                                  </pre>`,
-                            confirmButtonText: 'Lovely!',
-                            showCancelButton: false,
-                          });
-                        }, function () {
-                          this.$swal.resetDefaults();
-                        });
+                        this.failReset();
+                        this.infoSubmit = '';
                       }
                     });
               });
@@ -406,6 +380,45 @@
               });
             }
       },
+      failReset() {
+        this.$swal.setDefaults({
+          input: 'text',
+          confirmButtonText: 'Next &rarr;',
+          showCancelButton: true,
+          animation: false,
+          progressSteps: ['1', '2', '3'],
+        });
+        const steps = [
+          '아이디를 입력해주세요',
+          '이름을 입력해주세요',
+          '학번을 입력해주세요',
+        ];
+        this.$swal.queue(steps).then((result) => {
+          this.$http.post('api/users/failReset', {
+              userid: result[0],
+              username: result[1],
+              studentcode: result[2],
+            })
+            .then(() => {
+              this.$swal({
+                title: '확인 완료되었습니다',
+                text: '다시 로그인 해주세요',
+                type: 'success',
+              });
+            })
+            .catch(() => {
+              this.$swal({
+                title: '확인 실패하였습니다',
+                text: '다시 시도해주세요',
+                type: 'error',
+              })
+              .then(() => {
+                this.closeModal();
+                this.failReset();
+              });
+            });
+        });
+      },
   },
   };
 </script>
@@ -414,3 +427,6 @@
   background-color: rgb(40,40,40);
 }*/
 </style>
+<stlye>
+
+</stlye>
