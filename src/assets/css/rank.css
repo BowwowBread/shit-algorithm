@@ -137,6 +137,12 @@ hr{
   display: flex;
   flex-direction: column;
 }
+.rank1{
+  padding-top: 40px;
+}
+.rank3{
+  padding-top: 40px;
+}
 .rant1{
   font-weight: bold;
 }

@@ -1,5 +1,5 @@
 <template>
-    <div id="notice">
+    <div id="notice" v-if="entering">
       <div class="noticen">
           <div class="not-main">
               <h2 class="ui center aligned header" id="not-head"> 공지사항
@@ -8,7 +8,7 @@
               <div class="ui top attached tabular menu">
                   <a class="item active" data-tab="first" id="item">순위</a>
               </div>
-              <div class="ui bottom attached tab segment active">
+              <div class="ui bottom attached tab segment active" data-tab="first">
                 <div class="ui items">
                       <div class="item">
                           <div class="content">
@@ -19,30 +19,63 @@
                           </div>
                       </div>
                   </div>
-                  <div class="propol">
-                    <div class="ui items">
+                  <transition-group name="noticeList">
+                    <div class="ui items" v-for="notice in notices" v-bind:key="notices">
                       <div class="item">
-                        <div class="content">
-                          <p class="header" id="pollist"><span>1</span></p>
-                          <a href="#" class="ui disabled header" id="destent"><span>SIGO의 첫 알림!</span></a>
+                        <div class="content" v-on:click='open(notice.num)'>
+                          <p class="header" id="pollist">
+                              <span>{{notice.num}}</span></p>
+                          <a class="ui disabled header" id="destent">
+                              이름 : <span>{{notice.noticename}}</span>
+                              날짜 : <span>{{notice.date}}</span>
+                          </a>
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </transition-group>
               </div>
               <a href="#"><i class="huge chevron circle up icon"></i></a>
               <button class="ui button"><i class="large chevron down icon"></i></button>
           </div>
       </div>
   </div>
-    </div>
 </template>
 <script>
     export default {
       name: 'notice',
       data() {
         return {
+          notices: [],
+          entering: false,
         };
+      },
+      created() {
+        this.$http.get('notices')
+          .then((res) => {
+          let i = 0;
+          console.log(res);
+          while (i < res.data.notices.length) {
+            if (res.data.notices[i].type === 'notice') {
+              this.notices.push({
+                num: res.data.notices[i].num,
+                noticename: res.data.notices[i].noticeName,
+                date: res.data.notices[i].date,
+              });
+            }
+            i += 1;
+          }
+          this.entering = true;
+        })
+      .catch((err) => {
+          alert(err);
+        });
+      },
+      methods: {
+        open(num) {
+          this.$router.push({
+            path: `notices/${num}`,
+          });
+        },
       },
     };
 </script>
@@ -56,3 +89,23 @@
       background-color: rgb(40,40,40) !important;
     }
 </style>
+<!-- <template>
+    <div id="notice">
+        <div class="ui bottom attached tab segment active" data-tab="first">
+            <transition-group name="noticeList">
+                <div class="ui items" v-for="notice in notices" v-bind:key="notices">
+                    <div class="item">
+                        <div class="content" v-on:click='open(notice.num)'>
+                            <p class="header">
+                                <span>{{notice.num}}</span>번 </p>
+                            <a  class="ui disabled header">
+                                이름 : <span>{{notice.noticename}}</span>
+                                날짜 : <span>{{notice.date}}</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </transition-group>
+        </div>
+    </div>
+</template> -->

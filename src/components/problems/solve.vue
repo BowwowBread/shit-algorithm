@@ -15,7 +15,7 @@
                     <h3>문제 설명</h3>
                     <hr id="sub-hr">
                 </div>
-                <hr>
+                <!-- <hr> -->
                 <div class="solve_explain">
                     {{item.explanation}}
                 </div>
@@ -68,8 +68,7 @@ export default {
   },
   data() {
     return {
-    	userid: '',
-      problemUrl: '"../api/problems/"',
+      userid: '',
       urlParams: '',
       items: [],
       lang: 'c',
@@ -96,19 +95,17 @@ export default {
     };
   },
   created() {
-    const ROOT_URL = 'http://121.186.23.245:9999';
-    this.$http.defaults.baseURL = ROOT_URL;
 	  //      토큰 테스트
     this.userToken = this.$cookie.get('userToken');
 	  if (this.userToken != null) {
 	    this.userToken = this.$cookie.get('userToken');
 	    this.$http.defaults.headers.common.Authorization = this.userToken;
-	    this.$http.get('/api/users/my-info')
+	    this.$http.get('users/my-info')
         .then((resInfo) => {
           this.userid = resInfo.data.user.userId;
           const id = this.$route.params.num;
           this.$http.defaults.headers.common.Authorization = this.userToken;
-          this.$http.get(`/api/problems/${id}`)
+          this.$http.get(`problems/${id}`)
           .then((res) => {
               this.items.push({
               num: res.data.problem.num,
@@ -147,14 +144,6 @@ export default {
     this.solveMenu = false;
   },
   methods: {
-  	enter() {
-//		  const line = this.editor.getPosition();
-//		  const endcolumn = this.editor.getSelection().endColumn;
-//		  const range = new monaco.Range(line.lineNumber, endcolumn, line.lineNumber, endcolumn);
-//		  const text = '￦n';
-//		  const linechange = { range, text, forceMoveMarkers: true };
-//		  this.editor.executeEdits('code', [linechange]);
-    },
     onMounted(editor) {
       this.editor = editor;
     },
@@ -179,7 +168,7 @@ export default {
     		return;
       }
 	    this.$http.defaults.headers.common.Authorization = this.userToken;
-	    this.$http.post('/api/solution', {
+	    this.$http.post('solution', {
       	userid: this.userid,
         problemnum: this.items[0].num,
         inputcode: this.code,
@@ -212,7 +201,7 @@ export default {
     		return;
       }
 	    this.$http.defaults.headers.common.Authorization = this.userToken;
-	    this.$http.post('/api/solution', {
+	    this.$http.post('solution', {
         userid: this.userid,
         problemnum: this.items[0].num,
         inputcode: this.code,
@@ -252,4 +241,3 @@ export default {
 };
 </script>
 <style src="../../assets/css/solve.css" scoped></style>
-

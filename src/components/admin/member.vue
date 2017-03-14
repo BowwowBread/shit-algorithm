@@ -1,5 +1,5 @@
 <template>
-    <div class="member">
+    <div class="member" v-if="enteringMember">
         <ul>
 
             <li v-for="member in members">
@@ -22,6 +22,7 @@ export default{
   data() {
     return {
       members: [],
+      enteringMember: false,
     };
   },
   created() {
@@ -39,7 +40,7 @@ export default{
 				  cancelButtonText: '취소',
 			  })
 			  .then(() => {
-                  this.$http.delete(`api/users/${userid}`)
+                  this.$http.delete(`users/${userid}`)
                         .then(() => {
 						  this.$swal({
 							  title: '삭제 완료',
@@ -68,7 +69,7 @@ export default{
     getMember() {
 	    this.userToken = this.$cookie.get('userToken');
 	    this.$http.defaults.headers.common.Authorization = this.userToken;
-	    this.$http.get('api/users')
+	    this.$http.get('users')
         .then((res) => {
           let i = 0;
           while (i < res.data.users.length) {
@@ -80,7 +81,8 @@ export default{
             });
             i += 1;
           }
-        })
+      this.enteringMember = true;
+    })
           .catch((err) => {
 	          this.$swal({
 			          title: '유저 로드 실패',

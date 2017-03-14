@@ -33,6 +33,7 @@
         padding: 0px;
         margin-left: 200px;
         margin-top: -170px;
+        /*margin-top: -315px;*/
         background-color: white;
         border-radius: 15px;
     }
@@ -135,9 +136,11 @@
       height: calc(100vh - 100px);
     }
     #menu {
-      margin: 0px !important;
+      height: 75px !important;
+      display: flex;
+      align-items: center;
       position: absolute;
-      height: 100px;
+      margin: 0px !important;
       width: 100%;
       top: 0px;
       z-index: 5;
@@ -145,7 +148,6 @@
       transition: all 0.3s ease-in-out;
       /*border: none !important;*/
       /*background-color: #B8B8B8;*/
-      /*height: 75px;*/
     }
     #mainmn{
       margin-left: 70px;

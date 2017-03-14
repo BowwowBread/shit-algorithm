@@ -1,8 +1,6 @@
 <template>
-  <div class="nonaccount">
-    nonaccount
+  <div class="nonaccount" v-if="enteringNon">
     <ul>
-
       <li v-for="member in members">
         아이디: <span>{{member.userid}}</span><br>
         이름: <span>{{member.username}}</span><br>
@@ -25,6 +23,7 @@
     data() {
       return {
         members: [],
+        entering: false,
       };
     },
     created() {
@@ -35,7 +34,7 @@
     methods: {
     	account(userid, member) {
         this.$http.defaults.headers.common.Authorization = this.userToken;
-        this.$http.get(`api/users/account/${userid}`)
+        this.$http.get(`users/account/${userid}`)
         .then((res) => {
           console.log(res);
           this.$swal({
@@ -56,7 +55,7 @@
 			      cancelButtonText: '취소',
 		      })
 		      .then(() => {
-		      this.$http.delete(`api/users/${userid}`)
+		      this.$http.delete(`users/${userid}`)
 		      .then(() => {
                 this.$swal({
                   title: '삭제 완료',
@@ -83,7 +82,7 @@
       },
       getMember() {
 	      this.$http.defaults.headers.common.Authorization = this.userToken;
-	      this.$http.get('api/users/non-account')
+	      this.$http.get('users/non-account')
           .then((res) => {
             let i = 0;
             while (i < res.data.users.length) {
@@ -96,6 +95,7 @@
               });
               i += 1;
             }
+            this.enteringNon = true;
           });
       },
     },

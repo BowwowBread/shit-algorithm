@@ -2,6 +2,7 @@
 #solve{
     margin-top: 100px;
     height: calc(100vh - 100px);
+    color: white;
 }
 .solve_title{
     height:70px;
@@ -96,12 +97,14 @@
 }
 .solve_explain{
   font-size:17px;
+  margin-top: 5px;
 }
 .solve_output{
-  border: 2.1px solid;
+  border: 3px solid;
   border-radius: 10px;
-  margin: 50px 50px 50px 0px;
+  margin: 15px 50px 50px 0px;
   border-color: rgb(37,115,85);
+  /*margin-top: 15px*/
 }
 .solve_run{
   /*background-color: rgb(148,141,95);*/

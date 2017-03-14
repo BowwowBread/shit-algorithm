@@ -6,7 +6,7 @@
             </ul>
             <ul id="submn">
               <li><router-link to="/notice" :class="{menu_show_font : scrolled > 200}">공지사항</router-link></li>
-              <li><a v-on:click="problemLoginCheck" :class="{menu_show_font : scrolled > 200}">리스트</a></li>
+              <li><a v-on:click="problemLoginCheck" :class="{menu_show_font : scrolled > 200}">문제</a></li>
               <li><a v-on:click="rankLoginCheck" :class="{menu_show_font : scrolled > 200}">랭킹</a></li>
               <li v-if="loginState">
                 <router-link v-if="userRating == 3" to="/admin" :class="{menu_show_font : scrolled > 200}">관리자페이지 - {{username}}님</router-link>
@@ -19,6 +19,7 @@
         <div v-if="loginState == false" id="sign">
             <div class="ui modal">
               <div class="conclo">
+                <!-- <a href="#"><i class="close icon" v-on:click="closeModal"></i></a> -->
                 <i class="close icon" v-on:click="closeModal"></i>
               </div>
                 <div class="login_form" v-if="signState">
@@ -156,6 +157,9 @@
         },
       };
     },
+    ready() {
+      alert('ready');
+    },
     created() {
 	    this.$Progress.start();
 	    //  hook the progress bar to start before we move router-view
@@ -171,15 +175,14 @@
 			    //  continue to next page
             next();
         });
-      const ROOT_URL = 'http://121.186.23.245:9999';
+      const ROOT_URL = 'https://algorithm.ayanami.kr/api';
       this.$http.defaults.baseURL = ROOT_URL;
-
 //      토큰 테스트
       this.userToken = this.$cookie.get('userToken');
       if (this.userToken != null) {
         this.userToken = this.$cookie.get('userToken');
         this.$http.defaults.headers.common.Authorization = this.userToken;
-        this.$http.get('/api/users/my-info')
+        this.$http.get('users/my-info')
           .then((resInfo) => {
               this.userRating = resInfo.data.user.rating;
               this.username = resInfo.data.user.username;
@@ -287,17 +290,16 @@
       },
       submit() {
         let errMsg;
-            if (this.signState === true) {
-              this.$http.post('api/users/signin', {
+        if (this.signState === true) {
+              this.$http.post('users/signin', {
                 userid: this.userid,
                 password: this.password,
               })
               .then((resSign) => {
                 this.userToken = resSign.data.token;
-                // 헤더 토큰 등록
                 this.$http.defaults.headers.common.Authorization = this.userToken;
-                // 토큰 테스트
-                this.$http.get('/api/users/my-info')
+                // 헤더 토큰 등록
+                this.$http.get('users/my-info')
                   // 로그인 성공
                   .then((resInfo) => {
                     if (resInfo.status === 200) {
@@ -351,8 +353,7 @@
               });
             } else {
               // 회원가입
-                this.$http.defaults.headers.common.Authorization = this.userToken;
-                this.$http.post('/api/users/signup', {
+                this.$http.post('users/signup', {
                 username: this.username,
                 userid: this.userid,
                 password: this.password,
@@ -383,9 +384,10 @@
       failReset() {
         this.$swal.setDefaults({
           input: 'text',
-          confirmButtonText: 'Next &rarr;',
+          confirmButtonText: '다음',
+          cancelButtonText: '취소',
           showCancelButton: true,
-          animation: false,
+          animation: true,
           progressSteps: ['1', '2', '3'],
         });
         const steps = [
@@ -394,7 +396,8 @@
           '학번을 입력해주세요',
         ];
         this.$swal.queue(steps).then((result) => {
-          this.$http.post('api/users/failReset', {
+          this.$swal.resetDefaults();
+          this.$http.post('users/failReset', {
               userid: result[0],
               username: result[1],
               studentcode: result[2],
@@ -413,7 +416,6 @@
                 type: 'error',
               })
               .then(() => {
-                this.closeModal();
                 this.failReset();
               });
             });
@@ -426,4 +428,8 @@
 /*body{
   background-color: rgb(40,40,40);
 }*/
+<<<<<<< HEAD
 </style>
+=======
+</style>
+>>>>>>> 8614288358f360ce0d6afbc2d519d2ad8abe1099

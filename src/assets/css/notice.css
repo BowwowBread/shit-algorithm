@@ -51,7 +51,7 @@ body{
   /*flex-grow: 2;*/
 
 }
-#pob p {
+#pob p, a {
     margin: 0;
 }
 
@@ -59,9 +59,10 @@ body{
   color: black !important
 }
 #pollist{
-  flex-grow: 0.25;
-  padding-left: 28px;
+  flex-grow: 0.32;
+  padding-left: 23px;
 }
+/* a 코드 호과*/
 /*#destent{
   color: rgb(82,175,161);
 }*/

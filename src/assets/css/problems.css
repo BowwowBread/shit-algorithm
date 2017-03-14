@@ -16,6 +16,12 @@ body{
   left: 47%;
   font-size: 17px;
 }
+#mnit{
+  margin: 0;
+}
+.three.wide.column .header{
+  font-size: 17px;
+}
 .ui.grid{
   width: 1014px;
 }
@@ -119,20 +125,20 @@ body{
     flex-grow: 1;
     padding-left: 13px;
 }
-
+#list{
+  border: none !important;
+}
 .ui.disabled.header {
   margin: 0 !important;
     flex-grow: 0.2;
     padding-right: 5px;
-}
-.ui.disabled.header span{
-  /*margin-right: 150px;*/
 }
 
 .description {
     flex-grow: 1;
     margin: 0 !important;
     color: black;
+    font-size: 14px;
 }
 
 .ui.center.aligned.header {
@@ -148,36 +154,10 @@ body{
     padding-top: 0px;
 }
 
-/*#ltemone {
-    padding-left: 13px;
-    flex-grow: 2.4;
-}
-
-#ltemtwo {
-    flex-grow: 0.8;
-    padding-right: 5px;
-}
-
-#ltemthr {
-    flex-grow: 0.9;
-    padding-left: 30px;
-}
-
-#ltemfou {
-    flex-grow: 0.8;
-}
-
-#ltemfiv {
-    flex-grow: 0.8;
-}
-
-#ltemsix {
-    flex-grow: 1.1;
-    margin-right: 24px;
-}*/
 
 #pob {
     color: black;
+    padding-left: 11px;
 }
 
 .problemlist-enter-active {

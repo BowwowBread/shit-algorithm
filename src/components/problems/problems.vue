@@ -2,7 +2,7 @@
     <div id="problems" v-if="entering">
         <div class="container">
             <h2 class="ui center aligned header"> 문제풀기
-                <div class="sub header">Manage your account settings and set e-mail preferences.</div>
+                <div class="sub header">프로그래밍 문제를 풀고 맞추어 보는 곳 입니다.</div>
             </h2>
             <div class="ui top attached tabular menu">
                 <a class="item active" data-tab="first" id="item">문제</a>
@@ -13,7 +13,7 @@
                 <button v-on:click="shuffle">Shuffle</button>
             </div>
             <div class="ui bottom attached tab segment active" :style="{ 'max-height': lineheight + 'px' }" data-tab="first">
-              <div class="ui items">
+              <div class="ui items" id="mnit">
                     <div class="item">
                         <div class="content">
                           <div class="ui top attached tabular menu" id="pob">
@@ -41,6 +41,7 @@
                         </div>
                     </div>
                 </div>
+            <div id="list" class="ui bottom attached tab segment active" :style="{ 'max-height': lineheight + 'px' , 'min-height' : lineheight + 'px', 'overflow': 'hidden'}" data-tab="first">
                 <transition-group name="flip-list, problemlist" tag="ul">
                 <div class="ui items" v-for="item in items" v-bind:key="item">
                     <div class="item">
@@ -69,8 +70,9 @@
                 </div>
                 </transition-group>
             </div>
+            </div>
             <a href="#"><i class="huge chevron circle up icon"></i></a>
-            <button class="ui button" v-on:click="loadList"><i class="large chevron down icon"></i></button>
+            <button class="ui button"v-if="loadState" v-on:click="loadList"><i class="large chevron down icon" ></i></button>
         </div>
     </div>
 </template>
@@ -86,29 +88,30 @@ export default {
       items: [],
       loadState: true,
       entering: false,
-      lineheight: 0,
+      lineheight: '',
     };
+  },
+  ready() {
+    alert('ready');
   },
   created() {
     i = 0;
     end = 10;
-    const ROOT_URL = 'http://121.186.23.245:9999';
-    this.$http.defaults.baseURL = ROOT_URL;
     //토큰테스트
     this.userToken = this.$cookie.get('userToken');
     if (this.userToken != null) {
       this.userToken = this.$cookie.get('userToken');
       this.$http.defaults.headers.common.Authorization = this.userToken;
-      this.$http.get('/api/users/my-info')
+      this.$http.get('users/my-info')
         .then((resInfo) => {
             this.userid = resInfo.data.user.userId;
           this.$http.defaults.headers.common.Authorization = this.userToken;
-          this.$http.get('api/problems')
+          this.$http.get('problems')
             .then((res) => {
               length = res.data.problems.length;
               //문제 결과 로드
               this.$http.defaults.headers.common.Authorization = this.userToken;
-              this.$http.get('api/solution')
+              this.$http.get('solution')
                 .then((resRatio) => {
                   //문제 개수 반복
                   if (length < 10) {
@@ -147,7 +150,8 @@ export default {
                     } else if (ratio !== 0) {
                       ratio = `${parseInt(ratio * 100, 10)} %`;
                     }
-                    this.lineheight = 45 * i;
+//                    this.lineheight = document.getElementById('list').style.height;
+                    console.log(this.lineheight);
                     this.items.push({
                       num,
                       name,
@@ -212,17 +216,19 @@ export default {
   	loadList() {
 		  //문제 로드
       this.$http.defaults.headers.common.Authorization = this.userToken;
-		  this.$http.get('api/problems')
+		  this.$http.get('problems')
 			  .then((res) => {
 				  i = end;
                   end += 10;
                   if (i / 10 === parseInt(length / 10, 10)) {
                   	end = length;
                   	this.loadState = false;
+                  } else if (end === length) {
+                    this.loadState = false;
                   }
 				  //문제 결과 로드
 				  this.$http.defaults.headers.common.Authorization = this.userToken;
-				  this.$http.get('api/solution')
+				  this.$http.get('solution')
 					  .then((resRatio) => {
 						  //문제 개수 반복
 						  while (i < end) {
@@ -258,8 +264,7 @@ export default {
 							  } else {
 								  ratio = `${ratio.toString().substring(2, 4)} %`;
 							  }
-							  this.lineheight = 45 * i;
-							  console.log(this.lineheight);
+//                              this.lineheight = document.getElementById('list').style.height;
 							  this.items.push({
 								  num,
 								  name,
@@ -297,7 +302,7 @@ export default {
     },
   	result(num) {
 		  this.$http.defaults.headers.common.Authorization = this.userToken;
-		  this.$http.get(`api/solution/findsuccess/${this.userid}/${num}`)
+		  this.$http.get(`solution/findsuccess/${this.userid}/${num}`)
 			  .then((resresult) => {
                   if (resresult.data.result === true) {
                       this.$swal(

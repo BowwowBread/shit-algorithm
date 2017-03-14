@@ -1,5 +1,5 @@
 <template>
-<div id='mypage'>
+<div id='mypage' v-if="entering">
     <div class='myinfo'>
         <div id="userpage">
             <div class="usps">
@@ -62,46 +62,28 @@ export default {
         studentcode: '',
         successCount: 0,
         recentProblem: [],
+        entering: false,
       };
     },
     beforeCreate() {
-	    const ROOT_URL = 'http://121.186.23.245:9999';
-	    this.$http.defaults.baseURL = ROOT_URL;
-
 //          토큰 테스트
 	    this.userToken = this.$cookie.get('userToken');
 	    if (this.userToken != null) {
 		    this.userToken = this.$cookie.get('userToken');
 		    this.$http.defaults.headers.common.Authorization = this.userToken;
-		    this.$http.get('/api/users/my-info')
+		    this.$http.get('users/my-info')
 		    .then((resInfo) => {
                 this.userid = resInfo.data.user.userId;
                 this.username = resInfo.data.user.username;
                 this.studentcode = resInfo.data.user.studentCode;
-                this.$http.get('api/solution')
+                this.$http.get(`solution/resultsuccess/${userid}`)
                   .then((res) => {
-                    let i = 0;
-                    while (i < res.data.resolves.length) {
-                      this.$http.get(`api/solution/findsuccess/${this.userid}/${i}`)
-                        .then((resFind) => {
-                            if (resFind.data.result === 'true') {
-                              this.successCount += 1;
-                            }
-                        })
-                        .catch((err) => {
-                            this.$swal({
-                            title: '문제 정답 로드 실패',
-                            text: err,
-                            type: 'error',
-                          });
-                      });
-                      i += 1;
-                    }
-                    console.log(this.successCount);
+                    console.log(res);
+                    this.entering = true;
                 })
                   .catch((err) => {
                     this.$swal({
-                       title: '문제 결과 로드 실패',
+                       title: '문제 정답 로드 실패',
                        text: err,
                        type: 'error',
                     });
