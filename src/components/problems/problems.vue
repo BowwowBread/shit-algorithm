@@ -37,7 +37,7 @@
                 </transition-group>
             </div>
             <a href="#"><i class="huge chevron circle up icon"></i></a>
-            <button class="ui button" v-on:click="loadList"><i class="large chevron down icon" ></i></button>
+            <button class="ui button"v-if="loadState" v-on:click="loadList"><i class="large chevron down icon" ></i></button>
         </div>
     </div>
 </template>
@@ -185,9 +185,14 @@ export default {
 			  .then((res) => {
 				  i = end;
                   end += 10;
+                  console.log(i);
+                  console.log(length);
+                  console.log(end);
                   if (i / 10 === parseInt(length / 10, 10)) {
                   	end = length;
                   	this.loadState = false;
+                  } else if (end === length) {
+                    this.loadState = false;
                   }
 				  //문제 결과 로드
 				  this.$http.defaults.headers.common.Authorization = this.userToken;
