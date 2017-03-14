@@ -19,9 +19,8 @@
       },
       created() {
         const num = this.$route.params.num;
-        this.noticenum = num;
         console.log(num);
-        this.$http.get(`api/notices/${num}`)
+        this.$http.get(`notices/${num}`)
           .then((res) => {
               this.num = res.data.notice.num;
               this.name = res.data.notice.noticeName;

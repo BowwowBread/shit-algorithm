@@ -64,7 +64,7 @@ export default {
 	  this.userToken = this.$cookie.get('userToken');
     if (this.userToken != null) {
       this.$http.defaults.headers.common.Authorization = this.userToken;
-      this.$http.get('/api/users/my-info')
+      this.$http.get('users/my-info')
         .then((resInfo) => {
             this.userRating = resInfo.data.user.rating;
 	          if (this.userRating === 1) {

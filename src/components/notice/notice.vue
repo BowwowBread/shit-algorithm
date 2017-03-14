@@ -46,7 +46,7 @@
         };
       },
       created() {
-        this.$http.get('api/notices')
+        this.$http.get('notices')
           .then((res) => {
           let i = 0;
           console.log(res);

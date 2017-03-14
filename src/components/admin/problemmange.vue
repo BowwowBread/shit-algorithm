@@ -135,7 +135,7 @@ export default{
           .then(() => {
 	          this.userToken = this.$cookie.get('userToken');
 	          this.$http.defaults.headers.common.Authorization = this.userToken;
-            this.$http.delete(`api/problems/${num}`)
+            this.$http.delete(`problems/${num}`)
               .then(() => {
 	              this.$swal({
                       title: '삭제 완료',
@@ -162,7 +162,7 @@ export default{
     },
     modify() {
 	    this.$http.defaults.headers.common.Authorization = this.userToken;
-	    this.$http.put('api/problems', {
+	    this.$http.put('problems', {
             problemnum: this.problemNum,
             problemname: this.problemName,
             source: this.source,
@@ -197,7 +197,7 @@ export default{
     },
     modifyData(num) {
 	    this.$http.defaults.headers.common.Authorization = this.userToken;
-	    this.$http.get(`api/problems/${num}`)
+	    this.$http.get(`problems/${num}`)
         .then((res) => {
         	this.modifyState = !this.modifyState;
         	this.problemName = res.data.problem.problemName;
@@ -224,7 +224,7 @@ export default{
 	  solveListData(num) {
         this.solveList = [];
         this.$http.defaults.headers.common.Authorization = this.userToken;
-        this.$http.get('api/solution')
+        this.$http.get('solution')
           .then((res) => {
   	    	let i = 0;
 	          let username;
@@ -240,7 +240,7 @@ export default{
                     date = res.data.resolves[i].resolveData.date;
                     code = res.data.resolves[i].resolveData.code;
                     this.$http.defaults.headers.common.Authorization = this.userToken;
-                    this.$http.get(`api/users/search/${id}`)
+                    this.$http.get(`users/search/${id}`)
                       .then((userInfo) => {
             			 username = userInfo.data.users.username;
             			 studentcode = userInfo.data.users.studentCode;
@@ -275,7 +275,7 @@ export default{
 	  },
   	add() {
       this.$http.defaults.headers.common.Authorization = this.userToken;
-      this.$http.post('api/problems', {
+      this.$http.post('problems', {
       type: this.problemType,
       problemname: this.problemName,
       source: this.source,
@@ -316,7 +316,7 @@ export default{
 	    //토큰테스트
 	    this.userToken = this.$cookie.get('userToken');
 	    this.$http.defaults.headers.common.Authorization = this.userToken;
-	    this.$http.get('api/problems')
+	    this.$http.get('problems')
         .then((res) => {
           let i = 0;
           while (i < res.data.problems.length) {

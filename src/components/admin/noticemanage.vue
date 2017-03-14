@@ -95,7 +95,7 @@ export default{
       }
     },
     modifyNotice(num) {
-      this.$http.get(`api/notices/${num}`)
+      this.$http.get(`notices/${num}`)
         .then((res) => {
           this.noticeModify = !this.noticeModify;
           this.num = res.data.notice.num;
@@ -121,7 +121,7 @@ export default{
           cancelButtonText: '취소',
         })
         .then(() => {
-          this.$http.delete(`api/notices/${num}`)
+          this.$http.delete(`notices/${num}`)
             .then(() => {
               this.$swal({
                 title: '삭제 완료',
@@ -148,7 +148,7 @@ export default{
     },
     loadNotice() {
       console.log('load');
-      this.$http.get('api/notices')
+      this.$http.get('notices')
         .then((res) => {
           let i = 0;
           while (i < res.data.notices.length) {
@@ -172,7 +172,7 @@ export default{
     },
     addNotice() {
       console.log('add');
-      this.$http.post('api/notices', {
+      this.$http.post('notices', {
         noticename: this.name,
         contents: this.content,
         type: this.type,

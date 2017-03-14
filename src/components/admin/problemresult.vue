@@ -34,7 +34,7 @@
 			ratio() {
                 this.userToken = this.$cookie.get('userToken');
                 this.$http.defaults.headers.common.Authorization = this.userToken;
-                this.$http.get('api/solution')
+                this.$http.get('solution')
 					.then((res) => {
 						let i = 0;
                         while (i < res.data.resolves.length) {

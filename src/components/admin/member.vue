@@ -39,7 +39,7 @@ export default{
 				  cancelButtonText: '취소',
 			  })
 			  .then(() => {
-                  this.$http.delete(`api/users/${userid}`)
+                  this.$http.delete(`users/${userid}`)
                         .then(() => {
 						  this.$swal({
 							  title: '삭제 완료',
@@ -68,7 +68,7 @@ export default{
     getMember() {
 	    this.userToken = this.$cookie.get('userToken');
 	    this.$http.defaults.headers.common.Authorization = this.userToken;
-	    this.$http.get('api/users')
+	    this.$http.get('users')
         .then((res) => {
           let i = 0;
           while (i < res.data.users.length) {

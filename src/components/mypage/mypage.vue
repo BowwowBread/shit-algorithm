@@ -65,25 +65,23 @@ export default {
       };
     },
     beforeCreate() {
-	    const ROOT_URL = 'http://121.186.23.245:9999';
-	    this.$http.defaults.baseURL = ROOT_URL;
-
 //          토큰 테스트
 	    this.userToken = this.$cookie.get('userToken');
 	    if (this.userToken != null) {
 		    this.userToken = this.$cookie.get('userToken');
 		    this.$http.defaults.headers.common.Authorization = this.userToken;
-		    this.$http.get('/api/users/my-info')
+		    this.$http.get('users/my-info')
 		    .then((resInfo) => {
                 this.userid = resInfo.data.user.userId;
                 this.username = resInfo.data.user.username;
                 this.studentcode = resInfo.data.user.studentCode;
-                this.$http.get('api/solution')
+                this.$http.get('solution')
                   .then((res) => {
                     let i = 0;
                     while (i < res.data.resolves.length) {
-                      this.$http.get(`api/solution/findsuccess/${this.userid}/${i}`)
+                      this.$http.get(`solution/findsuccess/${this.userid}/${i}`)
                         .then((resFind) => {
+                            console.log(resFind);
                             if (resFind.data.result === 'true') {
                               this.successCount += 1;
                             }

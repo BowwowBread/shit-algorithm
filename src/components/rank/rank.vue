@@ -82,20 +82,16 @@ export default {
       location.href = '/';
     }
   },
-
   beforeCreate() {
-    const ROOT_URL = 'http://121.186.23.245:9999';
-    this.$http.defaults.baseURL = ROOT_URL;
-
 //          토큰 테스트
     this.userToken = this.$cookie.get('userToken');
 	  if (this.userToken != null) {
         this.userToken = this.$cookie.get('userToken');
         this.$http.defaults.headers.common.Authorization = this.userToken;
-        this.$http.get('/api/users/my-info')
+        this.$http.get('users/my-info')
           .then((resInfo) => {
             this.userid = resInfo.data.user.userId;
-            this.$http.get('api/users')
+            this.$http.get('users')
               .then((res) => {
               console.log(res);
                 const length = res.data.users.length;
