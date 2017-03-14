@@ -183,8 +183,8 @@ body{
 }
 
 .problemlist-enter-active {
-     transition: all 2s ease;
- }
+    transition: all 2s ease;
+}
 
 .problemlist-leave-active {
     transition: all .5s cubic-bezier(1.0, 0.5, 0.8, 1.0);
@@ -192,25 +192,13 @@ body{
 
 .problemlist-enter,
 .problemlist-leave-to
-    /* .slide-fade-leave-active for <2.1.8 */
+/* .slide-fade-leave-active for <2.1.8 */
 
 {
-    transform: translateY(-100px);
+    transform: translateX(-50px);
     opacity: 0;
 }
 
 .ui.bottom * {
     overflow: hidden;
 }
-.flip-list-move {
-    transition: all .1s;
-    display: inline-block;
-    margin-right: 10px;
-}
-.flip-list{
-    transition: all .1s;
-}
-.ui.bottom.attached.tab.segment.active{
-    overflow:hidden;
-}
-

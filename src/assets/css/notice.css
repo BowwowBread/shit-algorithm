@@ -1,3 +1,6 @@
+body{
+  background-color: rgb(40,40,40) !important;
+}
 .noticen {
     margin-top: 170px;
     padding: 0px 130px 40px 130px;
@@ -65,20 +68,4 @@
 #destent:hover{
   color: #343434 !important;
     /*color: rgb(64,138,127);*/
-}
-*{
-    margin:0;
-    padding:0;
-}
-.noticelist-enter-active {
-    transition: all 2s ease;
-}
-.noticelist-leave-active {
-    transition: all .5s cubic-bezier(1.0, 0.5, 0.8, 1.0);
-}
-.noticelist-enter, .noticelist-leave-to
-    /* .slide-fade-leave-active for <2.1.8 */
-{
-    transform: translateX(-50px);
-    opacity: 0;
 }
