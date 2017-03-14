@@ -26,7 +26,6 @@
                     </div>
                 </div>
             </div>
-<<<<<<< HEAD
             <div class="ui items">
                 <transition-group name="problemlist">
                     <div class="ui items" v-for="item in items" v-bind:key="item">
@@ -35,11 +34,11 @@
                                 <p class="header" id="listpol-head"><span>{{item.num}}</span>번 문제</p>
                                 <div class="content in" v-on:click='result(item.num)'>
                                     <a class="ui disabled header">
-                                    <span>{{item.name}}</span>
-                                  </a>
+                                        <span>{{item.name}}</span>
+                                    </a>
                                     <div class="description">
                                         <p class="ui disabled header">
-                                          <!-- <span>{{item.source}}</span> -->
+                                            <!-- <span>{{item.source}}</span> -->
                                             <!-- <span>난이도</span> -->
                                             <span>{{item.score}}</span>
                                             <span>{{item.success}}</span>
@@ -48,26 +47,25 @@
                                         </p>
                                     </div>
                                 </div>
-=======
+                            </div>
+                        </div>
+                    </div>
+                </transition-group>
+            </div>
             <div class="ui bottom attached tab segment active" :style="{ 'max-height': lineheight + 'px' , 'min-height' : lineheight + 'px'}" data-tab="first">
                 <transition-group name="flip-list, problemlist" tag="ul">
-                <div class="ui items" v-for="item in items" v-bind:key="item">
-                    <div class="item">
-                        <div class="content" v-on:click='result(item.num)'>
-                            <p class="header">
-                                <span>{{item.num}}</span>번 문제</p>
-                            <a  class="ui disabled header">
+                    <div class="ui items" v-for="item in items" v-bind:key="item">
+                        <div class="item">
+                            <div class="content" v-on:click='result(item.num)'>
+                                <p class="header">
+                                    <span>{{item.num}}</span>번 문제</p>
+                                <a class="ui disabled header">
                                 이름 : <span>{{item.name}}</span>
                             </a>
-                            <div class="description">
-                                <p>소스 : <span>{{item.source}}</span>
-                                난이도 : <span>난이도</span>
-                                점수 : <span>{{item.score}}</span>
-                                성공 : <span>{{item.success}}</span>
-                                실패 : <span>{{item.fail}}</span>
-                                정답률 : <span>{{item.ratio}}</span>
-                                </p>
->>>>>>> f6498dcb6cace2b9ef5cf7bbb458d897b92e1eac
+                                <div class="description">
+                                    <p>소스 : <span>{{item.source}}</span> 난이도 : <span>난이도</span> 점수 : <span>{{item.score}}</span> 성공 : <span>{{item.success}}</span> 실패 : <span>{{item.fail}}</span> 정답률 : <span>{{item.ratio}}</span>
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -324,17 +322,22 @@ export default {
 
 
 
+
+
 <style src="../../assets/css/problems.css" scoped></style>
 <style scoped>
 .sigoPage-enter-active {
     transition: all .3s ease;
 }
+
 .sigoPage-leave-active {
     transition: all 2s cubic-bezier(1.0, 0.5, 0.8, 1.0);
 }
+
 .sigoPage-enter,
 .sigoPage-leave-to
 /* .slide-fade-leave-active for <2.1.8 */
+
 {
     transform: translateY(50px);
     opacity: 0;
