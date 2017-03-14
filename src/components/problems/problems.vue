@@ -12,7 +12,7 @@
                 <a class="item" data-tab="five">기타</a>
                 <button v-on:click="shuffle">Shuffle</button>
             </div>
-            <div class="ui bottom attached tab segment active" :style="{ 'max-height': lineheight + 'px' , 'min-height' : lineheight + 'px'}" data-tab="first">
+            <div class="ui bottom attached tab segment active" :style="{ 'max-height': lineheight + 'px' , 'min-height' : lineheight + 'px', 'overflow': 'hidden'}" data-tab="first">
                 <transition-group name="flip-list, problemlist" tag="ul">
                 <div class="ui items" v-for="item in items" v-bind:key="item">
                     <div class="item">
@@ -36,14 +36,8 @@
                 </div>
                 </transition-group>
             </div>
-            <div class="ui pagination menu">
-                <a href="#" class="active item"><i class="angle left icon"></i></a>
-                <a href="#" class="active item"> 1 </a>
-                <a href="#" class="active item"> 2 </a>
-                <a href="#" class="active item"> 3 </a>
-                <a href="#" class="active item"> 4 </a>
-                <a v-if='loadState' href="#" class="active item" v-on:click="loadList"><i class="angle right icon"></i></a>
-            </div>
+            <a href="#"><i class="huge chevron circle up icon"></i></a>
+            <button class="ui button" v-on:click="loadList"><i class="large chevron down icon" ></i></button>
         </div>
     </div>
 </template>

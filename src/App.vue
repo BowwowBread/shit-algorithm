@@ -383,9 +383,10 @@
       failReset() {
         this.$swal.setDefaults({
           input: 'text',
-          confirmButtonText: 'Next &rarr;',
+          confirmButtonText: '다음',
+          cancelButtonText: '취소',
           showCancelButton: true,
-          animation: false,
+          animation: true,
           progressSteps: ['1', '2', '3'],
         });
         const steps = [
@@ -394,6 +395,7 @@
           '학번을 입력해주세요',
         ];
         this.$swal.queue(steps).then((result) => {
+          this.$swal.resetDefaults();
           this.$http.post('api/users/failReset', {
               userid: result[0],
               username: result[1],
@@ -413,7 +415,6 @@
                 type: 'error',
               })
               .then(() => {
-                this.closeModal();
                 this.failReset();
               });
             });
@@ -427,6 +428,3 @@
   background-color: rgb(40,40,40);
 }*/
 </style>
-<stlye>
-
-</stlye>

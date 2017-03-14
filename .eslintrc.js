@@ -31,6 +31,7 @@ module.exports = {
     'func-names' : 0,
     'prefer-arrow-callback' : 0,
     'spaced-comment' : 0,
+    'eol-last' : 0,
     
   },
   "settings": {

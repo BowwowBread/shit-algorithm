@@ -198,7 +198,3 @@ body{
     transform: translateX(-50px);
     opacity: 0;
 }
-
-.ui.bottom * {
-    overflow: hidden;
-}
