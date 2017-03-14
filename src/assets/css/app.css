@@ -18,6 +18,8 @@
     }
     .ui.modal{
         height:auto !important;
+        background-color: transparent !important;
+        box-shadow: none;
     }
     .signhead{
       /*background-color: rgb(135,89,186);*/

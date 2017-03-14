@@ -9,7 +9,7 @@
         학번 : <span>{{member.studentcode}}</span><br>
         등급 : <span>{{member.rating}}</span><br>
         승인여부 : <span>{{member.account}}</span><br>
-        <button v-on:click="account(member.userid)">승인하기</button>
+        <button v-on:click="account(member.userid, member)">승인하기</button>
         <button v-on:click="deletenonuser(member.userid, member)">유저삭제</button>
         <br>
       </li>
@@ -33,7 +33,7 @@
       this.getMember();
     },
     methods: {
-    	account(userid) {
+    	account(userid, member) {
         this.$http.defaults.headers.common.Authorization = this.userToken;
         this.$http.get(`api/users/account/${userid}`)
         .then((res) => {

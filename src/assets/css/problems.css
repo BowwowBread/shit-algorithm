@@ -1,4 +1,3 @@
-ㄹ녀ㅠ/*8dc7a3*/
 * {
   margin: 0;
   padding: 0;
@@ -16,6 +15,9 @@ body{
   position: absolute;
   left: 47%;
   font-size: 17px;
+}
+.ui.grid{
+  width: 1014px;
 }
 .ui.top.attached.tabular.menu a{
   color: rgb(194,194,194);
@@ -124,7 +126,7 @@ body{
     padding-right: 5px;
 }
 .ui.disabled.header span{
-  margin-right: 150px;
+  /*margin-right: 150px;*/
 }
 
 .description {
@@ -146,7 +148,7 @@ body{
     padding-top: 0px;
 }
 
-#ltemone {
+/*#ltemone {
     padding-left: 13px;
     flex-grow: 2.4;
 }
@@ -172,11 +174,7 @@ body{
 #ltemsix {
     flex-grow: 1.1;
     margin-right: 24px;
-}
-
-#pob .item {
-    margin: 0;
-}
+}*/
 
 #pob {
     color: black;
@@ -201,4 +199,15 @@ body{
 
 .ui.bottom * {
     overflow: hidden;
+}
+.flip-list-move {
+    transition: all .1s;
+    display: inline-block;
+    margin-right: 10px;
+}
+.flip-list{
+    transition: all .1s;
+}
+.ui.bottom.attached.tab.segment.active{
+    overflow:hidden;
 }
