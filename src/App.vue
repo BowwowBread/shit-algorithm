@@ -2,7 +2,7 @@
     <div id="app">
         <div id="menu" class="ui secondary menu" v-bind:class="{menu_show: scrollMenu }">
             <ul id="mainmn">
-                <li><router-link to="/" :class="{menu_show_font : scrolled > 200}">MAIN</router-link></li>
+                <li><router-link to="/" :class="{menu_show_font : scrolled > 200}">{{ $store.state.loadingState }}</router-link></li>
             </ul>
             <ul id="submn">
               <li><router-link to="/notice" :class="{menu_show_font : scrolled > 200}">공지사항</router-link></li>
@@ -28,7 +28,7 @@
                                 <div class="culnmn">
                                   <div class="signhead">
                                     <h1 class="ui grey header">로그인</h1>
-                                  </div>
+                                  </div>    
                                     <form class="ui large form">
                                         <div class="field">
                                             <div class="ui left icon input">
@@ -91,14 +91,6 @@
                                             <div class="ul left icon input">
                                                 <div class="lock icon">
                                                     <vue-recaptcha sitekey="6LejvBgUAAAAAE_F7SjXLPzPiyroAqAdXvBhk7IG"></vue-recaptcha>
-                                                    <!--<vueRecaptcha-->
-                                                            <!--ref="recaptcha"-->
-                                                            <!--@verify="onVerify"-->
-                                                            <!--@expired="onExpired"-->
-                                                            <!--:sitekey="opts.sitekey"-->
-                                                            <!--:options="opts">-->
-                                                    <!--</vueRecaptcha>-->
-                                                    <button @click="resetRecaptcha"> Reset ReCAPTCHA </button>
                                                 </div>
                                             </div>
                                         </div>
@@ -121,8 +113,11 @@
             </div>
         </div>
         <vue-progress-bar></vue-progress-bar>
+        <!--<div class="openSpinner" v-if="$store.state.loadingState">-->
+            <!--<pulse-loader :loading="loading"></pulse-loader>-->
+        <!--</div>-->
         <transition name="sigoPage" mode="out-in">
-      <router-view></router-view>
+      <router-view v-bind:data="$store.state.loadingState"></router-view>
       </transition>
         </div>
     </div>
@@ -130,9 +125,36 @@
 
 <script>
   import VueRecaptcha from 'vue-recaptcha';
+  import PulseLoader from 'vue-spinner/src/PulseLoader.vue';
+  import { mapActions } from 'vuex';
 
   export default {
-    components: { VueRecaptcha },
+    components: {
+      VueRecaptcha,
+      PulseLoader,
+    },
+    props: {
+      loading: {
+        type: Boolean,
+        default: true,
+      },
+      color: {
+        type: String,
+        default: '#5dc596',
+      },
+      size: {
+        type: String,
+        default: '15px',
+      },
+      margin: {
+        type: String,
+        default: '0 auto',
+      },
+      radius: {
+        type: String,
+        default: '100%',
+      },
+    },
     data() {
       return {
         loginState: false,
@@ -156,24 +178,17 @@
         },
       };
     },
-    ready() {
-      alert('ready');
-    },
     created() {
-	    this.$Progress.start();
-	    //  hook the progress bar to start before we move router-view
-	    this.$router.beforeEach((to, from, next) => {
-		    //  does the page we want to go to have a meta.progress object
+      this.$router.beforeEach((to, from, next) => {
 		    if (to.meta.progress !== undefined) {
 			    const meta = to.meta.progress;
-			    // parse meta tags
 			    this.$Progress.parseMeta(meta);
 		    }
-		    //  start the progress bar
+        this.$store.commit('loadingOn');
 		    this.$Progress.start();
-			    //  continue to next page
             next();
         });
+      this.$Progress.finish();
       const ROOT_URL = 'https://algorithm.ayanami.kr/api';
       this.$http.defaults.baseURL = ROOT_URL;
 //      토큰 테스트
@@ -195,17 +210,16 @@
 		          });
           });
       }
-      this.$router.afterEach((to, from) => {
-		    //  finish the progress bar
-	      this.$Progress.finish();
-      });
-      this.$Progress.finish();
       window.addEventListener('scroll', this.scrollFunction);
     },
     destroyed() {
       window.removeEventListener('scroll', this.scrollFunction);
     },
     methods: {
+    ...mapActions([
+      'loadingOn',
+      'loadingOff',
+    ]),
       scrollFunction() {
         this.scrolled = window.scrollY;
         if (this.scrolled > 200) {
