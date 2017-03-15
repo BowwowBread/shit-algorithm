@@ -53,12 +53,12 @@
                             </div>
                             <div class="eight wide column">
                               <div class="description">
-                                <p>소스 : <span>{{item.source}}</span>
-                                  난이도 : <span>난이도</span>
-                                  점수 : <span>{{item.score}}</span>
-                                  성공 : <span>{{item.success}}</span>
-                                  실패 : <span>{{item.fail}}</span>
-                                  정답률 : <span>{{item.ratio}}</span>
+                                <p><span>{{item.source}}</span>
+                                  <span>난이도</span>
+                                  <span>{{item.score}}</span>
+                                  <span>{{item.success}}</span>
+                                  <span>{{item.fail}}</span>
+                                  <span>{{item.ratio}}</span>
                                 </p>
                               </div>
                             </div>
@@ -148,7 +148,7 @@ export default {
                     } else if (ratio !== 0) {
                       ratio = `${parseInt(ratio * 100, 10)} %`;
                     }
-//                    this.lineheight = document.getElementById('list').style.height;
+                    this.lineheight = 55 * i;
                     console.log(this.lineheight);
                     this.items.push({
                       num,
@@ -262,8 +262,8 @@ export default {
 							  } else {
 								  ratio = `${ratio.toString().substring(2, 4)} %`;
 							  }
-//                              this.lineheight = document.getElementById('list').style.height;
-							  this.items.push({
+							   this.lineheight = 55 * i;
+                               this.items.push({
 								  num,
 								  name,
 								  source,

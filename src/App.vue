@@ -2,7 +2,7 @@
     <div id="app">
         <div id="menu" class="ui secondary menu" v-bind:class="{menu_show: scrollMenu }">
             <ul id="mainmn">
-                <li><router-link to="/" :class="{menu_show_font : scrolled > 200}">{{ $store.state.loadingState }}</router-link></li>
+                <li><router-link to="/" :class="{menu_show_font : scrolled > 200}">Main</router-link></li>
             </ul>
             <ul id="submn">
               <li><router-link to="/notice" :class="{menu_show_font : scrolled > 200}">공지사항</router-link></li>
@@ -438,12 +438,9 @@
   },
   };
 </script>
-<style src="./assets/css/app.css" scoped>
-/*body{
-  background-color: rgb(40,40,40);
-}*/
-<<<<<<< HEAD
+<style src="./assets/css/app.css" scoped></style>
+<style>
+    body {
+        background-color: rgb(40, 40, 40) !important;
+    }
 </style>
-=======
-</style>
->>>>>>> 8614288358f360ce0d6afbc2d519d2ad8abe1099

@@ -90,6 +90,7 @@
     "vue-loader": "^11.1.0",
     "vue-monaco-editor": "0.0.19",
     "vue-progressbar": "^0.7.1",
+    "vue-spinner": "^1.0.2",
     "vue-style-loader": "^2.0.0",
     "vue-sweetalert": "^0.1.16",
     "vue-template-compiler": "^2.2.2",
