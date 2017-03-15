@@ -33,8 +33,7 @@
         padding: 0px;
         margin-left: 200px;
         margin-top: -170px;
-        /*margin-top: -315px;*/
-        background-color: white;
+        background-color: rgba(222, 222, 222, 0.25);
         border-radius: 15px;
     }
     .conclo{
@@ -49,13 +48,9 @@
       background-color: transparent !important
     }
     .close.icon{
-      /*margin-top: -180px;
-      margin-right: 170px;*/
-      /*width: 300px;*/
+      
     }
-    /*.ui.modal{
-      box-shadow: none;
-    }*/
+
     .close.con{
       display: flex !important;
       width: 700px !important;
@@ -197,6 +192,9 @@
     }
     .v-spinner{
 
+    }
+    .login_form, .register_form{
+      margin-top: -220px;
     }
     .openSpinner {
         position: absolute;

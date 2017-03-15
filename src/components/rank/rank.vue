@@ -5,7 +5,7 @@
             <h2 class="ui center aligned header" id="rankhead"> 랭킹 시스템
         <div class="sub header">1등을 목표로 문제를 풀면서 친구들을 이겨보세요!</div>
       </h2>
-            <div class="rank-top" >
+            <div class="rank-top">
         <div class="rank1">
             <div class="rankge1">
                 <img src="image1.jpg">
@@ -42,20 +42,9 @@
                     <div class="item">
                         <div class="content">
                           <div class="ui top attached tabular menu" id="pob" >
-                            <div class="ui grid">
-                              <div class="two wide column">
-                                <p id="ltemone" class="item">등수</p>
-                              </div>
-                              <div class="four wide column">
-                                <p id="ltemtwo" class="item">학번</p>
-                              </div>
-                              <div class="five wide column">
-                                <p id="ltemthr" class="item">이름</p>
-                              </div>
-                              <div class="five wide column">
-                                <p id="ltemfou" class="item">점수</p>
-                              </div>
-                            </div>
+                              <p id="ltemone" class="item">등수</p>
+                              <p id="ltemtwo" class="item">이름</p>
+                              <p id="ltemthr" class="item">점수</p>
                           </div>
                         </div>
                     </div>
@@ -67,21 +56,6 @@
                         <p class="header" id="pollist"><span>{{rank + 1}}</span>등</p>
                         <p class="ui disabled header"><span>{{user.name}}</span></p>
                           <p class="sub header" id="subder"><span>{{user.score}}</span></p>
-                      <div class="content">
-                        <div class="ui grid">
-                          <div class="two wide column">
-                            <p class="header" id="pollist"><span>{{rank}}</span>등</p>
-                          </div>
-                          <div class="four wide column">
-                            <p class="sub header" id="substu"><span>30626</span></p>
-                          </div>
-                          <div class="five wide column">
-                            <p class="ui disabled header"><span>{{user.name}}</span></p>
-                          </div>
-                          <div class="five wide column">
-                            <p class="sub header" id="subder"><span>{{user.score}}</span></p>
-                          </div>
-                        </div>
                       </div>
                     </div>
                   </div>

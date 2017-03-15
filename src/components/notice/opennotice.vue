@@ -1,9 +1,9 @@
 <template>
     <div class="openNotice" v-if="entering">
-        <p>번호 : {{num}}</p>
+        <!-- <p>번호 : {{num}}</p>
         <p>제목 : {{name}}</p>
         <p>내용 : {{contents}}</p>
-        <p>날짜 : {{date}}</p>
+        <p>날짜 : {{date}}</p> -->
     <div class="openNotice" v-i="entering">
       <div class="notipoll">
         <div class="notipen">

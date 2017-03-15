@@ -19,7 +19,6 @@
         <div v-if="loginState == false" id="sign">
             <div class="ui modal">
               <div class="conclo">
-                <!-- <a href="#"><i class="close icon" v-on:click="closeModal"></i></a> -->
                 <i class="close icon" v-on:click="closeModal"></i>
               </div>
                 <div class="login_form" v-if="signState">
@@ -29,7 +28,7 @@
                                 <div class="culnmn">
                                   <div class="signhead">
                                     <h1 class="ui grey header">로그인</h1>
-                                  </div>    
+                                  </div>
                                     <form class="ui large form">
                                         <div class="field">
                                             <div class="ui left icon input">
@@ -439,11 +438,9 @@
   };
 </script>
 <style src="./assets/css/app.css" scoped>
-/*body{
-  background-color: rgb(40,40,40);
-}*/
-<<<<<<< HEAD
 </style>
-=======
+<style>
+    body {
+        background-color: rgb(40, 40, 40) !important;
+    }
 </style>
->>>>>>> 8614288358f360ce0d6afbc2d519d2ad8abe1099
