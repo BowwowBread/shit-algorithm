@@ -1,9 +1,27 @@
 <template>
     <div class="openNotice" v-i="entering">
-        <p>번호 : {{num}}</p>
-        <p>제목 : {{name}}</p>
-        <p>내용 : {{contents}}</p>
-        <p>날짜 : {{date}}</p>
+      <div class="notipoll">
+        <div class="notipen">
+            <div class="noti-head">
+                <p>{{name}}</p>
+            </div>
+            <hr>
+            <div class="noti-main">
+                <p>{{contents}}</p>
+            </div>
+        </div>
+        <div class="noti-tag">
+            <div class="noti1">
+                <p>{{num}}</p>
+            </div>
+            <div class="noti2">
+                <p>{{date}}</p>
+            </div>
+        </div>
+    </div>
+    <div class="pageicon">
+      <a href="/notice"><i class="big reply icon"></i></a>
+    </div>
     </div>
 </template>
 <script>

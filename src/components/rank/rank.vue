@@ -12,7 +12,7 @@
             </div>
             <p class="rant1">Seil</p>
             <hr>
-            <p class="rant2">MASTER</p>
+            <p class="rant2">2st</p>
         </div>
         <div class="rank2">
             <div class="rankge2">
@@ -20,7 +20,7 @@
             </div>
             <p class="rant1">Pices</p>
             <hr>
-            <p class="rant2">KING</p>
+            <p class="rant2">1st</p>
         </div>
         <div class="rank3">
             <div class="rankge3">
@@ -28,20 +28,31 @@
             </div>
             <p class="rant1">Center</p>
             <hr>
-            <p class="rant2">HERO</p>
+            <p class="rant2">3st</p>
         </div>
     </div>
             <div class="ui top attached tabular menu">
-                <a class="item active" data-tab="first" id="item">순위</a>
+                <p class="item active" data-tab="first" id="item">순위</p>
             </div>
             <div class="ui bottom attached tab segment active">
               <div class="ui items">
                     <div class="item">
                         <div class="content">
                           <div class="ui top attached tabular menu" id="pob" >
-                              <p id="ltemone" class="item">등수</p>
-                              <p id="ltemtwo" class="item">이름</p>
-                              <p id="ltemthr" class="item">점수</p>
+                            <div class="ui grid">
+                              <div class="two wide column">
+                                <p id="ltemone" class="item">등수</p>
+                              </div>
+                              <div class="four wide column">
+                                <p id="ltemtwo" class="item">학번</p>
+                              </div>
+                              <div class="five wide column">
+                                <p id="ltemthr" class="item">이름</p>
+                              </div>
+                              <div class="five wide column">
+                                <p id="ltemfou" class="item">점수</p>
+                              </div>
+                            </div>
                           </div>
                         </div>
                     </div>
@@ -49,10 +60,21 @@
                 <div class="propol" v-for="(user, rank) in users">
                   <div class="ui items">
                     <div class="item">
-                      <div class="content" >
-                        <p class="header" id="pollist"><span>{{rank}}</span>등</p>
-                        <p class="ui disabled header"><span>{{user.name}}</span></p>
-                          <p class="sub header" id="subder"><span>{{user.score}}</span></p>
+                      <div class="content">
+                        <div class="ui grid">
+                          <div class="two wide column">
+                            <p class="header" id="pollist"><span>{{rank}}</span>등</p>
+                          </div>
+                          <div class="four wide column">
+                            <p class="sub header" id="substu"><span>30626</span></p>
+                          </div>
+                          <div class="five wide column">
+                            <p class="ui disabled header"><span>{{user.name}}</span></p>
+                          </div>
+                          <div class="five wide column">
+                            <p class="sub header" id="subder"><span>{{user.score}}</span></p>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>

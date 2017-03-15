@@ -53,7 +53,7 @@
 
             </div>
             <div class="pageicon">
-              <a href="#"><i class="big reply icon"></i></a>
+              <a href="/problems"><i class="big reply icon"></i></a>
             </div>
         </div>
     </div>

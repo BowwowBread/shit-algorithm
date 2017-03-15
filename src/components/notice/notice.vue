@@ -6,7 +6,7 @@
                 <div class="sub header">SIGO의 알림를 외칩니다!</div>
               </h2>
               <div class="ui top attached tabular menu">
-                  <a class="item active" data-tab="first" id="item">순위</a>
+                  <p class="item active" data-tab="first" id="item">목록</p>
               </div>
               <div class="ui bottom attached tab segment active" data-tab="first">
                 <div class="ui items">
@@ -15,6 +15,7 @@
                             <div class="ui top attached tabular menu" id="pob">
                                 <p id="ltemone" class="item">번호</p>
                                 <p id="ltemtwo" class="item">제목</p>
+                                <p id="ltemthr" class="item">날짜</p>
                             </div>
                           </div>
                       </div>
@@ -23,12 +24,11 @@
                     <div class="ui items" v-for="notice in notices" v-bind:key="notices">
                       <div class="item">
                         <div class="content" v-on:click='open(notice.num)'>
-                          <p class="header" id="pollist">
-                              <span>{{notice.num}}</span></p>
+                          <p class="header" id="pollist"><span>{{notice.num}}</span></p>
                           <a class="ui disabled header" id="destent">
-                              이름 : <span>{{notice.noticename}}</span>
-                              날짜 : <span>{{notice.date}}</span>
+                              <span>{{notice.noticename}}</span>
                           </a>
+                          <p class="notdate"><span>{{notice.date}}</span></p>
                         </div>
                       </div>
                     </div>

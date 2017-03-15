@@ -30,6 +30,9 @@ body{
     background-color: rgb(224, 224, 224)
 }
 
+.content {
+  display: flex !important;
+}
 #not-head {
     color: white;
     font-weight: 100;
@@ -40,17 +43,18 @@ body{
     margin-top: 10px;
 }
 
-.content {
-    display: flex !important;
-}
 #ltemone{
-  flex-grow: 0.2;
+  flex-grow: 0.4;
 
 }
 #ltemtwo{
-  /*flex-grow: 2;*/
+  flex-grow:1.5;
 
 }
+#ltemthr{
+flex-grow:1;
+}
+
 #pob p, a {
     margin: 0;
 }
@@ -58,8 +62,14 @@ body{
 .ui.top.attached.tabular.menu{
   color: black !important
 }
+#destent{
+  flex-grow: 2.4;
+}
+.notdate{
+  flex-grow: 1;
+}
 #pollist{
-  flex-grow: 0.32;
+  flex-grow: 0.8;
   padding-left: 23px;
 }
 /* a 코드 호과*/
