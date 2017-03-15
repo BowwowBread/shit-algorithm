@@ -52,13 +52,14 @@
         };
       },
       updated() {
+        this.$store.dispatch('loadingOff');
+        console.log(this.$store.state.loadingState);
         this.$Progress.finish();
       },
       created() {
         this.$http.get('notices')
           .then((res) => {
           let i = 0;
-          console.log(res);
           while (i < res.data.notices.length) {
             let date = res.data.notices[i].date.replace('T', ', ');
             date = date.substring(0, date.length - 8);

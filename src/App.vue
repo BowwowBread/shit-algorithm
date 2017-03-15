@@ -2,7 +2,7 @@
     <div id="app">
         <div id="menu" class="ui secondary menu" v-bind:class="{menu_show: scrollMenu }">
             <ul id="mainmn">
-                <li><router-link to="/" :class="{menu_show_font : scrolled > 200}">Main</router-link></li>
+                <li><router-link to="/" :class="{menu_show_font : scrolled > 200}">{{$store.state.loadingState}}</router-link></li>
             </ul>
             <ul id="submn">
               <li><router-link to="/notice" :class="{menu_show_font : scrolled > 200}">공지사항</router-link></li>
@@ -19,8 +19,6 @@
         <div v-if="loginState == false" id="sign">
             <div class="ui modal">
               <div class="conclo">
-                <!-- <a href="#"><i class="close icon" v-on:click="closeModal"></i></a> -->
-                <i class="close icon" v-on:click="closeModal"></i>
               </div>
                 <div class="login_form" v-if="signState">
                     <div class="description">
@@ -118,7 +116,7 @@
             <!--<pulse-loader :loading="loading"></pulse-loader>-->
         <!--</div>-->
         <transition name="sigoPage" mode="out-in">
-      <router-view v-bind:data="$store.state.loadingState"></router-view>
+      <router-view></router-view>
       </transition>
         </div>
     </div>
@@ -179,13 +177,21 @@
         },
       };
     },
+    mounted() {
+      console.log('ss');
+    },
+    computed: {
+        loadingState() {
+          return this.$store.state.loadingState;
+        },
+    },
     created() {
       this.$router.beforeEach((to, from, next) => {
 		    if (to.meta.progress !== undefined) {
 			    const meta = to.meta.progress;
 			    this.$Progress.parseMeta(meta);
 		    }
-        this.$store.commit('loadingOn');
+        this.$store.dispatch('loadingOn');
 		    this.$Progress.start();
             next();
         });
@@ -440,7 +446,7 @@
 </script>
 <style src="./assets/css/app.css" scoped></style>
 <style>
-    body {
-        background-color: rgb(40, 40, 40) !important;
-    }
+body{
+    background-color:rgb(40,40,40) !important;
+}
 </style>

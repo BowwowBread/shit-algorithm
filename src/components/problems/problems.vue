@@ -149,7 +149,6 @@ export default {
                       ratio = `${parseInt(ratio * 100, 10)} %`;
                     }
                     this.lineheight = 55 * i;
-                    console.log(this.lineheight);
                     this.items.push({
                       num,
                       name,
