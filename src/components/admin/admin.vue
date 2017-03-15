@@ -10,7 +10,7 @@
                 <div class="ui secondary pointing menu">
                     <a class="item" v-on:click="click_member">회원관리</a>
                     <a class="item" v-on:click="click_nonaccount">비승인 회원관리</a>
-                    <a class="item" v-on:click="click_list">개시판관리</a>
+                    <a class="item" v-on:click="click_list">게시판관리</a>
                     <a class="item" v-on:click="click_problem">문제관리</a>
                     <a class="item" v-on:click="click_result">문제결과</a>
                 </div>
@@ -59,6 +59,9 @@ export default {
       notice: [],
       userToken: '',
     };
+  },
+  updated() {
+    this.$Progress.finish();
   },
   beforeCreate() {
 //          토큰 테스트

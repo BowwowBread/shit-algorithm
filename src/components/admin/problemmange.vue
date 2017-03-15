@@ -1,5 +1,6 @@
 <template>
     <div class="probleminput" v-if="enteringProblemmanage">
+        <div class="problem">
         <button v-on:click="openAdd">{{addMsg}}</button>
         <div class="addProblem" v-if="addState">
         <div class="input">
@@ -68,8 +69,9 @@
             <br>
         </ul>
         </div>
+        </div>
         <div class="solveList">
-            <transition-group name="problemmanage">
+            <transition-group name="problemmanage" tag="div">
             <ul v-for="list in solveList" v-bind:key="list">
                     <li>이름 : {{list.username}}</li>
                     <li>학번 : {{list.studentcode}}</li>
@@ -111,9 +113,15 @@ export default{
   },
   created() {
       //토큰테스트
-      this.userToken = this.$cookie.get('userToken');
+    this.userToken = this.$cookie.get('userToken');
 	  this.$http.defaults.headers.common.Authorization = this.userToken;
 	  this.fetchData();
+  },
+  beforeCreate() {
+    this.$Progress.start();
+  },
+  updated() {
+    this.$Progress.finish();
   },
   methods: {
   	openAdd() {
@@ -222,7 +230,7 @@ export default{
 	          });
           });
     },
-	  solveListData(num) {
+    solveListData(num) {
         this.solveList = [];
         this.$http.defaults.headers.common.Authorization = this.userToken;
         this.$http.get('solution')

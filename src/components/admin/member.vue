@@ -27,7 +27,13 @@ export default{
   },
   created() {
 	  //토큰테스트
-      this.getMember();
+    this.getMember();
+  },
+  beforeCreate() {
+    this.$Progress.start();
+  },
+  updated() {
+    this.$Progress.finish();
   },
   methods: {
   	deleteuser(userid, member) {

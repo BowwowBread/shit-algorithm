@@ -65,6 +65,9 @@ export default {
         entering: false,
       };
     },
+  updated() {
+    this.$Progress.finish();
+  },
     beforeCreate() {
 //          토큰 테스트
 	    this.userToken = this.$cookie.get('userToken');

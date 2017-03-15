@@ -51,7 +51,6 @@ label{
     margin-left:300px;
 }
 .list{
-    display:flex;
     clear:both;
 }
 .list > div {
@@ -63,17 +62,18 @@ ul{
 li{
     margin-top: 50px;
 }
-.solveList{
-    min-width: 500px;
-    position: fixed;
-    top: 200px;
-    left: 50%;
-    overflow: scroll;
-    border-left: 1px solid red;
+.list{
+    width: 500px !important;
+    border:1px solid red;
 }
-.problemList{
-    width: 50% !important;
-    position:relative;
+.solveList{
+    position:fixed;
+    right:0px;
+    overflow:scroll;
+    width:500px;
+    height:100%;
+    top:170px;
+    z-index:100;
 }
 .problemmanage-enter-active {
     transition: all 1s ease;

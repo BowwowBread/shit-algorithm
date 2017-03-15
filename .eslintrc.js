@@ -32,7 +32,10 @@ module.exports = {
     'prefer-arrow-callback' : 0,
     'spaced-comment' : 0,
     'eol-last' : 0,
-    
+    'no-shadow' : 0,
+    'no-confusing-arrow': 0,
+    'no-param-reassign': 0,
+    'no-dupe-keys': 0,
   },
   "settings": {
     "ecmascript": 6,

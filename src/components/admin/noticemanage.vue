@@ -60,13 +60,19 @@ export default{
   created() {
     this.loadNotice();
   },
+  beforeCreate() {
+    this.$Progress.start();
+  },
+  updated() {
+    this.$Progress.finish();
+  },
   methods: {
     modify() {
-      this.$http.put('api/notices', {
+      this.$http.put('notices', {
           num: this.num,
-          noticename: this.problemNum,
-          contents: this.problemName,
-          type: this.source,
+          noticeName: this.name,
+          contents: this.content,
+          type: this.type,
         })
         .then(() => {
           this.$swal({
@@ -81,7 +87,7 @@ export default{
             errMsgs = '모든 정보를 입력해주세요';
           }
           this.$swal({
-            title: '수정 실페',
+            title: '수정 실패',
             text: errMsgs,
             type: 'error',
           });
@@ -114,7 +120,7 @@ export default{
     },
     deleteNotice(num, notice) {
       this.$swal({
-          title: '문제 삭제',
+          title: '공 삭제',
           text: '정말로 삭제하시겠습니까?',
           type: 'question',
           showCancelButton: true,
@@ -148,7 +154,6 @@ export default{
         });
     },
     loadNotice() {
-      console.log('load');
       this.$http.get('notices')
         .then((res) => {
           let i = 0;

@@ -9,6 +9,7 @@ import Vuex from 'vuex';
 import Vue from 'vue';
 import router from './router';
 import App from './App.vue';
+import store from './store/index';
 import VueSweetAlert from 'vue-sweetalert';
 import VueProgressbar from 'vue-progressbar';
 import 'babel-polyfill';
@@ -19,11 +20,11 @@ window.$ = jquery;
 Vue.use(lodash);
 Vue.use(VueCookie);
 Vue.use(VueProgressbar, {
-	color: 'rgb(143, 255, 199)',
+	color: 'rgb(247, 119, 97)',
 	failedColor: 'red',
-	height: '2px',
+	thickness: '4px',
 	transition: {
-		speed: '.7s',
+		speed: '.1ms',
 		opacity: '1s',
 	},
 });
@@ -38,6 +39,7 @@ Vue.prototype.$http = axios;
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
+		store,
   router,
   template: '<App/>',
   components: { App },

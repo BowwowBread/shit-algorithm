@@ -23,13 +23,19 @@
     data() {
       return {
         members: [],
-        entering: false,
+        enteringNon: false,
       };
     },
     created() {
       this.userToken = this.$cookie.get('userToken');
       console.log(this.userToken);
       this.getMember();
+    },
+    beforeCreate() {
+      this.$Progress.start();
+    },
+    updated() {
+      this.$Progress.finish();
     },
     methods: {
     	account(userid, member) {

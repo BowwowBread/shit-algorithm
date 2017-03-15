@@ -25,6 +25,14 @@ export default {
 
     };
   },
+  beforeCreate() {
+    this.loadState = true;
+    this.$Progress.start();
+  },
+  mounted() {
+    this.loadState = false;
+    this.$Progress.finish();
+  },
 };
 </script>
 <style src="../../assets/css/index.css" scoped></style>
