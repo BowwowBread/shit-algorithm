@@ -38,6 +38,8 @@
     </div>
 </template>
 <script>
+    import { mapActions } from 'vuex';
+
     export default {
       name: 'notice',
       data() {
@@ -46,17 +48,21 @@
           entering: false,
         };
       },
+      updated() {
+        this.$Progress.finish();
+      },
       created() {
         this.$http.get('notices')
           .then((res) => {
           let i = 0;
           console.log(res);
           while (i < res.data.notices.length) {
+            const date = res.data.notices[i].date.replace('T', ', ');
             if (res.data.notices[i].type === 'notice') {
               this.notices.push({
                 num: res.data.notices[i].num,
                 noticename: res.data.notices[i].noticeName,
-                date: res.data.notices[i].date,
+                date,
               });
             }
             i += 1;

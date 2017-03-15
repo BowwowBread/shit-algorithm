@@ -143,6 +143,9 @@ export default {
   destroy() {
     this.solveMenu = false;
   },
+  updated() {
+    this.$Progress.finish();
+  },
   methods: {
     onMounted(editor) {
       this.editor = editor;

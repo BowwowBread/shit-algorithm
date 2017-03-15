@@ -1,5 +1,5 @@
 <template>
-    <div class="openNotice" v-i="entering">
+    <div class="openNotice" v-if="entering">
         <p>번호 : {{num}}</p>
         <p>제목 : {{name}}</p>
         <p>내용 : {{contents}}</p>
@@ -17,6 +17,9 @@
           date: '',
           entering: false,
         };
+      },
+      updated() {
+        this.$Progress.finish();
       },
       created() {
         const num = this.$route.params.num;

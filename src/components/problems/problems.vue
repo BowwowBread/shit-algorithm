@@ -5,12 +5,10 @@
                 <div class="sub header">Manage your account settings and set e-mail preferences.</div>
             </h2>
             <div class="ui top attached tabular menu">
-                <a class="item active" data-tab="first" id="item">문제</a>
+                <a class="item active" data-tab="first" id="item">최근 문제</a>
                 <a class="item" data-tab="second">출처</a>
-                <a class="item" data-tab="third">단계</a>
-                <a class="item" data-tab="four">최근 문제</a>
-                <a class="item" data-tab="five">기타</a>
-                <button v-on:click="shuffle">Shuffle</button>
+                <a class="item" data-tab="third">난이도</a>
+                <a class="item" data-tab="fourth" v-on:click="shuffle">랜덤문제</a>
             </div>
             <div id="list" class="ui bottom attached tab segment active" :style="{ 'max-height': lineheight + 'px' , 'min-height' : lineheight + 'px', 'overflow': 'hidden'}" data-tab="first">
                 <transition-group name="flip-list, problemlist" tag="ul">
@@ -56,8 +54,8 @@ export default {
       lineheight: '',
     };
   },
-  ready() {
-    alert('ready');
+  updated() {
+    this.$Progress.finish();
   },
   created() {
     i = 0;

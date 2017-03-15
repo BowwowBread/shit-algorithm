@@ -168,16 +168,22 @@
     data() {
       return {
         userCount: '',
+        timeline: [],
       };
     },
     created() {
-//      const ROOT_URL = 'http://121.186.23.245:9999';
-//      this.$http.defaults.baseURL = ROOT_URL;
-//      this.$http.get('./api/users')
-//        .then((resUserInfo) => {
-//          this.userCount = resUserInfo.data.users.length;
-//        <!--});-->
-//      console.log(this.userCount);
+//      this.$http.get('solution')
+//        .then((res) => {
+//          let i = 0;
+//          while (i < 3) {
+//            this.timeline.push({
+//              name: res.data.resolves[i].
+//            })
+//          }
+//        })
+//        .catch((err) => {
+//          console.log(err);
+//        });
     },
   };
 </script>

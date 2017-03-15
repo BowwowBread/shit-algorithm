@@ -29,6 +29,12 @@
     created() {
       this.ratio();
     },
+    beforeCreate() {
+      this.$Progress.start();
+    },
+    updated() {
+      this.$Progress.finish();
+    },
     methods: {
       ratio() {
         this.userToken = this.$cookie.get('userToken');
@@ -53,7 +59,7 @@
           });
           i += 1;
         }
-        this.problemResultmanage = true;
+        this.enteringProblemresult = true;
       })
         .catch((err) => {
           this.$swal({
