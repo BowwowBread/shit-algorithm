@@ -25,7 +25,7 @@
                       <div class="item">
                         <div class="content" v-on:click='open(notice.num)'>
                           <p class="header" id="pollist"><span>{{notice.num}}</span></p>
-                          <a class="ui disabled header" id="destent">
+                          <a class="ui header" id="destent">
                               <span>{{notice.noticename}}</span>
                           </a>
                           <p class="notdate"><span>{{notice.date}}</span></p>

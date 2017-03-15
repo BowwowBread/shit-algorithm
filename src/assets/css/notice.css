@@ -73,10 +73,10 @@ flex-grow:1;
   padding-left: 23px;
 }
 /* a 코드 호과*/
-/*#destent{
-  color: rgb(82,175,161);
-}*/
+#destent{
+  /*color: rgb(82,175,161);*/
+}
 #destent:hover{
-  color: #343434 !important;
+  /*color: #343434 !important;*/
     /*color: rgb(64,138,127);*/
 }

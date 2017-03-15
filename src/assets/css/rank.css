@@ -133,14 +133,5 @@ hr{
 .rant2{
   margin-top: 5px;
   font-size: 25px;
-  color: rgb(124,207,177)
+  color: rgb(124,207,177);
 }
-
-
-
- @media screen and (max-width:600px) {
-   .propol{
-     width: auto;
-      float: none;
-   }
- }
