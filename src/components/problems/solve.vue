@@ -15,7 +15,7 @@
                     <h3>문제 설명</h3>
                     <hr id="sub-hr">
                 </div>
-                <hr>
+                <!-- <hr> -->
                 <div class="solve_explain">
                     {{item.explanation}}
                 </div>
@@ -53,7 +53,7 @@
 
             </div>
             <div class="pageicon">
-              <a href="#"><i class="big reply icon"></i></a>
+              <a href="/problems"><i class="big reply icon"></i></a>
             </div>
         </div>
     </div>
@@ -244,4 +244,3 @@ export default {
 };
 </script>
 <style src="../../assets/css/solve.css" scoped></style>
-

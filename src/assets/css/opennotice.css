@@ -1,0 +1,66 @@
+hr{
+  margin-bottom: 20px;
+}
+.openNotice{
+  margin-top: 70px;
+  padding: 70px;
+  color: white;
+}
+.notipen{
+  border: 3px solid;
+  border-color: rgb(37,115,85);
+  width: 1040px;
+  height: 520px;
+  border-radius: 20px;
+  padding: 30px;
+  font-size: 17px;
+}
+.noti1{
+  width: 150px;
+  height: 70px;
+  margin-bottom: 10px;
+  margin-left: -2.3px;
+  border-radius: 0px 50px 50px 0px;
+  border: 3px solid;
+  border-color: rgb(37,115,85);
+  padding: 15px 5px 5px 22px;
+  font-size: 24px;
+}
+.noti2{
+  width: 200px;
+  height: 70px;
+  margin-left: -2.3px;
+  border-radius: 0px 50px 50px 0px;
+  border: 3px solid;
+  border-color: rgb(37,115,85);
+  padding: 10px;
+  padding-top: 22px;
+}
+.noti-head{
+  margin-bottom: 10px;
+  padding-left: 20px;
+  font-size: 23px;
+}
+.noti-main{
+  background: #f2f2f2;
+  color: black;
+  padding: 25px;
+  height: 395px;
+}
+.notipoll{
+  display: flex;
+}
+.noti-tag{
+  padding-top: 30px;
+}
+.big.reply.icon{
+  padding: 25px 0px 0px 10px;
+  margin-bottom: 20px;
+  color: rgb(80,153,140);
+  position: relative;
+  bottom: 0;
+  left: 0;
+}
+.big.reply.icon:hover{
+  color: rgb(52,115,104);
+}

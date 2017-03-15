@@ -6,7 +6,7 @@
             </ul>
             <ul id="submn">
               <li><router-link to="/notice" :class="{menu_show_font : scrolled > 200}">공지사항</router-link></li>
-              <li><a v-on:click="problemLoginCheck" :class="{menu_show_font : scrolled > 200}">리스트</a></li>
+              <li><a v-on:click="problemLoginCheck" :class="{menu_show_font : scrolled > 200}">문제</a></li>
               <li><a v-on:click="rankLoginCheck" :class="{menu_show_font : scrolled > 200}">랭킹</a></li>
               <li v-if="loginState">
                 <router-link v-if="userRating == 3" to="/admin" :class="{menu_show_font : scrolled > 200}">관리자페이지 - {{username}}님</router-link>
@@ -19,6 +19,7 @@
         <div v-if="loginState == false" id="sign">
             <div class="ui modal">
               <div class="conclo">
+                <!-- <a href="#"><i class="close icon" v-on:click="closeModal"></i></a> -->
                 <i class="close icon" v-on:click="closeModal"></i>
               </div>
                 <div class="login_form" v-if="signState">
@@ -441,4 +442,8 @@
 /*body{
   background-color: rgb(40,40,40);
 }*/
+<<<<<<< HEAD
 </style>
+=======
+</style>
+>>>>>>> 8614288358f360ce0d6afbc2d519d2ad8abe1099

@@ -2,7 +2,7 @@
     <div id="problems" v-if="entering">
         <div class="container">
             <h2 class="ui center aligned header"> 문제풀기
-                <div class="sub header">Manage your account settings and set e-mail preferences.</div>
+                <div class="sub header">프로그래밍 문제를 풀고 맞추어 보는 곳 입니다.</div>
             </h2>
             <div class="ui top attached tabular menu">
                 <a class="item active" data-tab="first" id="item">최근 문제</a>
@@ -10,29 +10,64 @@
                 <a class="item" data-tab="third">난이도</a>
                 <a class="item" data-tab="fourth" v-on:click="shuffle">랜덤문제</a>
             </div>
+            <div class="ui bottom attached tab segment active" :style="{ 'max-height': lineheight + 'px' }" data-tab="first">
+              <div class="ui items" id="mnit">
+                    <div class="item">
+                        <div class="content">
+                          <div class="ui top attached tabular menu" id="pob">
+                            <div class="ui grid">
+                              <div class="three wide column">
+                                <p id="ltemone">번호</p>
+                              </div>
+                              <div class="five wide column">
+                                <p id="ltemtwo">문제 이름</p>
+                              </div>
+                              <div class="two wide column">
+                                <p id="ltemthr">푼 횟수</p>
+                              </div>
+                              <div class="two wide column">
+                                <p id="ltemfou">정답자 수</p>
+                              </div>
+                              <div class="two wide column">
+                                <p id="ltemfiv">틀린사람 수</p>
+                              </div>
+                              <div class="two wide column">
+                                <p id="ltemsix">정답률</p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
             <div id="list" class="ui bottom attached tab segment active" :style="{ 'max-height': lineheight + 'px' , 'min-height' : lineheight + 'px', 'overflow': 'hidden'}" data-tab="first">
                 <transition-group name="flip-list, problemlist" tag="ul">
                 <div class="ui items" v-for="item in items" v-bind:key="item">
                     <div class="item">
                         <div class="content" v-on:click='result(item.num)'>
-                            <p class="header">
-                                <span>{{item.num}}</span>번 문제</p>
-                            <a  class="ui disabled header">
-                                이름 : <span>{{item.name}}</span>
-                            </a>
-                            <div class="description">
-                                <p>소스 : <span>{{item.source}}</span>
-                                난이도 : <span>난이도</span>
-                                점수 : <span>{{item.score}}</span>
-                                성공 : <span>{{item.success}}</span>
-                                실패 : <span>{{item.fail}}</span>
-                                정답률 : <span>{{item.ratio}}</span>
-                                </p>
+                          <div class="ui grid">
+                            <div class="three wide column">
+                              <p class="header"><span>{{item.num}}</span></p>
                             </div>
+                            <div class="five wide column">
+                              <a class="ui disabled header"><span>{{item.name}}</span></a>
+                            </div>
+                            <div class="eight wide column">
+                              <div class="description">
+                                <p>소스 : <span>{{item.source}}</span>
+                                  난이도 : <span>난이도</span>
+                                  점수 : <span>{{item.score}}</span>
+                                  성공 : <span>{{item.success}}</span>
+                                  실패 : <span>{{item.fail}}</span>
+                                  정답률 : <span>{{item.ratio}}</span>
+                                </p>
+                              </div>
+                            </div>
+                          </div>
                         </div>
                     </div>
                 </div>
                 </transition-group>
+            </div>
             </div>
             <a href="#"><i class="huge chevron circle up icon"></i></a>
             <button class="ui button"v-if="loadState" v-on:click="loadList"><i class="large chevron down icon" ></i></button>
@@ -291,4 +326,3 @@ export default {
 };
 </script>
 <style src="../../assets/css/problems.css" scoped></style>
-
