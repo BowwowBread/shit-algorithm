@@ -35,32 +35,38 @@
                   </transition-group>
               </div>
               <a href="#"><i class="huge chevron circle up icon"></i></a>
-              <button class="ui button"><i class="large chevron down icon"></i></button>
+              <button class="ui button"v-if="loadState" v-on:click="loadList"><i class="large chevron down icon" ></i></button>
           </div>
       </div>
   </div>
 </template>
 <script>
-    import { mapActions } from 'vuex';
-
+    let i = 0;
+    let end = 10;
+    let length;
     export default {
       name: 'notice',
       data() {
         return {
           notices: [],
           entering: false,
+          loadState: true,
         };
       },
       updated() {
         this.$store.dispatch('loadingOff');
-        console.log(this.$store.state.loadingState);
         this.$Progress.finish();
       },
       created() {
         this.$http.get('notices')
           .then((res) => {
-          let i = 0;
-          while (i < res.data.notices.length) {
+            i = 0;
+            length = res.data.notices.length;
+            console.log(length);
+            if (length < 10) {
+              end = length;
+            }
+            while (i < end) {
             let date = res.data.notices[i].date.replace('T', ', ');
             date = date.substring(0, date.length - 8);
             if (res.data.notices[i].type === 'notice') {
@@ -84,6 +90,36 @@
             path: `notices/${num}`,
           });
         },
+        loadList() {
+          this.$http.get('notices')
+            .then((res) => {
+              i = end;
+              end += 10;
+              if (i / 10 === parseInt(length / 10, 10)) {
+                end = length;
+                this.loadState = false;
+              } else if (end === length) {
+                this.loadState = false;
+              }
+              while (i < end) {
+                this.notices.push({
+                  num: res.data.notices[i].num,
+                  noticename: res.data.notices[i].noticeName,
+                });
+                i += 1;
+              }
+            })
+            .catch((err) => {
+              this.$swal({
+                  title: '공지 로드 실패',
+                  text: err,
+                  type: 'error',
+                })
+                .then(() => {
+                  location.href = '/';
+                });
+            });
+        },
       },
     };
 </script>
@@ -97,23 +133,4 @@
       background-color: rgb(40,40,40) !important;
     }
 </style>
-<!-- <template>
-    <div id="notice">
-        <div class="ui bottom attached tab segment active" data-tab="first">
-            <transition-group name="noticeList">
-                <div class="ui items" v-for="notice in notices" v-bind:key="notices">
-                    <div class="item">
-                        <div class="content" v-on:click='open(notice.num)'>
-                            <p class="header">
-                                <span>{{notice.num}}</span>번 </p>
-                            <a  class="ui disabled header">
-                                이름 : <span>{{notice.noticename}}</span>
-                                날짜 : <span>{{notice.date}}</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </transition-group>
-        </div>
-    </div>
-</template> -->
+
