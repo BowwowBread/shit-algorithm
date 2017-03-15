@@ -80,7 +80,7 @@
             <div class="ui middle aligned animated list">
               <div class="item">
                 <div class="content">
-                  <div class="header"><a href="#">문제</a></div>
+                  <div class="header"><router-link to="/problems">문제</router-link></div>
                 </div>
               </div>
               <div class="item">
@@ -112,7 +112,7 @@
             <div class="ui middle aligned animated list">
               <div class="item">
                 <div class="content">
-                  <div class="header"><a href="#">랭킹</a></div>
+                  <div class="header"><router-link to="/rank">랭킹</router-link></div>
                 </div>
               </div>
               <div class="item">
@@ -135,7 +135,7 @@
               <p> 불편한점이나 개선되어야할 점, 버그 등은 문의해주세요.</p>
             </div>
             <div class="ui list">
-              <a class="item" href="#" id="saws">문의 하기</a>
+              <a class="item" href="https://www.facebook.com/%EC%84%9C%EC%9A%B8%EC%95%84%EC%9D%B4%ED%8B%B0%EA%B3%A0%EB%93%B1%ED%95%99%EA%B5%90-SIGO-1529061383780127/" id="saws">문의 하기</a>
             </div>
           </div>
         </div>
@@ -144,19 +144,12 @@
     <div class="footsub">
       <div class="fosub">
         <div class="ddd">
-          <a href="#"><i class="big facebook icon"></i></a>
-          <a href="#"><i class="big github icon"></i></a>
-          <a href="#"><i class="big twitter icon"></i></a>
-          <a href="#"><i class="big youtube icon"></i></a>
-          <a href="#"><i class="big google Plus icon"></i></a>
+          <a href="https://www.facebook.com/%EC%84%9C%EC%9A%B8%EC%95%84%EC%9D%B4%ED%8B%B0%EA%B3%A0%EB%93%B1%ED%95%99%EA%B5%90-SIGO-1529061383780127/"><i class="big facebook icon"></i></a>
+          <a href="https://github.com/shitKorea/shit-algorithm"><i class="big github icon"></i></a>
         </div>
         <div class="ccc">
           <p>2017 SiGO. All rights reserved.</p>
         </div>
-        <!-- <div class="oll">
-            <p>© 2017 All Rights Reserved. <br> 프로젝트 이름: shit<br> 이 사이트는 저작권은 shit 한테 있고, shit의 허락을 받거나 출처를 남기며 퍼가세요.<br> seoul it high school 2017.
-          </p>
-        </div> -->
       </div>
     </div>
   </div>
@@ -167,23 +160,9 @@
     name: 'sigo',
     data() {
       return {
-        userCount: '',
-        timeline: [],
       };
     },
     created() {
-//      this.$http.get('solution')
-//        .then((res) => {
-//          let i = 0;
-//          while (i < 3) {
-//            this.timeline.push({
-//              name: res.data.resolves[i].
-//            })
-//          }
-//        })
-//        .catch((err) => {
-//          console.log(err);
-//        });
     },
   };
 </script>
