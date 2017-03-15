@@ -10,25 +10,28 @@
                         <div class="rankge1">
                             <img src="image1.jpg">
                         </div>
-                        <p class="rant1">Seil</p>
+                        <p class="rant1">2등</p>
                         <hr>
-                        <p class="rant2">MASTER</p>
+                        <p class="rant2">{{ranker[1].name}}</p>
+                        <p class="rant2">2st</p>
                     </div>
                     <div class="rank2">
                         <div class="rankge2">
                             <img src="image1.jpg">
                         </div>
-                        <p class="rant1">Pices</p>
+                        <p class="rant1">1등</p>
                         <hr>
-                        <p class="rant2">KING</p>
+                        <p class="rant2">{{ranker[0].name}}</p>
+                        <p class="rant2">1st</p>
                     </div>
                     <div class="rank3">
                         <div class="rankge3">
                             <img src="image1.jpg">
                         </div>
-                        <p class="rant1">Center</p>
+                        <p class="rant1">3등</p>
                         <hr>
-                        <p class="rant2">HERO</p>
+                        <p class="rant2">{{ranker[2].name}}</p>
+                        <p class="rant2">3st</p>
                     </div>
                 </div>
                 <div class="ui top attached tabular menu">
@@ -39,9 +42,20 @@
                         <div class="item">
                             <div class="content">
                                 <div class="ui top attached tabular menu" id="pob" >
-                                    <p id="ltemone" class="item">등수</p>
-                                    <p id="ltemtwo" class="item">이름</p>
-                                    <p id="ltemthr" class="item">점수</p>
+                                    <div class="ui grid">
+                                        <div class="two wide column">
+                                            <p id="ltemone" class="item">등수</p>
+                                        </div>
+                                        <div class="four wide column">
+                                            <p id="ltemtwo" class="item">학번</p>
+                                        </div>
+                                        <div class="five wide column">
+                                            <p id="ltemthr" class="item">이름</p>
+                                        </div>
+                                        <div class="five wide column">
+                                            <p id="ltemfou" class="item">점수</p>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -50,7 +64,7 @@
                         <div class="ui items">
                             <div class="item">
                                 <div class="content" >
-                                    <p class="header" id="pollist"><span>{{rank}}</span>등</p>
+                                    <p class="header" id="pollist"><span>{{rank + 1}}</span>등</p>
                                     <p class="ui disabled header"><span>{{user.name}}</span></p>
                                     <p class="sub header" id="subder"><span>{{user.score}}</span></p>
                                 </div>
@@ -75,9 +89,11 @@
     data() {
       return {
         userToken: '',
-        users: [],
+        data: [],
         loadState: true,
         entering: false,
+        ranker: [],
+        users: [],
       };
     },
     created() {
@@ -98,26 +114,49 @@
             this.userid = resInfo.data.user.userId;
             this.$http.get('users')
               .then((res) => {
-                console.log(res);
+                i = 0;
                 length = res.data.users.length;
                 if (length < 10) {
                   end = length;
                 }
-                while (i < end) {
-                  this.users.push({
+                while (i < length) {
+                  this.data.push({
                     name: res.data.users[i].username,
                     score: res.data.users[i].score,
                   });
                   i += 1;
                 }
                 const sort = 'score';
-                this.users.sort(function (a, b) {
+                this.data.sort(function (a, b) {
                   return b[sort] - a[sort];
                 });
+                i = 0;
+                while (i < end) {
+                  this.users.push({
+                    name: this.data[i].name,
+                    score: this.data[i].score,
+                  });
+                  i += 1;
+                }
+                i = 0;
+                while (i < 3) {
+                  this.ranker.push({
+                    name: this.users[i].name,
+                    score: this.users[i].score,
+                  });
+                  i += 1;
+                }
                 this.entering = true;
               })
               .catch((err) => {
-                console.log(err);
+                this.$swal({
+                    title: '유저 정보 조회 실패',
+                    text: err,
+                    type: 'error',
+                  })
+                  .then(() => {
+                    location.href = '/';
+                  });
               });
           })
           .catch((error) => {
@@ -141,11 +180,13 @@
           });
       }
     },
+    updated() {
+      this.$Progress.finish();
+    },
     methods: {
       loadList() {
         this.$http.get('users')
           .then((res) => {
-            console.log(res);
             i = end;
             end += 10;
             if (i / 10 === parseInt(length / 10, 10)) {
@@ -154,20 +195,25 @@
             } else if (end === length) {
               this.loadState = false;
             }
+            console.log(i);
+            console.log(end);
             while (i < end) {
               this.users.push({
-                name: res.data.users[i].username,
-                score: res.data.users[i].score,
+                name: this.data[i].name,
+                score: this.data[i].score,
               });
               i += 1;
             }
-            const sort = 'score';
-            this.users.sort(function (a, b) {
-              return b[sort] - a[sort];
-            });
           })
           .catch((err) => {
-            console.log(err);
+            this.$swal({
+                title: '유저 로드 실패',
+                text: err,
+                type: 'error',
+              })
+              .then(() => {
+                location.href = '/';
+              });
           });
       },
     },

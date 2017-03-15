@@ -53,7 +53,8 @@
               this.num = res.data.notice.num;
               this.name = res.data.notice.noticeName;
               this.contents = res.data.notice.contents;
-              this.date = res.data.notice.date;
+              this.date = res.data.notice.date.replace('T', ', ');
+              this.date = this.date.substring(0, this.date.length - 8);
               this.entering = true;
           })
           .catch((err) => {
