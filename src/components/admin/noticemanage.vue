@@ -178,7 +178,6 @@ export default{
         });
     },
     addNotice() {
-      console.log('add');
       this.$http.post('notices', {
         noticename: this.name,
         contents: this.content,

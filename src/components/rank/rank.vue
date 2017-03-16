@@ -98,13 +98,6 @@
         users: [],
       };
     },
-    created() {
-      this.userToken = this.$cookie.get('userToken');
-      if (this.userToken == null) {
-        alert('로그인 해주세요');
-        location.href = '/';
-      }
-    },
     beforeCreate() {
       //          토큰 테스트
       this.userToken = this.$cookie.get('userToken');
@@ -200,8 +193,6 @@
             } else if (end === length) {
               this.loadState = false;
             }
-            console.log(i);
-            console.log(end);
             while (i < end) {
               this.users.push({
                 name: this.data[i].name,

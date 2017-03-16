@@ -64,7 +64,6 @@
           .then((res) => {
             i = 0;
             length = res.data.notices.length;
-            console.log(length);
             if (length < 10) {
               end = length;
             }
@@ -83,7 +82,11 @@
           this.entering = true;
         })
       .catch((err) => {
-          alert(err);
+          this.$swal({
+            title: '공지 로드 실패',
+            text: err,
+            type: 'error',
+          });
         });
       },
       methods: {

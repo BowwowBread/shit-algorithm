@@ -194,7 +194,6 @@
         if (to.name !== 'index') {
           setTimeout(() => {
           this.$store.commit('loadingOn');
-          console.log('aaaas'); 
           }, 1000);  
         }
 		    this.$Progress.start();

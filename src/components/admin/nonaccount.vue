@@ -28,7 +28,6 @@
     },
     created() {
       this.userToken = this.$cookie.get('userToken');
-      console.log(this.userToken);
       this.getMember();
     },
   updated() {
@@ -42,7 +41,6 @@
         this.$http.defaults.headers.common.Authorization = this.userToken;
         this.$http.get(`users/account/${userid}`)
         .then((res) => {
-          console.log(res);
           this.$swal({
             title: '승인 완료',
             text: `${userid}님을 승인하였습니다`,

@@ -84,7 +84,6 @@ export default {
                 this.studentcode = resInfo.data.user.studentCode;
                 this.$http.get(`solution/resultsuccess/${userid}`)
                   .then((res) => {
-                    console.log(res);
                     this.entering = true;
                 })
                   .catch((err) => {
