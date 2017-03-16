@@ -1,5 +1,5 @@
 <template>
-    <div id="index">
+    <div id="index" style="margin-bottom:1000px;">
         <div class="sigo_container">
             <parallax></parallax>
             <!--<menubar></menubar>-->

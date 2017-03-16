@@ -208,3 +208,19 @@
         justify-content: center;
         align-items: center;
     }
+.spinner-enter-active {
+    transition: all 2s ease;
+}
+
+.spinner-leave-active {
+    transition: all .5s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+
+.spinner-enter,
+.spinner-leave-to
+/* .slide-fade-leave-active for <2.1.8 */
+
+{
+    transform: scale(5);
+    opacity: 0;
+}

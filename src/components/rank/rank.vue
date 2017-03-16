@@ -11,7 +11,7 @@
                             <img src="image1.jpg">
                         </div>
                         <p class="rant1">2등</p>
-                        <hr>
+                        <hr> 
                         <p class="rant2">{{ranker[1].name}}</p>
                         <p class="rant2">2st</p>
                     </div>
