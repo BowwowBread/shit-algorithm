@@ -1,8 +1,6 @@
 body {
-  background-color: rgb(40,40,40) !important;
-  /*color: white;*/
+    background-color: rgb(40,40,40) !important;
 }
-
 img.medium.ui.image {
     width: 440px;
     height: 225px;

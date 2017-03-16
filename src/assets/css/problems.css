@@ -136,11 +136,16 @@ body{
 
 .description {
     flex-grow: 1;
+    padding-left: 5px;
     margin: 0 !important;
     color: black;
-    font-size: 14px;
+    font-size: 16px;
 }
-
+.description .ui.grid .four.wide.column{
+}
+.description .ui.grid {
+  width: 100%;
+}
 .ui.center.aligned.header {
     margin-bottom: 60px;
 }

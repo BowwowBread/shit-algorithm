@@ -52,15 +52,17 @@
         };
       },
       updated() {
+        this.$store.dispatch('loadingOff');
+        console.log(this.$store.state.loadingState);
         this.$Progress.finish();
       },
       created() {
         this.$http.get('notices')
           .then((res) => {
           let i = 0;
-          console.log(res);
           while (i < res.data.notices.length) {
-            const date = res.data.notices[i].date.replace('T', ', ');
+            let date = res.data.notices[i].date.replace('T', ', ');
+            date = date.substring(0, date.length - 8);
             if (res.data.notices[i].type === 'notice') {
               this.notices.push({
                 num: res.data.notices[i].num,

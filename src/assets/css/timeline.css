@@ -110,6 +110,9 @@ a.header:hover {
     border-radius: 0px 0px 4px 4px;
     background-color: white;
 }
+.fluid.ui.button a{
+  color: rgb(121,121,121);
+}
 
 .navlist:hover {
     background-color: rgb(249, 249, 249);
@@ -208,7 +211,7 @@ div.one {
 }
 
 .ddd {
-    margin-left: 42%;
+    margin-left: 47%;
 }
 
 .ccc {

@@ -76,7 +76,9 @@ export default {
       scanf: null,
       codeResult: '',
       compileResult: '',
-      code: '',
+      code: `int main() {
+      //코드를 입력해주세요
+}`,
       runState: false,
       runMsg: '실행 결과가 이곳에 나타납니다',
       options: {
@@ -152,7 +154,6 @@ export default {
     },
     onCodeChange(editor) {
       this.code = editor.getValue();
-      console.log(this.code);
     },
     codeReset() {
       this.editor.setValue('');
