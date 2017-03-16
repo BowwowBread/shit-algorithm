@@ -238,8 +238,8 @@ export default {
         })
         .catch((err) => {
         this.$swal({
-                title: '문제 제출 실패',
-                text: err,
+                title: '실패',
+                text: '다시 도전해 보세요',
                 type: 'error',
             });
         });

@@ -59,12 +59,12 @@ export default new Router({
     },
     {
       path: '/404',
-      name: '404',
+      name: 'notfound',
       component: notFound,
     },
     {
       path: '/*',
-      redirect: { name: '404' },
+      redirect: { name: 'notfound' },
     },
   ],
 });

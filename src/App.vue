@@ -1,134 +1,150 @@
 <template>
-    <div id="app">
-        <div id="menu" class="ui secondary menu" v-bind:class="{menu_show: scrollMenu }">
-            <ul id="mainmn">
-                <li><router-link to="/" :class="{menu_show_font : scrolled > 200}">{{$store.state.loadingState}}</router-link></li>
-            </ul>
-            <ul id="submn">
-              <li><router-link to="/notice" :class="{menu_show_font : scrolled > 200}">공지사항</router-link></li>
-              <li><a v-on:click="problemLoginCheck" :class="{menu_show_font : scrolled > 200}">문제</a></li>
-              <li><a v-on:click="rankLoginCheck" :class="{menu_show_font : scrolled > 200}">랭킹</a></li>
-              <li v-if="loginState">
-                <router-link v-if="userRating == 3" to="/admin" :class="{menu_show_font : scrolled > 200}">관리자페이지 - {{username}}님</router-link>
-                <router-link v-else to="/mypage" :class="{menu_show_font : scrolled > 200}">{{username}}님</router-link>
-                <a @click="logout" :class="{menu_show_font : scrolled > 200}">로그아웃</a>
-              </li>
-                <li v-if="loginState == false"><a @click="openModal" :class="{menu_show_font : scrolled > 200}">SIGN</a></li>
-            </ul>
-        </div>
-        <div v-if="loginState == false" id="sign">
-            <div class="ui modal">
-              <!-- <div class="conclo">
+  <div id="app">
+    <div id="menu" class="ui secondary menu" v-bind:class="{menu_show: scrollMenu }">
+      <ul id="mainmn">
+        <li>
+          <router-link to="/" :class="{menu_show_font : scrolled > 200}">
+            <img src="./assets/img/logo.png" alt="" style="width:10%; height:10%; padding-top:50px;">
+          </router-link>
+        </li>
+      </ul>
+      <ul id="submn">
+        <li>
+          <router-link to="/notice" :class="{menu_show_font : scrolled > 200}">공지사항</router-link>
+        </li>
+        <li>
+          <a v-on:click="problemLoginCheck" :class="{menu_show_font : scrolled > 200}">문제</a>
+        </li>
+        <li>
+          <a v-on:click="rankLoginCheck" :class="{menu_show_font : scrolled > 200}">랭킹</a>
+        </li>
+        <li v-if="loginState">
+          <router-link v-if="userRating == 3" to="/admin" :class="{menu_show_font : scrolled > 200}">관리자페이지 - {{username}}님</router-link>
+          <router-link v-else to="/mypage" :class="{menu_show_font : scrolled > 200}">{{username}}님</router-link>
+          <a @click="logout" :class="{menu_show_font : scrolled > 200}">로그아웃</a>
+        </li>
+        <li v-if="loginState == false">
+          <a @click="openModal" :class="{menu_show_font : scrolled > 200}">로그인</a>
+        </li>
+      </ul>
+    </div>
+    <div v-if="loginState == false" id="sign">
+      <div class="ui modal">
+        <!-- <div class="conclo">
                 <i class="close icon" v-on:click="closeModal"></i>
               </div> -->
-                <div class="login_form" v-if="signState">
-                    <div class="description">
-                        <div class="ui two column centered grid">
-                            <div class="container">
-                                <div class="culnmn">
-                                  <div class="signhead">
-                                    <h1 class="ui grey header">로그인</h1>
-                                  </div>
-                                    <form class="ui large form">
-                                        <div class="field">
-                                            <div class="ui left icon input">
-                                                <i class="user icon"></i>
-                                                <input type="text" name="userid" placeholder="아이디" v-model="userid" v-on:keydown.enter="submit">
-                                            </div>
-                                        </div>
-                                        <div class="field">
-                                            <div class="ui left icon input">
-                                                <i class="lock icon"></i>
-                                                <input type="password" name="password" placeholder="비밀번호" v-model="password" v-on:keydown.enter="submit">
-                                            </div>
-                                        </div>
-                                        <button type="button" v-on:click="submit" class="ui fluid large teal submit button submitButton">
-                                            로그인
-                                        </button>
-                                    </form>
-                                    <button v-on:click="signState = false" class="ui button black signButton">
-                                        회원가입하기
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
+        <div class="login_form" v-if="signState">
+          <div class="description">
+            <div class="ui two column centered grid">
+              <div class="container">
+                <div class="culnmn">
+                  <div class="signhead">
+                    <h1 class="ui grey header">로그인</h1>
+                  </div>
+                  <form class="ui large form">
+                    <div class="field">
+                      <div class="ui left icon input">
+                        <i class="user icon"></i>
+                        <input type="text" name="userid" placeholder="아이디" v-model="userid" v-on:keydown.enter="submit">
+                      </div>
                     </div>
-                </div>
-                <div class="register_form" v-else>
-                    <div class="description">
-                        <div class="ui two column centered grid">
-                            <div class="container">
-                                <div class="culnmn">
-                                  <div class="signhead">
-                                    <h1 class="ui grey header">회원가입</h1>
-                                  </div>
-                                    <form class="ui large form">
-                                        <div class="field">
-                                            <div class="ui left icon input">
-                                                <i class="user icon"></i>
-                                                <input type="text" name="userid" placeholder="아이디" v-model="userid" v-on:keydown.enter="submit">
-                                            </div>
-                                        </div>
-                                        <div class="field">
-                                            <div class="ui left icon input">
-                                                <i class="lock icon"></i>
-                                                <input type="password" name="password" placeholder="비밀번호" v-model="password"v-on:keydown.enter="submit">
-                                            </div>
-                                        </div>
-                                        <div class="field">
-                                            <div class="ui left icon input">
-                                                <i class="user icon"></i>
-                                                <input type="text" name="username" placeholder="이름" v-model="username"v-on:keydown.enter="submit">
-                                            </div>
-                                        </div>
-                                        <div class="field">
-                                            <div class="ui left icon input">
-                                                <i class="student icon"></i>
-                                                <input type="text" name="studentcode" placeholder="학번" v-model="studentcode" v-on:keydown.enter="submit" v-on:keypress="isNumber(event)">
-                                            </div>
-                                        </div>
-                                        <div class="field">
-                                            <div class="ul left icon input">
-                                                <div class="lock icon">
-                                                    <vue-recaptcha sitekey="6LejvBgUAAAAAE_F7SjXLPzPiyroAqAdXvBhk7IG"></vue-recaptcha>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div id="html_element" ></div>
-                                        <div v-on:click="submit" v-on:keyup.enter="submit" class="ui fluid large teal submit button submitButton">
-                                            회원가입
-                                        </div>
-                                    </form>
-                                    <button v-on:click="signState = true" class="ui button black signButton">
-                                        로그인하기
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
+                    <div class="field">
+                      <div class="ui left icon input">
+                        <i class="lock icon"></i>
+                        <input type="password" name="password" placeholder="비밀번호" v-model="password" v-on:keydown.enter="submit">
+                      </div>
                     </div>
-
+                    <button type="button" v-on:click="submit" class="ui fluid large teal submit button submitButton">
+                      로그인
+                    </button>
+                  </form>
+                  <button v-on:click="signState = false" class="ui button black signButton">
+                    회원가입하기
+                  </button>
                 </div>
-
+              </div>
             </div>
+          </div>
         </div>
-        <vue-progress-bar></vue-progress-bar>
-        <transition name="spinner" mode="out-in">
-        <div class="openSpinner" v-if="loadingState">
-            <bounce-loader :loading="loading"></bounce-loader>
+        <div class="register_form" v-else>
+          <div class="description">
+            <div class="ui two column centered grid">
+              <div class="container">
+                <div class="culnmn">
+                  <div class="signhead">
+                    <h1 class="ui grey header">회원가입</h1>
+                  </div>
+                  <form class="ui large form">
+                    <div class="field">
+                      <div class="ui left icon input">
+                        <i class="user icon"></i>
+                        <input type="text" name="userid" placeholder="아이디" v-model="userid" v-on:keydown.enter="submit">
+                      </div>
+                    </div>
+                    <div class="field">
+                      <div class="ui left icon input">
+                        <i class="lock icon"></i>
+                        <input type="password" name="password" placeholder="비밀번호" v-model="password" v-on:keydown.enter="submit">
+                      </div>
+                    </div>
+                    <div class="field">
+                      <div class="ui left icon input">
+                        <i class="user icon"></i>
+                        <input type="text" name="username" placeholder="이름" v-model="username" v-on:keydown.enter="submit">
+                      </div>
+                    </div>
+                    <div class="field">
+                      <div class="ui left icon input">
+                        <i class="student icon"></i>
+                        <input type="text" name="studentcode" placeholder="학번" v-model="studentcode" v-on:keydown.enter="submit" v-on:keypress="isNumber(event)">
+                      </div>
+                    </div>
+                    <div class="field">
+                      <div class="ul left icon input">
+                        <div class="lock icon">
+                          <vue-recaptcha sitekey="6LejvBgUAAAAAE_F7SjXLPzPiyroAqAdXvBhk7IG"></vue-recaptcha>
+                        </div>
+                      </div>
+                    </div>
+                    <div id="html_element"></div>
+                    <div v-on:click="submit" v-on:keyup.enter="submit" class="ui fluid large teal submit button submitButton">
+                      회원가입
+                    </div>
+                  </form>
+                  <button v-on:click="signState = true" class="ui button black signButton">
+                    로그인하기
+                  </button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
         </div>
-        </transition>
-        <transition name="sigoPage" mode="out-in">
-      <router-view></router-view>
-      </transition>
-        </div>
+
+      </div>
     </div>
+    <vue-progress-bar></vue-progress-bar>
+    <transition name="spinner" mode="out-in">
+      <div class="openSpinner" v-if="loadingState">
+        <bounce-loader :loading="loading"></bounce-loader>
+      </div>
+    </transition>
+    <transition name="sigoPage" mode="out-in">
+      <router-view></router-view>
+    </transition>
+  </div>
+  </div>
 </template>
 
 <script>
   import VueRecaptcha from 'vue-recaptcha';
   import BounceLoader from 'vue-spinner/src/BounceLoader.vue';
-  import { mapActions, mapGetters, mapMutations } from 'vuex';
+  import {
+    mapActions,
+    mapGetters,
+    mapMutations,
+  } from 'vuex';
 
   export default {
     components: {
@@ -188,50 +204,61 @@
         return this.$store.state.loadingState;
       },
     },
-    created() {
-      this.$router.beforeEach((to, from, next) => {
-		    if (to.meta.progress !== undefined) {
-			    const meta = to.meta.progress;
-			    this.$Progress.parseMeta(meta);
-		    }
-        if (to.name !== 'index') {
-          this.$store.commit('loadingOn');
-        }
-		    this.$Progress.start();
-            next();
-        });
-      this.$Progress.finish();
+    beforeCreate() {
+      this.$Progress.start();
+      if (this.$route.name !== 'index') {
+        this.$store.commit('loadingOn');
+      }
       const ROOT_URL = 'https://algorithm.ayanami.kr/api';
       this.$http.defaults.baseURL = ROOT_URL;
-//      토큰 테스트
+      //      토큰 테스트
       this.userToken = this.$cookie.get('userToken');
       if (this.userToken != null) {
         this.userToken = this.$cookie.get('userToken');
         this.$http.defaults.headers.common.Authorization = this.userToken;
         this.$http.get('users/my-info')
           .then((resInfo) => {
-              this.userRating = resInfo.data.user.rating;
-              this.username = resInfo.data.user.username;
-              this.loginState = true;
+            this.userRating = resInfo.data.user.rating;
+            this.username = resInfo.data.user.username;
+            this.loginState = true;
           })
           .catch((error) => {
-	          this.$swal({
-			          title: '유저 조회 실패',
-			          text: error,
-			          type: 'error',
-		          });
+            this.$swal({
+              title: '유저 조회 실패',
+              text: error,
+              type: 'error',
+            });
           });
       }
+      this.$router.beforeEach((to, from, next) => {
+        next();
+        if (to.name !== 'index') {
+          this.$store.commit('loadingOn');
+        }
+        this.$Progress.start();
+        setInterval(() => {
+          if (this.$store.state.loadingState === true) {
+            this.$swal({
+                title: '오류 발생',
+                text: '메인페이지로 이동합니다',
+                type: 'error',
+              })
+              .then(() => {
+                location.href = '/';
+              });
+          }
+        }, 3000);
+      });
       window.addEventListener('scroll', this.scrollFunction);
     },
     destroyed() {
       window.removeEventListener('scroll', this.scrollFunction);
     },
     methods: {
-    ...mapActions([
-      'loadingOn',
-      'loadingOff',
-    ]),
+      ...mapActions([
+        'loadingOn',
+        'loadingOff',
+      ]),
       scrollFunction() {
         this.scrolled = window.scrollY;
         if (this.scrolled > 200) {
@@ -286,8 +313,7 @@
           title: '로그아웃합니다',
           text: '이 상자는 2초후에 사라집니다',
           timer: 2000,
-        },
-        );
+        });
         this.cookieDel();
         this.$router.push({
           name: 'index',
@@ -299,7 +325,7 @@
         $('.ui.modal').modal('show');
       },
       closeModal() {
-          $('.ui.modal').modal('hide');
+        $('.ui.modal').modal('hide');
       },
       onloadCallback() {
         alert('grecaptcha is ready!');
@@ -316,95 +342,95 @@
       submit() {
         let errMsg;
         if (this.signState === true) {
-              this.$http.post('users/signin', {
-                userid: this.userid,
-                password: this.password,
-              })
-              .then((resSign) => {
-                this.userToken = resSign.data.token;
-                this.$http.defaults.headers.common.Authorization = this.userToken;
-                // 헤더 토큰 등록
-                this.$http.get('users/my-info')
-                  // 로그인 성공
-                  .then((resInfo) => {
-                    if (resInfo.status === 200) {
-                      this.loginState = true;
-                      this.username = resInfo.data.user.username;
-                      this.closeModal();
-                      this.loginState = true;
-                      this.userRating = resInfo.data.user.rating;
-                      // Cookie : 이름 , 내용 , 만료기간 , 도메인
-                      this.$cookie.set('userToken', this.userToken, 1);
-                      // 쿠키 값 출력
-                      this.$swal(
-                        '로그인 성공',
-                        '안녕하세요!',
-                        'success',
-                      );
-                    }
-                  })
-                  // 토큰인증 실패
-                  .catch((err) => {
-                      this.closeModal();
-                      this.$swal({
-                        title: '로그인 실패',
-                        text: err,
-                        type: 'error',
-                    });
-                  });
-              })
-              .catch((err) => {
-                if (err.response.data.message === 'account false') {
-                    errMsg = '관리자의 승인을 기다려주세요';
-                } else if (err.response.data.message === 'login fail') {
-                    errMsg = '아이디 또는 비밀번호가 잘못되었습니다';
-                } else if (err.response.data.message === 'validation error') {
-                    errMsg = '정보를 모두 입력해주세요';
-                } else if (err.response.data.message === 'fail rating excess') {
-                    errMsg = '5회 이상 틀려 확인정보를 입력해 주세요';
-                    this.infoSubmit = true;
-                }
-                  this.$swal({
-                      title: '로그인 실패',
-                      text: errMsg,
-                      type: 'error',
-                  })
-                    .then(() => {
-                      if (this.infoSubmit === true) {
-                        this.failReset();
-                        this.infoSubmit = '';
-                      }
-                    });
-              });
-            } else {
-              // 회원가입
-                this.$http.post('users/signup', {
-                username: this.username,
-                userid: this.userid,
-                password: this.password,
-                studentcode: this.studentcode,
-              })
-              .then((resRegister) => {
-                  this.closeModal();
-                  const username = resRegister.data.username;
-                this.$swal({
-                  title: '회원가입 성공',
-                  text: `안녕하세요 ${username}님`,
-                  type: 'success',
-                });
-              })
-              .catch((error) => {
-                this.closeModal();
-                if (error.response.data.message === 'validation error') {
-                  errMsg = '정보를 제대로 기입해주세요';
+          this.$http.post('users/signin', {
+              userid: this.userid,
+              password: this.password,
+            })
+            .then((resSign) => {
+              this.userToken = resSign.data.token;
+              this.$http.defaults.headers.common.Authorization = this.userToken;
+              // 헤더 토큰 등록
+              this.$http.get('users/my-info')
+                // 로그인 성공
+                .then((resInfo) => {
+                  if (resInfo.status === 200) {
+                    this.loginState = true;
+                    this.username = resInfo.data.user.username;
+                    this.closeModal();
+                    this.loginState = true;
+                    this.userRating = resInfo.data.user.rating;
+                    // Cookie : 이름 , 내용 , 만료기간 , 도메인
+                    this.$cookie.set('userToken', this.userToken, 1);
+                    // 쿠키 값 출력
+                    this.$swal(
+                      '로그인 성공',
+                      '안녕하세요!',
+                      'success',
+                    );
                   }
+                })
+                // 토큰인증 실패
+                .catch((err) => {
+                  this.closeModal();
                   this.$swal({
-                    title: '회원가입 실패',
-                    text: errMsg,
+                    title: '로그인 실패',
+                    text: err,
                     type: 'error',
                   });
+                });
+            })
+            .catch((err) => {
+              if (err.response.data.message === 'account false') {
+                errMsg = '관리자의 승인을 기다려주세요';
+              } else if (err.response.data.message === 'login fail') {
+                errMsg = '아이디 또는 비밀번호가 잘못되었습니다';
+              } else if (err.response.data.message === 'validation error') {
+                errMsg = '정보를 모두 입력해주세요';
+              } else if (err.response.data.message === 'fail rating excess') {
+                errMsg = '5회 이상 틀려 확인정보를 입력해 주세요';
+                this.infoSubmit = true;
+              }
+              this.$swal({
+                  title: '로그인 실패',
+                  text: errMsg,
+                  type: 'error',
+                })
+                .then(() => {
+                  if (this.infoSubmit === true) {
+                    this.failReset();
+                    this.infoSubmit = '';
+                  }
+                });
+            });
+        } else {
+          // 회원가입
+          this.$http.post('users/signup', {
+              username: this.username,
+              userid: this.userid,
+              password: this.password,
+              studentcode: this.studentcode,
+            })
+            .then((resRegister) => {
+              this.closeModal();
+              const username = resRegister.data.username;
+              this.$swal({
+                title: '회원가입 성공',
+                text: `안녕하세요 ${username}님`,
+                type: 'success',
               });
-            }
+            })
+            .catch((error) => {
+              this.closeModal();
+              if (error.response.data.message === 'validation error') {
+                errMsg = '정보를 제대로 기입해주세요';
+              }
+              this.$swal({
+                title: '회원가입 실패',
+                text: errMsg,
+                type: 'error',
+              });
+            });
+        }
       },
       failReset() {
         this.$swal.setDefaults({
@@ -436,23 +462,24 @@
             })
             .catch(() => {
               this.$swal({
-                title: '확인 실패하였습니다',
-                text: '다시 시도해주세요',
-                type: 'error',
-              })
-              .then(() => {
-                this.failReset();
-              });
+                  title: '확인 실패하였습니다',
+                  text: '다시 시도해주세요',
+                  type: 'error',
+                })
+                .then(() => {
+                  this.failReset();
+                });
             });
         });
       },
-  },
+    },
   };
 </script>
 <style src="./assets/css/app.css" scoped>
+
 </style>
 <style>
-    body {
-        background-color: rgb(40, 40, 40) !important;
-    }
+  body {
+    background-color: rgb(40, 40, 40) !important;
+  }
 </style>
