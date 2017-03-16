@@ -29,12 +29,12 @@
     created() {
       this.ratio();
     },
-    beforeCreate() {
-      this.$Progress.start();
-    },
-    updated() {
+  updated() {
+    this.$nextTick(() => {
+      this.$store.commit('loadingOff');
       this.$Progress.finish();
-    },
+    });
+  },
     methods: {
       ratio() {
         this.userToken = this.$cookie.get('userToken');

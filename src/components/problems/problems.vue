@@ -88,9 +88,6 @@ export default {
       lineheight: '',
     };
   },
-  updated() {
-    this.$Progress.finish();
-  },
   created() {
     i = 0;
     end = 10;
@@ -204,6 +201,12 @@ export default {
 		    location.href = '/';
         });
     }
+  },
+  updated() {
+    this.$nextTick(() => {
+      this.$store.commit('loadingOff');
+      this.$Progress.finish();
+    });
   },
   methods: {
     shuffle() {

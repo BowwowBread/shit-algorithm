@@ -38,25 +38,24 @@
 
 .content {
     display: flex !important;
+    margin-bottom: 12px !important;
 }
 .propol{
-  margin-left: 10px;
+  margin-left: -25px;
 }
-/*#ltemone{
+#ltemone{
     padding-left: 17px;
     flex: 2;
-    justify-content: center;
 
 }
 #ltemtwo{
-    flex:3;
-    justify-content: center;
+    flex:6;
+    margin-right: 20px
 
 }
 #ltemthr{
-    flex:5;
-    justify-content: center;
-}*/
+    flex:3;
+}
 #pob p {
     margin: 0;
 }
@@ -71,13 +70,16 @@
     color: black !important
 }
 #pollist{
-
+  display: flex !important;
+  flex: 2.1;
 }
 .ui.disabled.header{
-
+  display: flex !important;
+  flex: 4.5;
 }
 #subder{
-
+  display: flex !important;
+  flex: 5;
 }
 .ui.items * {
     Padding: 0 !important;

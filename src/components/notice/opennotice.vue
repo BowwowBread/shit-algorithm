@@ -42,12 +42,14 @@
           entering: false,
         };
       },
-      updated() {
-        this.$Progress.finish();
-      },
+  updated() {
+    this.$nextTick(() => {
+      this.$store.commit('loadingOff');
+      this.$Progress.finish();
+    });
+  },
       created() {
         const num = this.$route.params.num;
-        console.log(num);
         this.$http.get(`notices/${num}`)
           .then((res) => {
               this.num = res.data.notice.num;
@@ -58,7 +60,11 @@
               this.entering = true;
           })
           .catch((err) => {
-            console.log(err);
+            this.$swal({
+                title: `${this.num}번 공지 로드 실패`,
+                text: err,
+                type: 'error',
+            });
           });
       },
     };

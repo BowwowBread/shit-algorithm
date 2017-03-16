@@ -35,6 +35,9 @@
         background-color: rgba(180,177,177,.38);
         /*background-color: white;*/
         margin-top: -180px;
+        margin-top: -400px;
+        /*margin-top: -315px;*/
+        background-color: white;
         border-radius: 15px;
     }
     .ui.grey.header{
@@ -176,16 +179,32 @@
     .dimmable{
         position: static !important;
     }
-    .v-spinner{
-
-    }
     .openSpinner {
-        position: absolute;
+        position: fixed;
         width: 100%;
         height: 100%;
         z-index: 1000;
+        top: 0;
+        left: 0;
+        right: 0;
         background-color: rgba(0, 0, 0, 0.9);
         display: flex;
         justify-content: center;
         align-items: center;
     }
+.spinner-enter-active {
+    transition: all 2s ease;
+}
+
+.spinner-leave-active {
+    transition: all .5s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+
+.spinner-enter,
+.spinner-leave-to
+/* .slide-fade-leave-active for <2.1.8 */
+
+{
+    transform: scale(5);
+    opacity: 0;
+}

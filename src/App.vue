@@ -113,9 +113,11 @@
             </div>
         </div>
         <vue-progress-bar></vue-progress-bar>
-        <!--<div class="openSpinner" v-if="$store.state.loadingState">-->
-            <!--<pulse-loader :loading="loading"></pulse-loader>-->
-        <!--</div>-->
+        <transition name="spinner" mode="out-in">
+        <div class="openSpinner" v-if="loadingState">
+            <bounce-loader :loading="loading"></bounce-loader>
+        </div>
+        </transition>
         <transition name="sigoPage" mode="out-in">
       <router-view></router-view>
       </transition>
@@ -125,13 +127,13 @@
 
 <script>
   import VueRecaptcha from 'vue-recaptcha';
-  import PulseLoader from 'vue-spinner/src/PulseLoader.vue';
-  import { mapActions } from 'vuex';
+  import BounceLoader from 'vue-spinner/src/BounceLoader.vue';
+  import { mapActions, mapGetters, mapMutations } from 'vuex';
 
   export default {
     components: {
       VueRecaptcha,
-      PulseLoader,
+      BounceLoader,
     },
     props: {
       loading: {
@@ -178,13 +180,13 @@
         },
       };
     },
-    mounted() {
-      console.log('ss');
-    },
     computed: {
-        loadingState() {
-          return this.$store.state.loadingState;
-        },
+      ...mapGetters([
+        'getterLoadingState',
+      ]),
+      loadingState() {
+        return this.$store.state.loadingState;
+      },
     },
     created() {
       this.$router.beforeEach((to, from, next) => {
@@ -192,7 +194,9 @@
 			    const meta = to.meta.progress;
 			    this.$Progress.parseMeta(meta);
 		    }
-        this.$store.dispatch('loadingOn');
+        if (to.name !== 'index') {
+          this.$store.commit('loadingOn');
+        }
 		    this.$Progress.start();
             next();
         });

@@ -28,21 +28,19 @@
     },
     created() {
       this.userToken = this.$cookie.get('userToken');
-      console.log(this.userToken);
       this.getMember();
     },
-    beforeCreate() {
-      this.$Progress.start();
-    },
-    updated() {
+  updated() {
+    this.$nextTick(() => {
+      this.$store.commit('loadingOff');
       this.$Progress.finish();
-    },
+    });
+  },
     methods: {
     	account(userid, member) {
         this.$http.defaults.headers.common.Authorization = this.userToken;
         this.$http.get(`users/account/${userid}`)
         .then((res) => {
-          console.log(res);
           this.$swal({
             title: '승인 완료',
             text: `${userid}님을 승인하였습니다`,

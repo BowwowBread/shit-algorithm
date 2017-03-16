@@ -1,5 +1,5 @@
 <template>
-    <div id="index">
+    <div id="index" style="margin-bottom:1000px;">
         <div class="sigo_container">
             <parallax></parallax>
             <!--<menubar></menubar>-->
@@ -25,13 +25,11 @@ export default {
 
     };
   },
-  beforeCreate() {
-    this.loadState = true;
-    this.$Progress.start();
-  },
-  mounted() {
-    this.loadState = false;
-    this.$Progress.finish();
+  created() {
+    this.$nextTick(() => {
+      this.$store.commit('loadingOff');
+      this.$Progress.finish();
+    });
   },
 };
 </script>

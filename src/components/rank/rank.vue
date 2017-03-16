@@ -11,7 +11,7 @@
                             <img src="image1.jpg">
                         </div>
                         <p class="rant1">2등</p>
-                        <hr>
+                        <hr> 
                         <p class="rant2">{{ranker[1].name}}</p>
                     </div>
                     <div class="rank2">
@@ -54,7 +54,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="propol" v-for="(user, rank) in users">
+                    <transition-group name="flip-list, ranklist" tag="ul">
+                    <div class="propol" v-for="(user, rank) in users" v-bind:key="user">
                         <div class="ui items">
                             <div class="item">
                                 <div class="content" >
@@ -65,6 +66,7 @@
                             </div>
                         </div>
                     </div>
+                  </transition-group>
                 </div>
                 <a href="#"><i class="huge chevron circle up icon"></i></a>
                 <button class="ui button" v-if="loadState" v-on:click="loadList"><i class="large chevron down icon"></i></button>
@@ -89,13 +91,6 @@
         ranker: [],
         users: [],
       };
-    },
-    created() {
-      this.userToken = this.$cookie.get('userToken');
-      if (this.userToken == null) {
-        alert('로그인 해주세요');
-        location.href = '/';
-      }
     },
     beforeCreate() {
       //          토큰 테스트
@@ -174,9 +169,12 @@
           });
       }
     },
-    updated() {
+  updated() {
+    this.$nextTick(() => {
+      this.$store.commit('loadingOff');
       this.$Progress.finish();
-    },
+    });
+  },
     methods: {
       loadList() {
         this.$http.get('users')
@@ -189,8 +187,6 @@
             } else if (end === length) {
               this.loadState = false;
             }
-            console.log(i);
-            console.log(end);
             while (i < end) {
               this.users.push({
                 name: this.data[i].name,

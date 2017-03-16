@@ -60,11 +60,11 @@ export default{
   created() {
     this.loadNotice();
   },
-  beforeCreate() {
-    this.$Progress.start();
-  },
   updated() {
-    this.$Progress.finish();
+    this.$nextTick(() => {
+      this.$store.commit('loadingOff');
+      this.$Progress.finish();
+    });
   },
   methods: {
     modify() {
@@ -178,7 +178,6 @@ export default{
         });
     },
     addNotice() {
-      console.log('add');
       this.$http.post('notices', {
         noticename: this.name,
         contents: this.content,

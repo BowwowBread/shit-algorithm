@@ -117,11 +117,11 @@ export default{
 	  this.$http.defaults.headers.common.Authorization = this.userToken;
 	  this.fetchData();
   },
-  beforeCreate() {
-    this.$Progress.start();
-  },
   updated() {
-    this.$Progress.finish();
+    this.$nextTick(() => {
+      this.$store.commit('loadingOff');
+      this.$Progress.finish();
+    });
   },
   methods: {
   	openAdd() {

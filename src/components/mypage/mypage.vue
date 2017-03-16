@@ -66,9 +66,12 @@ export default {
       };
     },
   updated() {
-    this.$Progress.finish();
+    this.$nextTick(() => {
+      this.$store.commit('loadingOff');
+      this.$Progress.finish();
+    });
   },
-    beforeCreate() {
+  beforeCreate() {
 //          토큰 테스트
 	    this.userToken = this.$cookie.get('userToken');
 	    if (this.userToken != null) {
@@ -81,7 +84,6 @@ export default {
                 this.studentcode = resInfo.data.user.studentCode;
                 this.$http.get(`solution/resultsuccess/${userid}`)
                   .then((res) => {
-                    console.log(res);
                     this.entering = true;
                 })
                   .catch((err) => {

@@ -162,8 +162,6 @@
       return {
       };
     },
-    created() {
-    },
   };
 </script>
 <style src="../../assets/css/timeline.css" scoped></style>

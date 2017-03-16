@@ -61,7 +61,11 @@ export default {
     };
   },
   updated() {
-    this.$Progress.finish();
+    this.$Progress.start();
+    this.$nextTick(() => {
+      this.$store.commit('loadingOff');
+      this.$Progress.finish();
+    });
   },
   beforeCreate() {
 //          토큰 테스트
