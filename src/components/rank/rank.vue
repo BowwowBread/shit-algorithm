@@ -180,9 +180,12 @@
           });
       }
     },
-    updated() {
+  updated() {
+    this.$nextTick(() => {
+      this.$store.commit('loadingOff');
       this.$Progress.finish();
-    },
+    });
+  },
     methods: {
       loadList() {
         this.$http.get('users')

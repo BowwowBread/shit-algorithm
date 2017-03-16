@@ -2,7 +2,7 @@
     <div id="app">
         <div id="menu" class="ui secondary menu" v-bind:class="{menu_show: scrollMenu }">
             <ul id="mainmn">
-                <li><router-link to="/" :class="{menu_show_font : scrolled > 200}">Main</router-link></li>
+                <li><router-link to="/" :class="{menu_show_font : scrolled > 200}">{{$store.state.loadingState}}</router-link></li>
             </ul>
             <ul id="submn">
               <li><router-link to="/notice" :class="{menu_show_font : scrolled > 200}">공지사항</router-link></li>
@@ -112,9 +112,9 @@
             </div>
         </div>
         <vue-progress-bar></vue-progress-bar>
-        <!--<div class="openSpinner" v-if="$store.state.loadingState">-->
-            <!--<pulse-loader :loading="loading"></pulse-loader>-->
-        <!--</div>-->
+        <div class="openSpinner" v-if="loadingState">
+            <pulse-loader :loading="loading"></pulse-loader>
+        </div>
         <transition name="sigoPage" mode="out-in">
       <router-view></router-view>
       </transition>
@@ -125,7 +125,7 @@
 <script>
   import VueRecaptcha from 'vue-recaptcha';
   import PulseLoader from 'vue-spinner/src/PulseLoader.vue';
-  import { mapActions } from 'vuex';
+  import { mapActions, mapGetters, mapMutations } from 'vuex';
 
   export default {
     components: {
@@ -177,13 +177,13 @@
         },
       };
     },
-    mounted() {
-      console.log('ss');
-    },
     computed: {
-        loadingState() {
-          return this.$store.state.loadingState;
-        },
+      ...mapGetters([
+        'getterLoadingState',
+      ]),
+      loadingState() {
+        return this.$store.state.loadingState;
+      },
     },
     created() {
       this.$router.beforeEach((to, from, next) => {
@@ -191,7 +191,7 @@
 			    const meta = to.meta.progress;
 			    this.$Progress.parseMeta(meta);
 		    }
-        this.$store.dispatch('loadingOn');
+        this.$store.commit('loadingOn');
 		    this.$Progress.start();
             next();
         });

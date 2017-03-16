@@ -31,12 +31,12 @@
       console.log(this.userToken);
       this.getMember();
     },
-    beforeCreate() {
-      this.$Progress.start();
-    },
-    updated() {
+  updated() {
+    this.$nextTick(() => {
+      this.$store.commit('loadingOff');
       this.$Progress.finish();
-    },
+    });
+  },
     methods: {
     	account(userid, member) {
         this.$http.defaults.headers.common.Authorization = this.userToken;

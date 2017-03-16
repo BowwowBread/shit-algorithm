@@ -66,9 +66,12 @@ export default {
       };
     },
   updated() {
-    this.$Progress.finish();
+    this.$nextTick(() => {
+      this.$store.commit('loadingOff');
+      this.$Progress.finish();
+    });
   },
-    beforeCreate() {
+  beforeCreate() {
 //          토큰 테스트
 	    this.userToken = this.$cookie.get('userToken');
 	    if (this.userToken != null) {

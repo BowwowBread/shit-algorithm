@@ -42,9 +42,12 @@
           entering: false,
         };
       },
-      updated() {
-        this.$Progress.finish();
-      },
+  updated() {
+    this.$nextTick(() => {
+      this.$store.commit('loadingOff');
+      this.$Progress.finish();
+    });
+  },
       created() {
         const num = this.$route.params.num;
         console.log(num);

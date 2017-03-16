@@ -146,7 +146,10 @@ export default {
     this.solveMenu = false;
   },
   updated() {
-    this.$Progress.finish();
+    this.$nextTick(() => {
+      this.$store.commit('loadingOff');
+      this.$Progress.finish();
+    });
   },
   methods: {
     onMounted(editor) {

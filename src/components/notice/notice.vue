@@ -53,10 +53,12 @@
           loadState: true,
         };
       },
-      updated() {
-        this.$store.dispatch('loadingOff');
-        this.$Progress.finish();
-      },
+  updated() {
+    this.$nextTick(() => {
+      this.$store.commit('loadingOff');
+      this.$Progress.finish();
+    });
+  },
       created() {
         this.$http.get('notices')
           .then((res) => {
@@ -102,9 +104,12 @@
                 this.loadState = false;
               }
               while (i < end) {
+                let date = res.data.notices[i].date.replace('T', ', ');
+                date = date.substring(0, date.length - 8);
                 this.notices.push({
                   num: res.data.notices[i].num,
                   noticename: res.data.notices[i].noticeName,
+                  date,
                 });
                 i += 1;
               }

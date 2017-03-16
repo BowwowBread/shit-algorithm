@@ -25,13 +25,12 @@ export default {
 
     };
   },
-  beforeCreate() {
-    this.loadState = true;
-    this.$Progress.start();
-  },
-  mounted() {
-    this.loadState = false;
-    this.$Progress.finish();
+  created() {
+      console.log('sss');
+    this.$nextTick(() => {
+      this.$store.commit('loadingOff');
+      this.$Progress.finish();
+    });
   },
 };
 </script>

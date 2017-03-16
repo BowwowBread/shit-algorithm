@@ -36,6 +36,7 @@ module.exports = {
     'no-confusing-arrow': 0,
     'no-param-reassign': 0,
     'no-dupe-keys': 0,
+    'import/prefer-default-export' : 0,
   },
   "settings": {
     "ecmascript": 6,
