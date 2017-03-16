@@ -151,3 +151,19 @@ hr{
     font-size: 17px;
     color: rgb(124,207,177)
 }
+.ranklist-enter-active {
+    transition: all 2s ease;
+}
+
+.ranklist-leave-active {
+    transition: all .5s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+
+.ranklist-enter,
+.ranklist-leave-to
+/* .slide-fade-leave-active for <2.1.8 */
+
+{
+    transform: translateX(-50px);
+    opacity: 0;
+}

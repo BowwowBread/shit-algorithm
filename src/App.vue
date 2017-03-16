@@ -191,7 +191,12 @@
 			    const meta = to.meta.progress;
 			    this.$Progress.parseMeta(meta);
 		    }
-        this.$store.commit('loadingOn');
+        if (to.name !== 'index') {
+          setTimeout(() => {
+          this.$store.commit('loadingOn');
+          console.log('aaaas'); 
+          }, 1000);  
+        }
 		    this.$Progress.start();
             next();
         });

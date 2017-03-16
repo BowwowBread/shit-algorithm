@@ -37,6 +37,7 @@ module.exports = {
     'no-param-reassign': 0,
     'no-dupe-keys': 0,
     'import/prefer-default-export' : 0,
+    'no-trailing-spaces' : 0,
   },
   "settings": {
     "ecmascript": 6,

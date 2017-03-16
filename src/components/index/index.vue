@@ -26,7 +26,6 @@ export default {
     };
   },
   created() {
-      console.log('sss');
     this.$nextTick(() => {
       this.$store.commit('loadingOff');
       this.$Progress.finish();
