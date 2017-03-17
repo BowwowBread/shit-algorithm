@@ -5,9 +5,8 @@
         <div class="sub header">프로그래밍 문제를 풀고 맞추어 보는 곳 입니다.</div>
       </h2>
       <div class="ui top attached tabular menu">
-        <a class="item active" data-tab="first" id="item">최근 문제</a>
-        <a class="item" data-tab="second">출처</a>
-        <a class="item" data-tab="third">난이도</a>
+        <a class="item active" data-tab="first" id="item">일반 문제</a>
+        <a class="item" data-tab="third"></a>
         <a class="item" data-tab="fourth" v-on:click="shuffle">랜덤문제</a>
       </div>
       <div class="ui bottom attached tab segment active" :style="{ 'max-height': lineheight + 'px' }" data-tab="first">
@@ -69,7 +68,7 @@
         </div>
       </div>
       <a href="#">
-        <i class="huge chevron circle up icon"></i>
+        <i class="huge chevron circle up icon" v-on:click="scrollUp"></i>
       </a>
       <button class="ui button" v-if="loadState" v-on:click="loadList">
         <i class="large chevron down icon"></i>
@@ -213,6 +212,11 @@
       });
     },
     methods: {
+      scrollUp() {
+        $('html, body').stop().animate({
+           scrollTop: 0,
+        }, 500);
+      },
       shuffle() {
         this.items = _.shuffle(this.items);
       },
