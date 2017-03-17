@@ -1,12 +1,12 @@
 <template>
-  <div id="index" style="margin-bottom:1000px;">
+  <div id="index">
     <div class="sigo_container">
       <parallax></parallax>
+      <timeline></timeline>
       <!--<menubar></menubar>-->
     </div>
-    <div class="sigo_container">
-      <timeline></timeline>
-    </div>
+    <!--<div class="sigo_container">-->
+    <!--</div>-->
   </div>
 </template>
 

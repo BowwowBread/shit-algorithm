@@ -6,7 +6,7 @@
       </h2>
       <div class="ui top attached tabular menu">
         <a class="item active" data-tab="first" id="item">일반 문제</a>
-        <a class="item" data-tab="third"></a>
+        <a class="item" data-tab="third">대회 문제</a>
         <a class="item" data-tab="fourth" v-on:click="shuffle">랜덤문제</a>
       </div>
       <div class="ui bottom attached tab segment active" :style="{ 'max-height': lineheight + 'px' }" data-tab="first">
