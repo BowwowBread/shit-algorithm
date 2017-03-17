@@ -236,18 +236,6 @@
           this.$store.commit('loadingOn');
         }
         this.$Progress.start();
-        setInterval(() => {
-          if (this.$store.state.loadingState === true) {
-            this.$swal({
-                title: '오류 발생',
-                text: '메인페이지로 이동합니다',
-                type: 'error',
-              })
-              .then(() => {
-                location.href = '/';
-              });
-          }
-        }, 3000);
       });
       window.addEventListener('scroll', this.scrollFunction);
     },
