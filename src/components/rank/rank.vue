@@ -8,15 +8,15 @@
                 <div class="rank-top">
                     <div class="rank1">
                         <div class="rankge1">
-                            <img src="image1.jpg">
+                            <img src="../../assets/img/bg.jpg">
                         </div>
                         <p class="rant1">2등</p>
-                        <hr> 
+                        <hr>
                         <p class="rant2">{{ranker[1].name}}</p>
                     </div>
                     <div class="rank2">
                         <div class="rankge2">
-                            <img src="image1.jpg">
+                            <img src="../../assets/img/bg.jpg">
                         </div>
                         <p class="rant1">1등</p>
                         <hr>
@@ -24,7 +24,7 @@
                     </div>
                     <div class="rank3">
                         <div class="rankge3">
-                            <img src="image1.jpg">
+                            <img src="../../assets/img/bg.jpg">
                         </div>
                         <p class="rant1">3등</p>
                         <hr>

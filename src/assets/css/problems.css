@@ -149,7 +149,15 @@ body{
 .ui.center.aligned.header {
     margin-bottom: 60px;
 }
-
+#second{
+  padding-left: 35px
+}
+#three{
+  text-align: center;
+}
+#fooo{
+  text-align: center;
+}
 .ui.items {
     font-size: 13px;
 }
