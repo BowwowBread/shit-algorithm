@@ -161,7 +161,7 @@
                 <p> 불편한점이나 개선되어야할 점, 버그 등은 문의해주세요.</p>
               </div>
               <div class="ui list">
-                <a class="item" href="https://www.facebook.com/%EC%84%9C%EC%9A%B8%EC%95%84%EC%9D%B4%ED%8B%B0%EA%B3%A0%EB%93%B1%ED%95%99%EA%B5%90-SIGO-1529061383780127/" id="saws">문의 하기</a>
+                <a class="item" href="https://www.facebook.com/shitsigo/messages/" id="saws">문의 하기</a>
               </div>
             </div>
           </div>
@@ -170,7 +170,7 @@
       <div class="footsub">
         <div class="fosub">
           <div class="ddd">
-            <a href="https://www.facebook.com/%EC%84%9C%EC%9A%B8%EC%95%84%EC%9D%B4%ED%8B%B0%EA%B3%A0%EB%93%B1%ED%95%99%EA%B5%90-SIGO-1529061383780127/">
+            <a href="https://www.facebook.com/shitsigo/">
               <i class="big facebook icon"></i>
             </a>
             <a href="https://github.com/shitKorea/shit-algorithm">
