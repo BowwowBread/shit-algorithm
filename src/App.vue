@@ -209,7 +209,7 @@
       if (this.$route.name !== 'index') {
         this.$store.commit('loadingOn');
       }
-      const ROOT_URL = 'https://algorithm.ayanami.kr/api';
+      const ROOT_URL = 'https://algorithm.seoulit.kr/api';
       this.$http.defaults.baseURL = ROOT_URL;
       //      토큰 테스트
       this.userToken = this.$cookie.get('userToken');
