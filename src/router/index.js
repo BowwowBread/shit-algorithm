@@ -53,7 +53,7 @@ export default new Router({
       component: Notice,
     },
     {
-      path: '/notices/:num',
+      path: '/notice/:num',
       name: 'openNotice',
       component: openNotice,
     },

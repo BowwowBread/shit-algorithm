@@ -105,8 +105,8 @@
         }, 500);
       },
       open(num) {
-        location.href = `https://algorithm.seoulit.kr/notices/${num}`;
-//        this.$router.push({e
+        location.href = `https://algorithm.seoulit.kr/notice/${num}`;
+//        this.$router.push({
 //          path: `notices/${num}`,
 //        });
       },
