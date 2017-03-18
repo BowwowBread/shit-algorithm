@@ -9,7 +9,7 @@ import Mypage from '../components/mypage/mypage.vue';
 import Notice from '../components/notice/notice.vue';
 import openNotice from '../components/notice/opennotice.vue';
 import notFound from '../components/notfound/notfound.vue';
-
+import Monitor from '../components/monitor/monitor.vue';
 
 Vue.use(Router);
 
@@ -61,6 +61,11 @@ export default new Router({
       path: '/404',
       name: 'notfound',
       component: notFound,
+    },
+    {
+      path: '/monitor',
+      name: 'monitor',
+      component: Monitor,
     },
     {
       path: '/*',
