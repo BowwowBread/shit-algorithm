@@ -4,7 +4,7 @@
       <ul id="mainmn">
         <li>
           <router-link to="/" :class="{menu_show_font : scrolled > 200}">
-            <img src="./assets/img/logo.png" alt="" style="width:10%; height:10%; padding-top:50px;">
+            <img src="./assets/img/sigoing.png" alt="" style="width:10%; height:10%; padding-top:50px;">
           </router-link>
         </li>
       </ul>
