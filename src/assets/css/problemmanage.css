@@ -75,6 +75,13 @@ li{
     top:170px;
     z-index:100;
 }
+.solveList li{
+    margin: 0;
+}
+.solveList ul{
+    border-bottom: 1px solid black;
+    padding: 25px 0;
+}
 .problemmanage-enter-active {
     transition: all 1s ease;
 }

@@ -75,7 +75,7 @@ export default {
       this.$http.get('users/my-info')
         .then((resInfo) => {
             this.userRating = resInfo.data.user.rating;
-	          if (this.userRating === 1) {
+	          if (this.userRating !== 3) {
                   this.$swal({
                       title: '입장 실패',
                       text: '어드민이 아닙니다',
