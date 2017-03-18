@@ -16,8 +16,8 @@
         </div>
         <div class="right">
           <div class="foico">
-            <a href="#"><i class="big facebook f icon"></i></a>
-            <a href="#"><i class="big git icon"></i></a>
+            <a href="https://www.facebook.com/shitsigo/"><i class="big facebook f icon"></i></a>
+            <a href="https://github.com/shitKorea/shit-algorithm"><i class="big git icon"></i></a>
           </div>
         </div>
       </div>

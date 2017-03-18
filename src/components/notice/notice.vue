@@ -92,7 +92,10 @@
             title: '공지 로드 실패',
             text: err,
             type: 'error',
-          });
+          })
+            .then((res) => {
+              location.href = '/';
+            });
         });
     },
     methods: {
