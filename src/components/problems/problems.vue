@@ -318,9 +318,10 @@
                 'warning',
               );
             } else {
-              this.$router.push({
-                path: `problems/${num}`,
-              });
+              location.href = `https://algorithm.seoulit.kr/problems/${num}`;
+//              this.$router.push({
+//                path: `problems/${num}`,
+//              });
             }
           })
           .catch((err) => {

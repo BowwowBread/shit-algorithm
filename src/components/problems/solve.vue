@@ -159,8 +159,12 @@ export default {
       this.code = editor.getValue();
     },
     codeReset() {
-      this.editor.setValue('');
-    	this.code = '';
+      this.editor.setValue(`int main() {
+      //코드를 입력해주세요
+}`);
+    	this.code = `int main() {
+      //코드를 입력해주세요
+}`;
     	this.runMsg = '실행 결과가 이곳에 나타납니다';
     	this.codeResult = '';
     },
@@ -174,7 +178,6 @@ export default {
         this.runMsg = 'ERROR';
     		return;
       }
-	    this.$http.defaults.headers.common.Authorization = this.userToken;
 	    this.$http.post('solution', {
       	userid: this.userid,
         problemnum: this.items[0].num,
@@ -207,7 +210,6 @@ export default {
         this.runMsg = 'ERROR';
     		return;
       }
-	    this.$http.defaults.headers.common.Authorization = this.userToken;
 	    this.$http.post('solution', {
         userid: this.userid,
         problemnum: this.items[0].num,
