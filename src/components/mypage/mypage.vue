@@ -20,8 +20,8 @@
                 <div class="header">내 활동</div>
                 <hr>
                 <div class="description">
-                  <p>내 점수 : <span>{{score}}</span></p>
-                  <p>문제 푼 수 : <span>{{successCount}}</span></p>
+                  <p>내 점수 : <span>{{score}} 점</span></p>
+                  <p>문제 푼 수 : <span>{{successCount}} 개</span></p>
                 </div>
               </div>
             </div>
@@ -70,25 +70,12 @@
         this.$http.get('users/my-info')
           .then((resInfo) => {
             this.username = resInfo.data.user.username;
-            this.studentcode = resInfo.data.user.studentcode;
+            this.studentcode = resInfo.data.user.studentCode;
             this.userid = resInfo.data.user.userId;
-            this.$http.get(`users/search/${this.userid}`)
+            this.score = resInfo.data.user.score;
+            this.$http.get('solution/resultsuccess')
               .then((res) => {
-                this.score = res.data.users.score;
-                this.entering = true;
-              })
-              .catch((err) => {
-                this.$swal({
-                    title: '문제 정답 로드 실패',
-                    text: err,
-                    type: 'error',
-                  })
-                  .then(() => {
-                    location.href = '/';
-                  });
-              });
-            this.$http.get(`solution/resultsuccess/${this.userid}`)
-              .then((res) => {
+                this.successCount = res.data.resolves.length;
                 let i = res.data.resolves.length - 5;
                 while (i < res.data.resolves.length) {
                   let date = res.data.resolves[i].resolveData.date.replace('T', ', ');
@@ -99,6 +86,7 @@
                   });
                   i += 1;
                 }
+                this.entering = true;
               })
               .catch((err) => {
                 this.$swal({

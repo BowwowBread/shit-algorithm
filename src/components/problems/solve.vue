@@ -179,7 +179,6 @@ export default {
     		return;
       }
 	    this.$http.post('solution', {
-      	userid: this.userid,
         problemnum: this.items[0].num,
         inputcode: this.code,
         name: 'problem',
@@ -211,7 +210,6 @@ export default {
     		return;
       }
 	    this.$http.post('solution', {
-        userid: this.userid,
         problemnum: this.items[0].num,
         inputcode: this.code,
         name: 'problem',
