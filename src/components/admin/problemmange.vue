@@ -29,7 +29,7 @@
           <p>시간 : {{timeLimit}}</p>
           <p>메모리 : {{memoryLimit}}</p>
         </div>
-        <button v-on:click="add">문제 등록</button>
+        <button class="addProblemButton"v-on:click="add">문제 등록</button>
             <select v-model="problemType">
                 <option value="normal">일반</option>
                 <option value="contest">대회</option>

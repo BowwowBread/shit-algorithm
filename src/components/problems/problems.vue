@@ -6,8 +6,8 @@
       </h2>
       <div class="ui top attached tabular menu">
         <a class="item " data-tab="first" id="item" v-on:click="clickNormal" :class="{active: normal_problem}">일반 문제</a>
-        <a class="item" data-tab="third" v-on:click="clickContst" :class="{active: contest_problem}">대회 문제</a>
-        <a class="item" data-tab="fourth" v-on:click="shuffle, clickRandom" :class="{active: random_problem}">랜덤문제</a>
+        <a class="item" data-tab="third" v-on:click="clickContest" :class="{active: contest_problem}">대회 문제</a>
+        <a class="item" data-tab="fourth" v-on:click="shuffle" :class="{active: random_problem}">문제 섞기</a>
       </div>
       <div class="ui bottom attached tab segment active" :style="{ 'max-height': lineheight + 'px' }" data-tab="first">
         <div class="ui items" id="mnit">
@@ -70,7 +70,7 @@
       <a href="#">
         <i class="huge chevron circle up icon" v-on:click="scrollUp"></i>
       </a>
-      <button class="ui button" v-if="loadState" v-on:click="loadList">
+      <button class="ui button" v-if="loadState" v-on:click="loadList(false)">
         <i class="large chevron down icon"></i>
       </button>
     </div>
@@ -92,6 +92,7 @@
         loadState: true,
         entering: false,
         lineheight: '',
+        changeLoad: false,
       };
     },
     created() {
@@ -216,19 +217,21 @@
     },
     methods: {
       clickNormal() {
+        console.log('ss');
         this.normal_problem = true;
         this.contest_problem = false;
         this.random_problem = false;
+        this.changeLoad = true;
+        this.items = [];
+        this.loadList(this.changeLoad);
       },
       clickContest() {
         this.normal_problem = false;
         this.contest_problem = true;
         this.random_problem = false;
-      },
-      clickRandom() {
-        this.normal_problem = false;
-        this.contest_problem = false;
-        this.random_problem = true;
+        this.changeLoad = true;
+        this.items = [];
+        this.loadList(this.changeLoad);
       },
       scrollUp() {
         $('html, body').stop().animate({
@@ -236,94 +239,192 @@
         }, 500);
       },
       shuffle() {
+        this.normal_problem = false;
+        this.contest_problem = false;
+        this.random_problem = true;
         this.items = _.shuffle(this.items);
       },
-      loadList() {
+      loadList(changeLoad) {
         //문제 로드
+        if (changeLoad) {
+          i = 0;
+          end = 10;
+          this.lineheight = 0;
+          this.items = [];
+          this.loadState = true;
+        } else {
+          i = end;
+          end += 10;
+        }
         this.$http.defaults.headers.common.Authorization = this.userToken;
-        this.$http.get('problems')
-          .then((res) => {
-            i = end;
-            end += 10;
-            if (i / 10 === parseInt(length / 10, 10)) {
-              end = length;
-              this.loadState = false;
-            } else if (end === length) {
-              this.loadState = false;
-            }
-            //문제 결과 로드
-            this.$http.defaults.headers.common.Authorization = this.userToken;
-            this.$http.get('solution')
-              .then((resRatio) => {
-                //문제 개수 반복
-                while (i < end) {
-                  const num = res.data.problems[i].num;
-                  const name = res.data.problems[i].problemName;
-                  const source = res.data.problems[i].source;
-                  const score = res.data.problems[i].score;
-                  let count = 0;
-                  let success = 0;
-                  let fail = 0;
-                  let ratio = 0;
-                  let j = 0;
-                  //문제 결과 수 반복
-                  while (j < resRatio.data.resolves.length) {
-                    //문제 번호 === 문제 결과 번호
-                    if (i === resRatio.data.resolves[j].resolveData.problemNum) {
-                      //문제 결과 카운트
-                      if (resRatio.data.resolves[j].resolveData.result === 'success') {
-                        success += 1;
-                      } else {
-                        fail += 1;
+        if (this.contest_problem === true) {
+          //대회 문제
+          console.log('hi');
+          this.$http.get('problems')
+            .then((res) => {
+              if (i / 10 === parseInt(length / 10, 10)) {
+                end = length;
+                this.loadState = false;
+              } else if (end === length) {
+                this.loadState = false;
+              }
+              //문제 결과 로드
+              this.$http.defaults.headers.common.Authorization = this.userToken;
+              this.$http.get('solution')
+                .then((resRatio) => {
+                  //문제 개수 반복
+                  while (i < end) {
+                    const num = res.data.problems[i].num;
+                    const name = res.data.problems[i].problemName;
+                    const source = res.data.problems[i].source;
+                    const score = res.data.problems[i].score;
+                    let count = 0;
+                    let success = 0;
+                    let fail = 0;
+                    let ratio = 0;
+                    let j = 0;
+                    //문제 결과 수 반복
+                    while (j < resRatio.data.resolves.length) {
+                      //문제 번호 === 문제 결과 번호
+                      if (i === resRatio.data.resolves[j].resolveData.problemNum) {
+                        //문제 결과 카운트
+                        if (resRatio.data.resolves[j].resolveData.result === 'success') {
+                          success += 1;
+                        } else {
+                          fail += 1;
+                        }
+                        count += 1;
                       }
-                      count += 1;
+                      j += 1;
                     }
-                    j += 1;
+                    //결과 수정
+                    ratio = success / count;
+                    if (isNaN(ratio)) {
+                      ratio = `${0} %`;
+                    } else if (ratio === 0) {
+                      ratio = `${0} %`;
+                    } else {
+                      ratio = `${ratio.toString().substring(2, 4)} %`;
+                    }
+                    this.lineheight = 55 * i;
+                    this.items.push({
+                      num,
+                      name,
+                      source,
+                      score,
+                      success,
+                      fail,
+                      count,
+                      ratio,
+                    });
+                    i += 1;
                   }
-                  //결과 수정
-                  ratio = success / count;
-                  if (isNaN(ratio)) {
-                    ratio = `${0} %`;
-                  } else if (ratio === 0) {
-                    ratio = `${0} %`;
-                  } else {
-                    ratio = `${ratio.toString().substring(2, 4)} %`;
+                })
+                .catch((err) => {
+                  this.$swal({
+                      title: '문제 기록 로드 실패',
+                      text: err,
+                      type: 'error',
+                    })
+                    .then(() => {
+                      location.href = '/';
+                    });
+                });
+            })
+            .catch((err) => {
+              this.$swal({
+                  title: '문제 로드 실패',
+                  text: err,
+                  type: 'error',
+                })
+                .then(() => {
+                  location.href = '/';
+                });
+            });
+        } else {
+          //일반 문제
+          this.$http.get('problems')
+            .then((res) => {
+              if (i / 10 === parseInt(length / 10, 10)) {
+                end = length;
+                this.loadState = false;
+              } else if (end === length) {
+                this.loadState = false;
+              }
+              //문제 결과 로드
+              this.$http.defaults.headers.common.Authorization = this.userToken;
+              this.$http.get('solution')
+                .then((resRatio) => {
+                  //문제 개수 반복
+                  while (i < end) {
+                    const num = res.data.problems[i].num;
+                    const name = res.data.problems[i].problemName;
+                    const source = res.data.problems[i].source;
+                    const score = res.data.problems[i].score;
+                    let count = 0;
+                    let success = 0;
+                    let fail = 0;
+                    let ratio = 0;
+                    let j = 0;
+                    //문제 결과 수 반복
+                    while (j < resRatio.data.resolves.length) {
+                      //문제 번호 === 문제 결과 번호
+                      if (i === resRatio.data.resolves[j].resolveData.problemNum) {
+                        //문제 결과 카운트
+                        if (resRatio.data.resolves[j].resolveData.result === 'success') {
+                          success += 1;
+                        } else {
+                          fail += 1;
+                        }
+                        count += 1;
+                      }
+                      j += 1;
+                    }
+                    //결과 수정
+                    ratio = success / count;
+                    if (isNaN(ratio)) {
+                      ratio = `${0} %`;
+                    } else if (ratio === 0) {
+                      ratio = `${0} %`;
+                    } else {
+                      ratio = `${ratio.toString().substring(2, 4)} %`;
+                    }
+                    this.lineheight = 55 * i;
+                    this.items.push({
+                      num,
+                      name,
+                      source,
+                      score,
+                      success,
+                      fail,
+                      count,
+                      ratio,
+                    });
+                    i += 1;
                   }
-                  this.lineheight = 55 * i;
-                  this.items.push({
-                    num,
-                    name,
-                    source,
-                    score,
-                    success,
-                    fail,
-                    count,
-                    ratio,
-                  });
-                  i += 1;
-                }
-              })
-              .catch((err) => {
-                this.$swal({
-                    title: '문제 기록 로드 실패',
-                    text: err,
-                    type: 'error',
-                  })
-                  .then(() => {
-                    location.href = '/';
-                  });
-              });
-          })
-          .catch((err) => {
-            this.$swal({
-                title: '문제 로드 실패',
-                text: err,
-                type: 'error',
-              })
-              .then(() => {
-                location.href = '/';
-              });
-          });
+                })
+                .catch((err) => {
+                  this.$swal({
+                      title: '문제 기록 로드 실패',
+                      text: err,
+                      type: 'error',
+                    })
+                    .then(() => {
+                      location.href = '/';
+                    });
+                });
+            })
+            .catch((err) => {
+              this.$swal({
+                  title: '문제 로드 실패',
+                  text: err,
+                  type: 'error',
+                })
+                .then(() => {
+                  location.href = '/';
+                });
+            });
+        }
       },
       result(num) {
         this.$http.defaults.headers.common.Authorization = this.userToken;

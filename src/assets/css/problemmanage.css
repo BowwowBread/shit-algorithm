@@ -16,6 +16,15 @@ textarea{
     float:right;
     height:20px;
 }
+.addProblemButton{
+    clear:both;
+    float:left;
+}
+.addProblem select{
+    float:left;
+    margin-left:100px;
+}
+
 label{
     float: left;
     height:20px;

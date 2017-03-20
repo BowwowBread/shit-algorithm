@@ -29,7 +29,7 @@
                 </div>
             </div>
             <div class="solve_main">
-                <div class="solve_input" v-on:keydown.enter="enter">
+                <div class="solve_input">
                     <monaco-editor class="monacoEditor" width="100%" language="c" :code="code" :editorOptions="options"  @mounted="onMounted" @codeChange="onCodeChange">
                     </monaco-editor>
                 </div>
@@ -50,7 +50,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
             <div class="pageicon">
               <a href="/problems"><i class="big reply icon"></i></a>
