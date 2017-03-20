@@ -222,7 +222,6 @@
         this.contest_problem = false;
         this.random_problem = false;
         this.changeLoad = true;
-        this.items = [];
         this.loadList(this.changeLoad);
       },
       clickContest() {
@@ -230,7 +229,6 @@
         this.contest_problem = true;
         this.random_problem = false;
         this.changeLoad = true;
-        this.items = [];
         this.loadList(this.changeLoad);
       },
       scrollUp() {
@@ -259,8 +257,7 @@
         this.$http.defaults.headers.common.Authorization = this.userToken;
         if (this.contest_problem === true) {
           //대회 문제
-          console.log('hi');
-          this.$http.get('problems')
+          this.$http.get('problems/contest')
             .then((res) => {
               if (i / 10 === parseInt(length / 10, 10)) {
                 end = length;
@@ -332,6 +329,9 @@
                 });
             })
             .catch((err) => {
+              if (err.response.data.message === '아직 오픈되지 않았습니다.') {
+                err = '대회기간이 아닙니다.';
+              }
               this.$swal({
                   title: '문제 로드 실패',
                   text: err,
@@ -438,9 +438,6 @@
               );
             } else {
               location.href = `https://algorithm.seoulit.kr/problems/${num}`;
-//              this.$router.push({
-//                path: `problems/${num}`,
-//              });
             }
           })
           .catch((err) => {

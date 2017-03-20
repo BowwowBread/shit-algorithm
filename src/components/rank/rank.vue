@@ -12,7 +12,7 @@
             </div>
             <p class="rant1">2등</p>
             <hr>
-            <p class="rant2">{{ranker[1].name}}</p>
+            <p class="rant2" v-if="rank">{{ranker[1].name}}</p>
           </div>
           <div class="rank2">
             <div class="rankge2">
@@ -20,7 +20,7 @@
             </div>
             <p class="rant1">1등</p>
             <hr>
-            <p class="rant2">{{ranker[0].name}}</p>
+            <p class="rant2" v-if="rank">{{ranker[0].name}}</p>
           </div>
           <div class="rank3">
             <div class="rankge3">
@@ -28,11 +28,12 @@
             </div>
             <p class="rant1">3등</p>
             <hr>
-            <p class="rant2">{{ranker[2].name}}</p>
+            <p class="rant2" v-if="rank">{{ranker[2].name}}</p>
           </div>
         </div>
         <div class="ui top attached tabular menu">
-          <p class="item active" data-tab="first" id="item">순위</p>
+          <p class="item" data-tab="first" v-on:click="clickNormal" :class="{active: normal_rank}">순위</p>
+          <p class="item" data-tab="first" v-on:click="clickContest" :class="{active: contest_rank}">대회 순위</p>
         </div>
         <div class="ui bottom attached tab segment active">
           <div class="ui items">
@@ -71,7 +72,7 @@
         <a href="#">
           <i class="huge chevron circle up icon" v-on:click="scrollUp"></i>
         </a>
-        <button class="ui button" v-if="loadState" v-on:click="loadList">
+        <button class="ui button" v-if="loadState" v-on:click="loadList(false)">
           <i class="large chevron down icon"></i>
         </button>
       </div>
@@ -94,6 +95,9 @@
         entering: false,
         ranker: [],
         users: [],
+        normal_rank: true,
+        contest_rank: false,
+        rank: true,
       };
     },
     beforeCreate() {
@@ -116,11 +120,12 @@
                   this.data.push({
                     name: res.data.users[i].username,
                     score: res.data.users[i].score,
+                    contestScore: res.data.users[i].contestScore,
                   });
                   i += 1;
                 }
                 const sort = 'score';
-                this.data.sort(function (a, b) {
+                this.data.sort(function(a, b) {
                   return b[sort] - a[sort];
                 });
                 i = 0;
@@ -180,40 +185,134 @@
       });
     },
     methods: {
+      clickNormal() {
+        this.normal_rank = true;
+        this.contest_rank = false;
+        this.changeLoad = true;
+        this.loadList(this.changeLoad);
+      },
+      clickContest() {
+        this.normal_rank = false;
+        this.contest_rank = true;
+        this.changeLoad = true;
+        this.loadList(this.changeLoad);
+      },
       scrollUp() {
         $('html, body').stop().animate({
           scrollTop: 0,
         }, 500);
       },
-      loadList() {
-        this.$http.get('users')
-          .then((res) => {
-            i = end;
-            end += 10;
-            if (i / 10 === parseInt(length / 10, 10)) {
-              end = length;
-              this.loadState = false;
-            } else if (end === length) {
-              this.loadState = false;
-            }
-            while (i < end) {
-              this.users.push({
-                name: this.data[i].name,
-                score: this.data[i].score,
+      loadList(changeLoad) {
+        if (changeLoad) {
+          i = 0;
+          end = 10;
+          this.lineheight = 0;
+          this.rank = false;
+          this.ranker = [];
+          this.users = [];
+          this.loadState = true;
+        } else {
+          i = end;
+          end += 10;
+        }
+        if (this.contest_rank === true) {
+          // 대회 랭크
+          this.$http.get('users')
+            .then((res) => {
+              console.log(this.data);
+              if (i / 10 === parseInt(length / 10, 10)) {
+                end = length;
+                this.loadState = false;
+              } else if (end === length) {
+                this.loadState = false;
+              }
+              const sort = 'contestScore';
+              this.data.sort(function(a, b) {
+                return b[sort] - a[sort];
               });
-              i += 1;
-            }
-          })
-          .catch((err) => {
-            this.$swal({
-                title: '유저 로드 실패',
-                text: err,
-                type: 'error',
-              })
-              .then(() => {
-                location.href = '/';
+              while (i < end) {
+                let score = 0;
+                if (this.data[i].contestScore === 0) {
+                  score = 0;
+                } else {
+                  score = this.data[i].contestScore;
+                }
+                this.users.push({
+                  name: this.data[i].name,
+                  score,
+                });
+                i += 1;
+              }
+
+              i = 0;
+              while (i < 3) {
+                this.ranker.push({
+                  name: this.users[i].name,
+                  score: this.users[i].score,
+                });
+                i += 1;
+                if (i === 3) {
+                  this.rank = true;
+                }
+              }
+            })
+            .catch((err) => {
+              this.$swal({
+                  title: '유저 로드 실패',
+                  text: err,
+                  type: 'error',
+                })
+                .then(() => {
+                  location.href = '/';
+                });
+            });
+        } else {
+          // 일반 랭크
+          this.$http.get('users')
+            .then((res) => {
+              if (i / 10 === parseInt(length / 10, 10)) {
+                end = length;
+                this.loadState = false;
+              } else if (end === length) {
+                this.loadState = false;
+              }
+              const sort = 'score';
+              this.data.sort(function(a, b) {
+                return b[sort] - a[sort];
               });
-          });
+              while (i < end) {
+                console.log(i);
+                console.log(end);
+                this.users.push({
+                  name: this.data[i].name,
+                  score: this.data[i].score,
+                });
+                i += 1;
+              }
+
+              i = 0;
+              while (i < 3) {
+                this.ranker.push({
+                  name: this.users[i].name,
+                  score: this.users[i].score,
+                });
+                i += 1;
+                if (i === 3) {
+                  this.rank = true;
+                }
+              }
+            })
+            .catch((err) => {
+              this.$swal({
+                  title: '유저 로드 실패',
+                  text: err,
+                  type: 'error',
+                })
+                .then(() => {
+                  location.href = '/';
+                });
+            });
+        }
       },
     },
   };

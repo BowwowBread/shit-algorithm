@@ -50,7 +50,7 @@
                 <div class="modify" v-if="item.num == problemNum && modifyState">
                     <label for="problemName">problemName : </label><input type="text" v-model="problemName" id="problemName"><br>
                     <label for="source">source : </label><input type="text" v-model="source" id="source"><br>
-                    <label for="explanation">explanation : </label><input type="text" v-model="explanation" id="explanation"><br>
+                    <label for="explanation">explanation : </label><textarea type="text" v-model="explanation" id="explanation"></textarea><br>
                     <label for="score">score : </label><input type="text" v-model="score" id="score"  v-on:keypress="isNumber(event)"><br>
                     <label for="inputExample">inputExample : </label><input type="text" v-model="inputExample" id="inputExample"><br>
                     <label for="inputExample2">inputExample2 : </label><input type="text" v-model="inputExample2" id="inputExample2"><br>
@@ -183,7 +183,7 @@ export default{
             timelimit: this.timeLimit,
             memorylimit: this.memoryLimit,
             score: this.score,
-            type: this.type,
+            type: this.problemType,
         })
         .then(() => {
 	        this.$swal({
@@ -328,15 +328,35 @@ export default{
 	    this.$http.get('problems')
         .then((res) => {
           let i = 0;
+          console.log(res);
           while (i < res.data.problems.length) {
             this.items.push({
               num: res.data.problems[i].num,
               name: res.data.problems[i].problemName,
               source: res.data.problems[i].source,
             });
-            this.lastNum = res.data.problems[i].num;
             i += 1;
           }
+          this.$http.get('problems/contest')
+            .then((resContest) => {
+            let j = 0;
+              while (j < res.data.problems.length) {
+                this.items.push({
+                  num: res.data.problems[j].num,
+                  name: res.data.problems[j].problemName,
+                  soiurce: res.data.problems[j].source,
+                  });
+                j += 1;
+                }
+                this.lastNum = res.data.problems[i].num + res.data.problems[j].num;
+             })
+           .catch((err) => {
+                this.$swal({
+                title: '문제 로드 실패',
+                text: err,
+                type: 'error',
+              });
+            });
           this.enteringProblemmanage = true;
         })
         .catch((err) => {

@@ -38,6 +38,7 @@ module.exports = {
     'no-dupe-keys': 0,
     'import/prefer-default-export' : 0,
     'no-trailing-spaces' : 0,
+    'space-before-function-paren': 0,
   },
   "settings": {
     "ecmascript": 6,
