@@ -30,28 +30,49 @@
                     </div>
                 </div>
             </section>
-        </div>
     </div>
-</div>
-</div>
+    </div>
+    </div>
 </template>
 
 <script>
-export default {
-    name: 'monitor',
-    data() {
-        return {
+    export default {
+        name: 'monitor',
+        data() {
+            return {
 
-        };
-    },
-    created() {},
-    mounted() {
-        this.$nextTick(() => {
-            this.$store.commit('loadingOff');
-            this.$Progress.finish();
-        });
-    },
-};
+            };
+        },
+        created() {},
+        mounted() {
+            this.$nextTick(() => {
+                this.$store.commit('loadingOff');
+                this.$Progress.finish();
+            });
+        },
+        methods: {
+            monitoring() {
+                this.$http.get('solution')
+                    .then((res) => {
+                        let i = 0;
+                        while (i < res.data.resolves.length) {
+                            const data = res.data.resolves[i].resolveData.data.replace('T', ', ');
+                            this.monitorData.push({
+                                userid: res.data.resolves[i].userId,
+                                code: res.data.resolves[i].resolveData.code,
+                                date: data.substring(0, data.length - 8),
+                                lang: res.data.resolves[i].resolveData.language,
+                                memory: res.data.resolves[i].resolveData.memory,
+                                num: res.data.resolves[i].resolveData.problemNum,
+                                result: res.data.resolves[i].resolveData.result,
+                                time: res.data.resolves[i].resolveData.time,
+                            });
+                            i += 1;
+                        }
+                    });
+            },
+        },
+    };
 </script>
 
 
