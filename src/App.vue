@@ -470,4 +470,7 @@
   body {
     background-color: rgb(40, 40, 40) !important;
   }
+  .dimmable:not(.body){
+   position: static !important;
+ }
 </style>

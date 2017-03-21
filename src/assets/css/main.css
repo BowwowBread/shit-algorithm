@@ -29,7 +29,7 @@
     -webkit-background-size: cover;
     background-size: cover;
     background: url('../../assets/img/bg.jpg') center;
-    height: 100%;
+    /*height: 100%;*/
 }
 
 .swiper-slide {

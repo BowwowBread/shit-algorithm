@@ -43,7 +43,7 @@
             <div class="ui items" v-for="item in items" v-bind:key="item">
               <div class="item">
                 <div class="content" v-on:click='result(item.num)'>
-                  <div class="ui grid">
+                  <div class="ui grid" id="blemlist">
                     <div class="three wide column">
                       <p class="header"><span>{{item.num}}</span></p>
                     </div>
@@ -53,7 +53,7 @@
                     <div class="eight wide column">
                       <div class="description">
                         <div class="ui grid">
-                          <div class="four wide column"><span>{{item.score}}</span></div>
+                          <div class="four wide column" id="one"><span>{{item.score}}</span></div>
                           <div class="four wide column" id="second"><span>{{item.success}}</span></div>
                           <div class="four wide column" id="three"><span>{{item.fail}}</span></div>
                           <div class="four wide column" id="fooo"><span>{{item.ratio}}</span></div>

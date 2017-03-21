@@ -1,80 +1,94 @@
 * {
-  margin: 0;
-  padding: 0;
+    margin: 0;
+    padding: 0;
 }
-body{
-  height: auto;
+
+body {
+    height: auto;
 }
-#menu{
-  background-color: white;
+
+#menu {
+    background-color: white;
 }
-#problems{
+
+#problems {
     margin-top: 100px;
 }
-#page-span{
-  position: absolute;
-  left: 47%;
-  font-size: 17px;
+
+#page-span {
+    position: absolute;
+    left: 47%;
+    font-size: 17px;
 }
-#mnit{
-  margin: 0;
+
+#mnit {
+    margin: 0;
 }
-.three.wide.column .header{
-  font-size: 17px;
+
+.three.wide.column .header {
+    font-size: 17px;
 }
-.ui.grid{
-  width: 1014px;
+
+.ui.grid {
+    width: 1014px;
 }
-.ui.top.attached.tabular.menu a{
-  color: rgb(194,194,194);
+
+.ui.top.attached.tabular.menu a {
+    color: rgb(194, 194, 194);
 }
+
 .container {
-  padding: 70px 130px 0px 130px;
+    padding: 70px 130px 0px 130px;
     width: 100%;
     height: 100vh;
     margin-top: 20px;
     display: block;
     position: relative;
 }
-.reverse{
-  position: relative;
+
+.reverse {
+    position: relative;
 }
-.ui.center.aligned.header{
-  margin-bottom: 60px;
-  color: white;
-  font-weight: 100
+
+.ui.center.aligned.header {
+    margin-bottom: 60px;
+    color: white;
+    font-weight: 100
 }
-.ui.center.aligned.header .sub.header{
-  color: white;
-  font-weight: 100;
-  margin-top: 10px;
+
+
+.ui.center.aligned.header .sub.header {
+    color: white;
+    font-weight: 100;
+    margin-top: 10px;
 }
-.item{
-  padding: 10px;
+
+.item {
+    padding: 10px;
 }
+
 .big.reply.icon {
-  color: rgb(179,179,179);
-  position: absolute;
-  left: 0;
+    color: rgb(179, 179, 179);
+    position: absolute;
+    left: 0;
 }
 .ui.items:first-child{
   margin-top: 19.5px !important;
 }
 .big.share.icon {
-  color: rgb(179,179,179);
-  position: absolute;
-  right: 0;
+    color: rgb(179, 179, 179);
+    position: absolute;
+    right: 0;
 }
 
 .big.reply.icon:hover {
-  color: rgb(255,255,255);
-  /*color: rgb(121,121,121);*/
+    color: rgb(255, 255, 255);
+    /*color: rgb(121,121,121);*/
 }
 
 .big.share.icon:hover {
-  color: rgb(255,255,255);
+    color: rgb(255, 255, 255);
 }
-
 
 .ui.button {
     width: 100%;
@@ -114,20 +128,14 @@ body{
 .content {
     display: flex !important;
 }
+
 .content.in {
     /*display: flex !important;*/
     /*flex-grow: -0.9;*/
 }
 
-#listpol-head {
-    flex-grow: 1;
-    padding-left: 13px;
-}
-#list{
-  border: none !important;
-}
 .ui.disabled.header {
-  margin: 0 !important;
+    margin: 0 !important;
     flex-grow: 0.2;
     padding-right: 5px;
 }
@@ -139,22 +147,49 @@ body{
     color: black;
     font-size: 16px;
 }
-.description .ui.grid .four.wide.column{
-}
+
+.description .ui.grid .four.wide.column {}
+
 .description .ui.grid {
-  width: 100%;
+    width: 100%;
 }
+
 .ui.center.aligned.header {
     margin-bottom: 60px;
 }
-#second{
-  padding-left: 35px
+
+#listpol-head {
+    flex-grow: 1;
+    padding-left: 13px;
 }
-#three{
-  text-align: center;
+
+#list {
+    border: none !important;
 }
-#fooo{
-  text-align: center;
+
+#one{
+  padding-left: 24px;
+}
+
+#second {
+    padding-left: 39px
+}
+
+#three {
+    padding-left: 56px;
+}
+
+#fooo {
+  padding-left: 43px;
+}
+
+#pob {
+    color: black;
+    padding-left: 11px;
+}
+
+#blemlist .three.wide.column{
+  margin-left: -2px;
 }
 .ui.items {
     font-size: 13px;
@@ -165,12 +200,6 @@ body{
     padding-top: 0px;
 }
 
-
-#pob {
-    color: black;
-    padding-left: 11px;
-}
-
 .problemlist-enter-active {
     transition: all 2s ease;
 }
@@ -179,8 +208,7 @@ body{
     transition: all .5s cubic-bezier(1.0, 0.5, 0.8, 1.0);
 }
 
-.problemlist-enter,
-.problemlist-leave-to
+.problemlist-enter, .problemlist-leave-to
 /* .slide-fade-leave-active for <2.1.8 */
 
 {
@@ -191,14 +219,17 @@ body{
 .ui.bottom * {
     overflow: hidden;
 }
+
 .flip-list-move {
     transition: all .1s;
     display: inline-block;
     margin-right: 10px;
 }
-.flip-list{
+
+.flip-list {
     transition: all .1s;
 }
-.ui.bottom.attached.tab.segment.active{
-    overflow:hidden;
+
+.ui.bottom.attached.tab.segment.active {
+    overflow: hidden;
 }
