@@ -39,6 +39,8 @@ module.exports = {
     'import/prefer-default-export' : 0,
     'no-trailing-spaces' : 0,
     'space-before-function-paren': 0,
+    'arrow-body-style': 0,
+    'no-useless-return': 0,
   },
   "settings": {
     "ecmascript": 6,

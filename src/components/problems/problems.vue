@@ -217,7 +217,6 @@
     },
     methods: {
       clickNormal() {
-        console.log('ss');
         this.normal_problem = true;
         this.contest_problem = false;
         this.random_problem = false;
@@ -259,12 +258,13 @@
           //대회 문제
           this.$http.get('problems/contest')
             .then((res) => {
+              length = res.data.problems.length;
               if (i / 10 === parseInt(length / 10, 10)) {
                 end = length;
                 this.loadState = false;
               } else if (end === length) {
                 this.loadState = false;
-              }
+              } 
               //문제 결과 로드
               this.$http.defaults.headers.common.Authorization = this.userToken;
               this.$http.get('solution')
@@ -303,7 +303,9 @@
                     } else {
                       ratio = `${ratio.toString().substring(2, 4)} %`;
                     }
-                    this.lineheight = 55 * i;
+                    console.log(i);
+                    this.lineheight = 60 * (i + 1);
+                    console.log(this.lineheight);
                     this.items.push({
                       num,
                       name,
@@ -318,6 +320,7 @@
                   }
                 })
                 .catch((err) => {
+                  console.log(err);
                   this.$swal({
                       title: '문제 기록 로드 실패',
                       text: err,
@@ -331,6 +334,14 @@
             .catch((err) => {
               if (err.response.data.message === '아직 오픈되지 않았습니다.') {
                 err = '대회기간이 아닙니다.';
+                this.$swal({
+                  title: '문제 로드 실패',
+                  text: err,
+                  type: 'error',
+                })
+                .then(() => {
+                  return;
+                });
               }
               this.$swal({
                   title: '문제 로드 실패',
