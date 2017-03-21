@@ -49,12 +49,10 @@
 
 }
 #ltemtwo{
-    flex:6;
-    margin-right: 20px
-
+    flex:3;
 }
 #ltemthr{
-    flex:3;
+    /*flex:3;*/
 }
 #pob p {
     margin: 0;
@@ -67,19 +65,19 @@
 }
 
 .ui.top.attached.tabular.menu{
-    color: black !important
+    color: black
 }
 #pollist{
-  display: flex !important;
-  flex: 2.1;
+  display: flex;
+  flex: 2.2;
 }
 .ui.disabled.header{
-  display: flex !important;
+  display: flex;
   flex: 4.5;
 }
 #subder{
-  display: flex !important;
-  flex: 5;
+  display: flex;
+  flex: 5.1;
 }
 .ui.items * {
     Padding: 0 !important;

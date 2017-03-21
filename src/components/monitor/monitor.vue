@@ -15,18 +15,19 @@
             </section>
             <section class="four" onclick="goToPage(3)">
                 <h1>Settings</h1>
-                <div class="four-set">
-                  <div class="fo-shit">
-                    <div class="foleft">
-                      <p>아이디</p>
-                      <p>학번</p>
-                      <p>이름</p>
+                <div class="ui cards">
+                    <div class="card">
+                        <div class="content">
+                            <div class="header"><p>아이디 : <span>admin</span></p></div>
+                            <div class="meta"><p>학번 : <span>10626</span></p></div>
+                            <div class="meta"><p>이름 : <span>기무띠</span></p></div>
+                            <hr>
+                            <div class="description">
+                                <p>코드 : <span>12313124</span></p>
+                                <p>제출 결과 : <span>ture / false</span></p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="foright">
-                      <p>코드</p>
-                      <p>제출 결과</p>
-                    </div>
-                  </div>
                 </div>
             </section>
         </div>
@@ -52,6 +53,8 @@ export default {
     },
 };
 </script>
+
+
 
 
 <style src="../../assets/css/monitor.css" scoped></style>

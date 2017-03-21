@@ -64,7 +64,7 @@ body{
   /*flex: 6.7;*/
 }
 .notdate{
-  flex-grow: 1;
+  flex-grow: 1.02;
   /*flex: 4;*/
 }
 #pollist{

@@ -44,21 +44,13 @@ body {
 .menu-btn:active {
   opacity: 0.2;
 }
-.four-set{
-  background-color: rgb(133,109,200);
-  width: 100%;
-  height: 500px;
+.ui.cards{
+  margin-left: 60px;
+  margin-top: 30px;
 }
-.fo-shit{
-  padding: 30px;  
-}
-.foleft{
-  border: 1px solid;
-  border-color: rgb(47,50,125);
-}
-.foright{
-  border: 1px solid;
-  border-color: rgb(129,132,232);
+.card{
+  width: 500px;
+  height: 200px;
 }
 p{
   margin: 0;
