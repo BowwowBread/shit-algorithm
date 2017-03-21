@@ -48,7 +48,6 @@ body{
   color: white;
   font-weight: 100;
   margin-top: 10px;
-  font-weight: 100
 }
 .item{
   padding: 10px;
@@ -58,7 +57,9 @@ body{
   position: absolute;
   left: 0;
 }
-
+.ui.items:first-child{
+  margin-top: 19.5px !important;
+}
 .big.share.icon {
   color: rgb(179,179,179);
   position: absolute;

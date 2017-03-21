@@ -9,7 +9,7 @@
         <a class="item" data-tab="third" v-on:click="clickContest" :class="{active: contest_problem}">대회 문제</a>
         <a class="item" data-tab="fourth" v-on:click="shuffle" :class="{active: random_problem}">문제 섞기</a>
       </div>
-      <div class="ui bottom attached tab segment active" :style="{ 'max-height': lineheight + 'px' }" data-tab="first">
+      <div class="ui bottom attached tab segment active" data-tab="first">
         <div class="ui items" id="mnit">
           <div class="item">
             <div class="content">
@@ -38,8 +38,8 @@
             </div>
           </div>
         </div>
-        <div id="list" class="ui bottom attached tab segment active" :style="{ 'max-height': lineheight + 'px' , 'min-height' : lineheight + 'px', 'overflow': 'hidden'}" data-tab="first">
-          <transition-group name="flip-list, problemlist" tag="ul">
+        <div id="list" class="ui bottom attached tab segment active"  data-tab="first">
+          <transition-group name="flip-list, problemlist" tag="ul" :style="{ 'max-height': lineheight + 'px' , 'min-height' : lineheight + 'px', 'overflow': 'hidden'}">
             <div class="ui items" v-for="item in items" v-bind:key="item">
               <div class="item">
                 <div class="content" v-on:click='result(item.num)'>
@@ -91,7 +91,7 @@
         items: [],
         loadState: true,
         entering: false,
-        lineheight: '',
+        lineheight: 1,
         changeLoad: false,
       };
     },
@@ -151,7 +151,6 @@
                       } else if (ratio !== 0) {
                         ratio = `${parseInt(ratio * 100, 10)} %`;
                       }
-                      this.lineheight = 55 * i;
                       this.items.push({
                         num,
                         name,
@@ -164,6 +163,8 @@
                       });
                       i += 1;
                     }
+                    this.lineheight = 45 * this.items.length;                    
+                    console.log(this.items.length);
                     this.entering = true;
                   })
                   .catch((err) => {
@@ -232,7 +233,7 @@
       },
       scrollUp() {
         $('html, body').stop().animate({
-           scrollTop: 0,
+          scrollTop: 0,
         }, 500);
       },
       shuffle() {
@@ -246,7 +247,6 @@
         if (changeLoad) {
           i = 0;
           end = 10;
-          this.lineheight = 0;
           this.items = [];
           this.loadState = true;
         } else {
@@ -264,7 +264,7 @@
                 this.loadState = false;
               } else if (end === length) {
                 this.loadState = false;
-              } 
+              }
               //문제 결과 로드
               this.$http.defaults.headers.common.Authorization = this.userToken;
               this.$http.get('solution')
@@ -303,9 +303,6 @@
                     } else {
                       ratio = `${ratio.toString().substring(2, 4)} %`;
                     }
-                    console.log(i);
-                    this.lineheight = 60 * (i + 1);
-                    console.log(this.lineheight);
                     this.items.push({
                       num,
                       name,
@@ -317,6 +314,8 @@
                       ratio,
                     });
                     i += 1;
+                    this.lineheight = 45 * this.items.length;                    
+                    console.log(this.items.length);
                   }
                 })
                 .catch((err) => {
@@ -335,22 +334,24 @@
               if (err.response.data.message === '아직 오픈되지 않았습니다.') {
                 err = '대회기간이 아닙니다.';
                 this.$swal({
-                  title: '문제 로드 실패',
-                  text: err,
-                  type: 'error',
-                })
-                .then(() => {
-                  return;
-                });
+                    title: '문제 로드 실패',
+                    text: err,
+                    type: 'error',
+                  })
+                  .then(() => {
+                    this.clickNormal();
+                    return;
+                  });
+              } else {
+                this.$swal({
+                    title: '문제 로드 실패',
+                    text: err,
+                    type: 'error',
+                  })
+                  .then(() => {
+                    location.href = '/';
+                  });
               }
-              this.$swal({
-                  title: '문제 로드 실패',
-                  text: err,
-                  type: 'error',
-                })
-                .then(() => {
-                  location.href = '/';
-                });
             });
         } else {
           //일반 문제
@@ -400,7 +401,6 @@
                     } else {
                       ratio = `${ratio.toString().substring(2, 4)} %`;
                     }
-                    this.lineheight = 55 * i;
                     this.items.push({
                       num,
                       name,
@@ -412,6 +412,8 @@
                       ratio,
                     });
                     i += 1;
+                    this.lineheight = 45 * this.items.length;
+                    console.log(this.items.length);
                   }
                 })
                 .catch((err) => {

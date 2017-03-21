@@ -95,7 +95,7 @@ export default {
       },
     };
   },
-  created() {
+  beforeCreate() {
 	  //      토큰 테스트
     this.userToken = this.$cookie.get('userToken');
 	  if (this.userToken != null) {
@@ -118,6 +118,18 @@ export default {
               time: res.data.problem.problemData.timeLimit,
               memorylimit: res.data.problem.problemData.memoryLimit,
             });
+          })
+          .catch((err) => {
+            if (err.response.data.message === '아직 오픈되지 않았습니다.') {
+              this.$swal({
+                title: '문제 로드 실패',
+                text: '대회기간이 아닙니다',
+                type: 'error',
+              })
+              .then(() => {
+                location.href = '/problems';
+              });
+            }
           });
         })
         .catch((error) => {
