@@ -30,9 +30,6 @@
     </div>
     <div v-if="loginState == false" id="sign">
       <div class="ui modal">
-        <!-- <div class="conclo">
-                <i class="close icon" v-on:click="closeModal"></i>
-              </div> -->
         <div class="login_form" v-if="signState">
           <div class="description">
             <div class="ui two column centered grid">
@@ -200,22 +197,28 @@
       ...mapGetters([
         'getterLoadingState',
       ]),
+      //로딩 스피너 상태 값
       loadingState() {
         return this.$store.state.loadingState;
       },
     },
     beforeCreate() {
+      //프로그레스바 시작
       this.$Progress.start();
+      //메인은 로딩스피너가 생기지 않음
       if (this.$route.name !== 'index') {
         this.$store.commit('loadingOn');
       }
+      //기본 URL 설정
       const ROOT_URL = 'https://algorithm.seoulit.kr/api';
       this.$http.defaults.baseURL = ROOT_URL;
-      //      토큰 테스트
+      //쿠키에 저장되있는 토큰을 가져옴
       this.userToken = this.$cookie.get('userToken');
+      //쿠키에 토큰이 저장되있는 경우
       if (this.userToken != null) {
-        this.userToken = this.$cookie.get('userToken');
+        //헤더에 토큰을 추가
         this.$http.defaults.headers.common.Authorization = this.userToken;
+        //쿠키에서 받은 토큰값으로 정보를 받아와 로그인 상태를 유지
         this.$http.get('users/my-info')
           .then((resInfo) => {
             this.userRating = resInfo.data.user.rating;
@@ -230,6 +233,7 @@
             });
           });
       }
+      //라우팅 시 이동히가진 메소드 호출
       this.$router.beforeEach((to, from, next) => {
         next();
         if (to.name !== 'index') {

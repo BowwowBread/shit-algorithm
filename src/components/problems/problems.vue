@@ -164,7 +164,6 @@
                       i += 1;
                     }
                     this.lineheight = 45 * this.items.length;                    
-                    console.log(this.items.length);
                     this.entering = true;
                   })
                   .catch((err) => {
@@ -315,11 +314,9 @@
                     });
                     i += 1;
                     this.lineheight = 45 * this.items.length;                    
-                    console.log(this.items.length);
                   }
                 })
                 .catch((err) => {
-                  console.log(err);
                   this.$swal({
                       title: '문제 기록 로드 실패',
                       text: err,
@@ -413,7 +410,6 @@
                     });
                     i += 1;
                     this.lineheight = 45 * this.items.length;
-                    console.log(this.items.length);
                   }
                 })
                 .catch((err) => {

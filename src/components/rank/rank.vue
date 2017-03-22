@@ -219,7 +219,6 @@
           // 대회 랭크
           this.$http.get('users')
             .then((res) => {
-              console.log(this.data);
               if (i / 10 === parseInt(length / 10, 10)) {
                 end = length;
                 this.loadState = false;
@@ -281,8 +280,6 @@
                 return b[sort] - a[sort];
               });
               while (i < end) {
-                console.log(i);
-                console.log(end);
                 this.users.push({
                   name: this.data[i].name,
                   score: this.data[i].score,
