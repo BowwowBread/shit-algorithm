@@ -3,22 +3,22 @@
         <div class="notice" v-if="entering">
             <div class="notipoll">
                 <div class="notipen">
+                  <hr>
                     <div class="noti-head">
                         <p>{{name}}</p>
                     </div>
-                    <hr>
                     <div class="noti-main">
                         <p>{{contents}}</p>
                     </div>
                 </div>
-                <div class="noti-tag">
+                <!-- <div class="noti-tag">
                     <div class="noti1">
                         <p>{{num}}</p>
                     </div>
                     <div class="noti2">
                         <p>{{date}}</p>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
         <div class="pageicon">

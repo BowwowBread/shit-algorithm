@@ -64,8 +64,8 @@
   margin-left: 10px;
 }
 
-.ui.top.attached.tabular.menu{
-    color: black
+#topmn .item{
+  color: rgb(194, 194, 194)
 }
 #pollist{
   display: flex;

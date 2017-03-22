@@ -16,7 +16,7 @@
             <section class="four" onclick="goToPage(3)">
                 <h1>Settings</h1>
                 <div class="ui cards">
-                    <div class="card">
+                    <div class="card" id="card">
                         <div class="content">
                             <div class="header"><p>아이디 : <span>admin</span></p></div>
                             <div class="meta"><p>학번 : <span>10626</span></p></div>

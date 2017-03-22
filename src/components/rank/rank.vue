@@ -8,7 +8,7 @@
         <div class="rank-top">
           <div class="rank1">
             <div class="rankge1">
-              <img src="../../assets/img/bg.jpg">
+              <img src="../../assets/img/oll1.png">
             </div>
             <p class="rant1">2등</p>
             <hr>
@@ -16,7 +16,7 @@
           </div>
           <div class="rank2">
             <div class="rankge2">
-              <img src="../../assets/img/bg.jpg">
+              <img src="../../assets/img/oll2.png">
             </div>
             <p class="rant1">1등</p>
             <hr>
@@ -24,16 +24,16 @@
           </div>
           <div class="rank3">
             <div class="rankge3">
-              <img src="../../assets/img/bg.jpg">
+              <img src="../../assets/img/oll3.png">
             </div>
             <p class="rant1">3등</p>
             <hr>
             <p class="rant2" v-if="rank">{{ranker[2].name}}</p>
           </div>
         </div>
-        <div class="ui top attached tabular menu">
-          <p class="item" data-tab="first" v-on:click="clickNormal" :class="{active: normal_rank}">순위</p>
-          <p class="item" data-tab="first" v-on:click="clickContest" :class="{active: contest_rank}">대회 순위</p>
+        <div class="ui top attached tabular menu" id="topmn">
+          <a class="item" data-tab="first" v-on:click="clickNormal" :class="{active: normal_rank}">순위</a>
+          <a class="item" data-tab="first" v-on:click="clickContest" :class="{active: contest_rank}">대회 순위</a>
         </div>
         <div class="ui bottom attached tab segment active">
           <div class="ui items">
