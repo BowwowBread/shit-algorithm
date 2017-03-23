@@ -328,14 +328,12 @@ export default{
 	    this.$http.get('problems')
         .then((res) => {
           let i = 0;
-          console.log(res);
           while (i < res.data.problems.length) {
             this.items.push({
               num: res.data.problems[i].num,
               name: res.data.problems[i].problemName,
               source: res.data.problems[i].source,
             });
-            console.log(i);
             i += 1;
           }
           this.lastNum = res.data.problems[i - 1].num;
