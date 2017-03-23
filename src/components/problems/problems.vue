@@ -53,7 +53,7 @@
                     <div class="eight wide column">
                       <div class="description">
                         <div class="ui grid">
-                          <div class="four wide column" id="one"><span>{{item.score}}</span></div>
+                          <div class="four wide column" id="one"><span>{{item.count}}</span></div>
                           <div class="four wide column" id="second"><span>{{item.success}}</span></div>
                           <div class="four wide column" id="three"><span>{{item.fail}}</span></div>
                           <div class="four wide column" id="fooo"><span>{{item.ratio}}</span></div>
