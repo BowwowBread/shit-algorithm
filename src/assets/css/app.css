@@ -32,8 +32,8 @@
         position: relative;
         padding: 0px;
         margin-left: 200px;
-        background-color: rgba(180,177,177,.38);
-        /*background-color: white;*/
+        /*background-color: rgba(180,177,177,.38);*/
+        background-color: white;
         margin-top: -180px;
         border-radius: 15px;
     }

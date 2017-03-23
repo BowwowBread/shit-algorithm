@@ -220,7 +220,7 @@ export default{
 	        this.problemNum = res.data.problem.num;
 	        this.score = res.data.problem.score;
 	        this.explanation = res.data.problem.explanation;
-	        this.type = res.data.problem.type;
+	        this.problemType = res.data.problem.type;
           })
           .catch((err) => {
 	          this.$swal({
@@ -335,28 +335,10 @@ export default{
               name: res.data.problems[i].problemName,
               source: res.data.problems[i].source,
             });
+            console.log(i);
             i += 1;
           }
-          this.$http.get('problems/contest')
-            .then((resContest) => {
-            let j = 0;
-              while (j < res.data.problems.length) {
-                this.items.push({
-                  num: res.data.problems[j].num,
-                  name: res.data.problems[j].problemName,
-                  soiurce: res.data.problems[j].source,
-                  });
-                j += 1;
-                }
-                this.lastNum = res.data.problems[i].num + res.data.problems[j].num;
-             })
-           .catch((err) => {
-                this.$swal({
-                title: '문제 로드 실패',
-                text: err,
-                type: 'error',
-              });
-            });
+          this.lastNum = res.data.problems[i - 1].num;
           this.enteringProblemmanage = true;
         })
         .catch((err) => {

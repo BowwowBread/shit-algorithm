@@ -24,7 +24,19 @@
                             <hr>
                             <div class="description">
                                 <p>코드 : <span>12313124</span></p>
-                                <p>제출 결과 : <span>ture / false</span></p>
+                                <p>제출 결과 : <span>true / false</span></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card" id="card">
+                        <div class="content">
+                            <div class="header"><p>아이디 : <span>admin</span></p></div>
+                            <div class="meta"><p>학번 : <span>10626</span></p></div>
+                            <div class="meta"><p>이름 : <span>기무띠</span></p></div>
+                            <hr>
+                            <div class="description">
+                                <p>코드 : <span>12313124</span></p>
+                                <p>제출 결과 : <span>true / false</span></p>
                             </div>
                         </div>
                     </div>

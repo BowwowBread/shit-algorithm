@@ -22,7 +22,7 @@ body {
 }
 
 #mnit {
-    margin: 0;
+    margin: 0 !important;
 }
 
 .three.wide.column .header {
@@ -56,11 +56,11 @@ body {
     font-weight: 100
 }
 
+
 .ui.center.aligned.header .sub.header {
     color: white;
     font-weight: 100;
     margin-top: 10px;
-    font-weight: 100
 }
 
 .item {
@@ -72,7 +72,9 @@ body {
     position: absolute;
     left: 0;
 }
-
+.ui.items:first-child{
+  margin-top: 19.5px !important;
+}
 .big.share.icon {
     color: rgb(179, 179, 179);
     position: absolute;

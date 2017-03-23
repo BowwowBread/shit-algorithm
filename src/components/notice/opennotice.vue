@@ -3,13 +3,18 @@
         <div class="notice" v-if="entering">
             <div class="notipoll">
                 <div class="notipen">
-                  <hr>
-                    <div class="noti-head">
-                        <p>{{name}}</p>
+                  <div class="noti-head">
+                    <p>{{name}}</p>
+                  </div>
+                  <div class="noti-main">
+                    <div class="noti-in">
+                      <p>{{contents}}</p>
                     </div>
-                    <div class="noti-main">
-                        <p>{{contents}}</p>
+                    <div class="noti-sub">
+                      <p><span>{{num}}</span>번</p>
+                      <p><span>{{date}}</span></p>
                     </div>
+                  </div>
                 </div>
                 <!-- <div class="noti-tag">
                     <div class="noti1">

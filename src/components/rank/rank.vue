@@ -8,7 +8,7 @@
         <div class="rank-top">
           <div class="rank1">
             <div class="rankge1">
-              <img src="../../assets/img/oll1.png">
+              <img src="../../assets/img/bg.jpg">
             </div>
             <p class="rant1">2등</p>
             <hr>
@@ -16,7 +16,7 @@
           </div>
           <div class="rank2">
             <div class="rankge2">
-              <img src="../../assets/img/oll2.png">
+              <img src="../../assets/img/bg.jpg">
             </div>
             <p class="rant1">1등</p>
             <hr>
@@ -24,7 +24,7 @@
           </div>
           <div class="rank3">
             <div class="rankge3">
-              <img src="../../assets/img/oll3.png">
+              <img src="../../assets/img/bg.jpg">
             </div>
             <p class="rant1">3등</p>
             <hr>
@@ -219,7 +219,6 @@
           // 대회 랭크
           this.$http.get('users')
             .then((res) => {
-              console.log(this.data);
               if (i / 10 === parseInt(length / 10, 10)) {
                 end = length;
                 this.loadState = false;
@@ -281,8 +280,6 @@
                 return b[sort] - a[sort];
               });
               while (i < end) {
-                console.log(i);
-                console.log(end);
                 this.users.push({
                   name: this.data[i].name,
                   score: this.data[i].score,
