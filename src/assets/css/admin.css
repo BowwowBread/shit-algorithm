@@ -13,6 +13,27 @@ h1.ui.header {
     font-size: 38px;
 }
 
+
+/*.adminmn{
+  width: 100%;
+position: absolute;
+background: white;
+top: 0;
+left: 0;
+right: 0;
+z-index: 200;
+padding-left: 33px;
+    padding-top: 20px;
+}
+.ui.secondary.pointing.menu{
+  margin-left: -20px;
+}
+.twelve.wide.stretched.column{
+  padding-top: 55px;
+    padding-left: 30px;
+}*/
+
+
 .container {
     /*background-color:rgb(250,250,250);*/
     position: absolute;

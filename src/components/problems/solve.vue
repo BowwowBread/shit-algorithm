@@ -17,7 +17,9 @@
                 </div>
                 <!-- <hr> -->
                 <div class="solve_explain">
+                  <div class="solve_explainner">
                     {{item.explanation}}
+                  </div>
                 </div>
                 <div class="solve_inputex">
                   <p>입력 값 예제</p>
@@ -35,8 +37,10 @@
                 </div>
                 <div class="solve_footer">
                     <div class="solve_output">
-                        <p>{{runMsg}}</p><br>
+                      <p>{{runMsg}}</p>
+                      <div class="solve-outputner">
                         <pre>{{codeResult}}</pre>
+                      </div>
                     </div>
                     <div class="solve_button">
                         <div class="solve_run" @click="codeRun">

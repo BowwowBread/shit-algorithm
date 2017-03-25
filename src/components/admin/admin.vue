@@ -6,14 +6,16 @@
              "background-color: white ;
               color: black;">
             <div class="ui">
+              <div class="adminmn">
                 <h1 class="ui header admin">ADMINPAGE</h1>
                 <div class="ui secondary pointing menu">
-                    <a class="item" v-on:click="click_member">회원관리</a>
-                    <a class="item" v-on:click="click_nonaccount">비승인 회원관리</a>
-                    <a class="item" v-on:click="click_list">게시판관리</a>
-                    <a class="item" v-on:click="click_problem">문제관리</a>
-                    <a class="item" v-on:click="click_result">문제결과</a>
+                  <a class="item" v-on:click="click_member">회원관리</a>
+                  <a class="item" v-on:click="click_nonaccount">비승인 회원관리</a>
+                  <a class="item" v-on:click="click_list">게시판관리</a>
+                  <a class="item" v-on:click="click_problem">문제관리</a>
+                  <a class="item" v-on:click="click_result">문제결과</a>
                 </div>
+              </div>
                     <div class="twelve wide stretched column">
                         <member v-if="memberState"></member>
                         <nonaccount v-if="nonaccountState"></nonaccount>
