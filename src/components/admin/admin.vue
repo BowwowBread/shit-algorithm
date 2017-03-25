@@ -28,7 +28,7 @@
     </div>
     </div>
 
-</template>
+</template> 
 
 <script>
 import member from './member.vue';

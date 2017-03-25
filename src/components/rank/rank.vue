@@ -113,9 +113,12 @@
               .then((res) => {
                 i = 0;
                 length = res.data.users.length;
-                if (length < 10) {
-                  end = length;
-                }
+           if (i / 10 === parseInt(length / 10, 10)) {
+              end = length;
+              this.loadState = false;
+            } else if (end === length) {
+              this.loadState = false;
+            }
                 while (i < length) {
                   this.data.push({
                     name: res.data.users[i].username,

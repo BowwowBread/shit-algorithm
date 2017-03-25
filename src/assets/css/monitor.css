@@ -123,3 +123,19 @@ h1 {
   line-height: 70px;
   -webkit-user-select: none;
 }
+
+.monitorlist-enter-active {
+    transition: all 2s ease;
+}
+
+.monitorlist-leave-active {
+    transition: all .5s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+
+.monitorlist-enter, .monitorlist-leave-to
+/* .slide-fade-leave-active for <2.1.8 */
+
+{
+    transform: translateX(-50px);
+    opacity: 0;
+}

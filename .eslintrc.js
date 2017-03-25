@@ -41,6 +41,7 @@ module.exports = {
     'space-before-function-paren': 0,
     'arrow-body-style': 0,
     'no-useless-return': 0,
+    'max-len': 0,
   },
   "settings": {
     "ecmascript": 6,
