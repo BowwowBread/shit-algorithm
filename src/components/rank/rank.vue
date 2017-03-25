@@ -5,7 +5,7 @@
         <h2 class="ui center aligned header" id="rankhead"> 랭킹 시스템
           <div class="sub header">1등을 목표로 문제를 풀면서 친구들을 이겨보세요!</div>
         </h2>
-        <div class="rank-top">
+        <div class="rank-top" >
           <div class="rank1">
             <div class="rankge1">
               <img src="../../assets/img/bg.jpg">
@@ -27,8 +27,8 @@
               <img src="../../assets/img/bg.jpg">
             </div>
             <p class="rant1">3등</p>
-            <hr>
             <p class="rant2" v-if="rank">{{ranker[2].name}}</p>
+            <hr>
           </div>
         </div>
         <div class="ui top attached tabular menu" id="topmn">
@@ -138,10 +138,16 @@
                 }
                 i = 0;
                 while (i < 3) {
-                  this.ranker.push({
-                    name: this.users[i].name,
-                    score: this.users[i].score,
-                  });
+                  if (this.users[i] != null) {
+                    this.ranker.push({
+                      name: this.users[i].name,
+                      score: 'sss',
+                    });
+                  } else {
+                    this.ranker.push({
+                      name: `${i + 1}등에 도전해보세요`,
+                    });
+                  }
                   i += 1;
                 }
                 this.entering = true;
@@ -245,10 +251,16 @@
 
               i = 0;
               while (i < 3) {
-                this.ranker.push({
-                  name: this.users[i].name,
-                  score: this.users[i].score,
-                });
+                if (this.users[i] != null) {
+                  this.ranker.push({
+                    name: this.users[i].name,
+                    score: 'sss',
+                  });
+                } else {
+                  this.ranker.push({
+                    name: `${i + 1}등에 도전해보세요`,
+                  });
+                }
                 i += 1;
                 if (i === 3) {
                   this.rank = true;
@@ -289,10 +301,16 @@
 
               i = 0;
               while (i < 3) {
-                this.ranker.push({
-                  name: this.users[i].name,
-                  score: this.users[i].score,
-                });
+                if (this.users[i] != null) {
+                  this.ranker.push({
+                    name: this.users[i].name,
+                    score: 'sss',
+                  });
+                } else {
+                  this.ranker.push({
+                    name: `${i + 1}등에 도전해보세요`,
+                  });
+                }
                 i += 1;
                 if (i === 3) {
                   this.rank = true;

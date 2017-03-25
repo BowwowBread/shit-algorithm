@@ -131,11 +131,11 @@
                       //문제 결과 수 반복
                       while (j < resRatio.data.resolves.length) {
                         //문제 번호 === 문제 결과 번호
-                        if (i === resRatio.data.resolves[j].resolveData.problemNum) {
+                        if (i + 101 === resRatio.data.resolves[j].resolveData.problemNum) {
                           //문제 결과 카운트
                           if (resRatio.data.resolves[j].resolveData.result === 'success') {
                             success += 1;
-                          } else {
+                          } else if (resRatio.data.resolves[j].resolveData.result === 'fail') {
                             fail += 1;
                           }
                           count += 1;
@@ -151,6 +151,7 @@
                       } else if (ratio !== 0) {
                         ratio = `${parseInt(ratio * 100, 10)} %`;
                       }
+                      
                       this.items.push({
                         num,
                         name,
@@ -282,7 +283,7 @@
                     //문제 결과 수 반복
                     while (j < resRatio.data.resolves.length) {
                       //문제 번호 === 문제 결과 번호
-                      if (i === resRatio.data.resolves[j].resolveData.problemNum) {
+                      if (i + 101 === resRatio.data.resolves[j].resolveData.problemNum) {
                         //문제 결과 카운트
                         if (resRatio.data.resolves[j].resolveData.result === 'success') {
                           success += 1;
@@ -378,7 +379,7 @@
                     //문제 결과 수 반복
                     while (j < resRatio.data.resolves.length) {
                       //문제 번호 === 문제 결과 번호
-                      if (i === resRatio.data.resolves[j].resolveData.problemNum) {
+                      if (i + 101 === resRatio.data.resolves[j].resolveData.problemNum) {
                         //문제 결과 카운트
                         if (resRatio.data.resolves[j].resolveData.result === 'success') {
                           success += 1;

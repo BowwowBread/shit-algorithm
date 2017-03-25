@@ -30,7 +30,7 @@
 
 <script>
 import member from './member.vue';
-import problemmanage from './problemmange.vue';
+import problemmanage from './problemmanage.vue';
 import notice from './noticemanage.vue';
 import nonaccount from './nonaccount.vue';
 import problemresult from './problemresult.vue';
