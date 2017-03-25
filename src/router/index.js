@@ -10,6 +10,7 @@ import Notice from '../components/notice/notice.vue';
 import openNotice from '../components/notice/opennotice.vue';
 import notFound from '../components/notfound/notfound.vue';
 import Monitor from '../components/monitor/monitor.vue';
+import contestIntro from '../components/introduce/contestintro.vue';
 
 Vue.use(Router);
 
@@ -56,6 +57,11 @@ export default new Router({
       path: '/notice/:num',
       name: 'openNotice',
       component: openNotice,
+    },
+    {
+      path: '/contestIntro',
+      name: 'contestIntro',
+      component: contestIntro,
     },
     {
       path: '/404',
