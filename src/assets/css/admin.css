@@ -16,9 +16,8 @@ h1.ui.header {
 
 /*.adminmn{
   width: 100%;
-position: absolute;
+position: fixed;
 background: white;
-top: 0;
 left: 0;
 right: 0;
 z-index: 200;
