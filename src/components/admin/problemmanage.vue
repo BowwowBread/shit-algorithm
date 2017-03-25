@@ -89,6 +89,7 @@
 export default{
   data() {
     return {
+      data: [],
       items: [],
       problemData: [],
       solveList: [],
@@ -220,7 +221,7 @@ export default{
 	        this.problemNum = res.data.problem.num;
 	        this.score = res.data.problem.score;
 	        this.explanation = res.data.problem.explanation;
-	        this.problemType = res.data.problem.type;
+	        this.type = res.data.problem.type;
           })
           .catch((err) => {
 	          this.$swal({
@@ -328,15 +329,49 @@ export default{
 	    this.$http.get('problems')
         .then((res) => {
           let i = 0;
+          console.log(res);
           while (i < res.data.problems.length) {
-            this.items.push({
+            this.data.push({
               num: res.data.problems[i].num,
               name: res.data.problems[i].problemName,
               source: res.data.problems[i].source,
             });
             i += 1;
           }
-          this.lastNum = res.data.problems[i - 1].num;
+          this.$http.get('problems/contest')
+            .then((resContest) => {
+            let j = 0;
+              while (j < resContest.data.problems.length) {
+                this.data.push({
+                  num: resContest.data.problems[j].num,
+                  name: resContest.data.problems[j].problemName,
+                  source: resContest.data.problems[j].source,
+                  });
+                j += 1;
+                }
+                if (j === resContest.data.problems.length) {
+                  const sort = 'num';
+                  this.data.sort(function (a, b) {
+                    return a[sort] - b[sort];
+                  });
+                  i = 0;
+                  while (i < this.data.length) {
+                    this.items.push({
+                      num: this.data[i].num,
+                      name: this.data[i].name,
+                      source: this.data[i].source,
+                    });
+                    i += 1;
+                  }
+                }
+             })
+           .catch((err) => {
+                this.$swal({
+                title: '문제 로드 실패',
+                text: err,
+                type: 'error',
+              });
+            });
           this.enteringProblemmanage = true;
         })
         .catch((err) => {

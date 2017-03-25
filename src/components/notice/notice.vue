@@ -70,9 +70,12 @@
         .then((res) => {
           i = 0;
           length = res.data.notices.length;
-          if (length < 10) {
-            end = length;
-          }
+           if (i / 10 === parseInt(length / 10, 10)) {
+              end = length;
+              this.loadState = false;
+            } else if (end === length) {
+              this.loadState = false;
+            }
           while (i < end) {
             let date = res.data.notices[i].date.replace('T', ', ');
             date = date.substring(0, date.length - 8);

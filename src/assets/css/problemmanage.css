@@ -73,7 +73,6 @@ li{
 }
 .list{
     width: 500px !important;
-    border:1px solid red;
 }
 .solveList{
     position:fixed;

@@ -75,16 +75,18 @@
             this.score = resInfo.data.user.score;
             this.$http.get('solution/resultsuccess')
               .then((res) => {
-                this.successCount = res.data.resolves.length;
-                let i = res.data.resolves.length - 5;
-                while (i < res.data.resolves.length) {
-                  let date = res.data.resolves[i].resolveData.date.replace('T', ', ');
-                  date = date.substring(0, date.length - 8);
-                  this.recentProblem.push({
-                    num: res.data.resolves[i].resolveData.problemNum,
-                    date,
-                  });
-                  i += 1;
+                if (res.resolves != null) {
+                  this.successCount = res.data.resolves.length;
+                  let i = res.data.resolves.length - 5;
+                  while (i < res.data.resolves.length) {
+                    let date = res.data.resolves[i].resolveData.date.replace('T', ', ');
+                    date = date.substring(0, date.length - 8);
+                    this.recentProblem.push({
+                      num: res.data.resolves[i].resolveData.problemNum,
+                      date,
+                    });
+                    i += 1;
+                  }
                 }
                 this.entering = true;
               })

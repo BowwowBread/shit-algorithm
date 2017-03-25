@@ -68,11 +68,11 @@ export default{
   },
   methods: {
     modify() {
+      const date = new Date();
       this.$http.put('notices', {
-          num: this.num,
-          noticeName: this.name,
+          noticenum: this.num,
+          noticename: this.name,
           contents: this.content,
-          type: this.type,
         })
         .then(() => {
           this.$swal({
