@@ -44,7 +44,7 @@
                             </div>
                         </div>
                     </div>
-                        <transition-group name="monitorlist" tag="ul" class="ui cards">
+                    <transition-group name="monitorlist" tag="ul" class="ui cards">
                         <div class="card" v-for="monitor in monitorData" v-bind:key="monitor">
                             <div class="content">
                                 <div class="header">
@@ -68,7 +68,7 @@
                                 </div>
                             </div>
                         </div>
-                        </transition-group>
+                    </transition-group>
                 </div>
             </div>
         </div>
@@ -104,7 +104,7 @@
                         if (this.userRating !== 3) {
                             // 어드민이 아닌 경우
                             this.$swal({
-                                // 실패 모달
+                                    // 실패 모달
                                     title: '입장 실패',
                                     text: '어드민이 아닙니다',
                                     type: 'error',
@@ -127,7 +127,7 @@
                     .catch((error) => {
                         // 유저 정보 조회 실패
                         this.$swal({
-                            // 실패 모달
+                                // 실패 모달
                                 title: '유저 정보 조회 실패',
                                 text: error,
                                 type: 'error',
@@ -140,7 +140,7 @@
             } else {
                 // 토큰 테스트 실패
                 this.$swal({
-                    // 실패 모달
+                        // 실패 모달
                         title: '입장 실패',
                         text: '로그인을 해주세요',
                         type: 'error',
@@ -153,7 +153,7 @@
         },
         mounted() {
             this.$nextTick(() => {
-      // 데이터 갱신 완료시 프로그레스바, 로딩창 종료
+                // 데이터 갱신 완료시 프로그레스바, 로딩창 종료
                 this.$store.commit('loadingOff');
                 this.$Progress.finish();
             });
@@ -183,37 +183,37 @@
             },
             contestOpen() {
                 this.$http.get('users/contest/true')
-                .then(() => {
-                this.$swal(
-                    '대회 오픈',
-                    '대회가 시작되었습니다.',
-                    'success',
-                );
-                })
-                .catch((err) => {
-                    this.$swal({
-                        title: '대회 오픈 실패',
-                        text: err,
-                        type: 'error',
+                    .then(() => {
+                        this.$swal(
+                            '대회 오픈',
+                            '대회가 시작되었습니다.',
+                            'success',
+                        );
+                    })
+                    .catch((err) => {
+                        this.$swal({
+                            title: '대회 오픈 실패',
+                            text: err,
+                            type: 'error',
+                        });
                     });
-                });
             },
             contestClose() {
                 this.$http.get('users/contest/false')
-                .then(() => {
-                this.$swal(
-                    '대회 종료',
-                    '대회가 종료되었습니다.',
-                    'success',
-                );
-                })
-                .catch((err) => {
-                    this.$swal({
-                        title: '대회 종료 실패',
-                        text: err,
-                        type: 'error',
+                    .then(() => {
+                        this.$swal(
+                            '대회 종료',
+                            '대회가 종료되었습니다.',
+                            'success',
+                        );
+                    })
+                    .catch((err) => {
+                        this.$swal({
+                            title: '대회 종료 실패',
+                            text: err,
+                            type: 'error',
+                        });
                     });
-                });
             },
             monitoring(state) {
                 // 문제 결과 로드
@@ -358,14 +358,14 @@
                                     i -= 1;
                                 }
                                 // 현재 개수 저장
-                                this.resolveLength = this.count;                                
+                                this.resolveLength = this.count;
                             }
                         }
                     })
                     .catch((err) => {
                         // 문제 결과 로드 실패
                         this.$swal({
-                            // 실패 모달
+                                // 실패 모달
                                 title: '모니터링 페이지 오류',
                                 text: err,
                                 type: 'error',

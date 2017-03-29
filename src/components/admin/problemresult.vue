@@ -24,6 +24,7 @@
     </ul>
   </div>
 </template>
+
 <script>
   export default {
     data() {
@@ -86,7 +87,11 @@
     },
   };
 </script>
-<style scoped>
 
+<style scoped>
+  
 </style>
-<style src="../../assets/css/problemresult.css" scoped></style>
+
+<style src="../../assets/css/problemresult.css" scoped>
+  
+</style>

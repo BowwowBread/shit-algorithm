@@ -24,13 +24,16 @@
     </div>
   </div>
 </template>
+
 <script>
   export default {
     name: 'sigo',
     data() {
-      return {
-      };
+      return {};
     },
   };
 </script>
-<style src="../../assets/css/timeline.css" scoped></style>
+
+<style src="../../assets/css/timeline.css" scoped>
+  
+</style>

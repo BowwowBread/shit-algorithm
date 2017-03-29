@@ -97,21 +97,21 @@
               .catch((err) => {
                 // 문제 결과 조회 실패
                 this.$swal({
-                  // 실패 모달
-                  title: '문제 결과 조회 실패',
-                  text: err,
-                  type: 'error',
-                })
-                .then(() => {
-                  // 메인으로 이동
-                  location.href = '/';
-                });
+                    // 실패 모달
+                    title: '문제 결과 조회 실패',
+                    text: err,
+                    type: 'error',
+                  })
+                  .then(() => {
+                    // 메인으로 이동
+                    location.href = '/';
+                  });
               });
           })
           .catch((error) => {
             // 유저 조회 실패
             this.$swal({
-              // 실패 모달
+                // 실패 모달
                 title: '유저 조회 실패',
                 text: error,
                 type: 'error',
@@ -124,7 +124,7 @@
       } else {
         // 토큰 인증 실패
         this.$swal({
-          // 실패 모달
+            // 실패 모달
             title: '입장 실패',
             text: '로그인을 해주세요',
             type: 'error',
@@ -137,7 +137,11 @@
     },
   };
 </script>
-<style scoped>
 
+<style scoped>
+  
 </style>
-<style src="../../assets/css/mypage.css" scoped></style>
+
+<style src="../../assets/css/mypage.css" scoped>
+  
+</style>

@@ -5,7 +5,7 @@
         <h2 class="ui center aligned header" id="rankhead"> 랭킹 시스템
           <div class="sub header">1등을 목표로 문제를 풀면서 친구들을 이겨보세요!</div>
         </h2>
-        <div class="rank-top" >
+        <div class="rank-top">
           <div class="rank1">
             <div class="rankge1">
               <img src="../../assets/img/bg.jpg">
@@ -73,8 +73,8 @@
           <i class="huge chevron circle up icon" v-on:click="scrollUp"></i>
         </a>
         <button class="ui button" v-if="loadState" v-on:click="loadList(false)">
-          <i class="large chevron down icon"></i>
-        </button>
+            <i class="large chevron down icon"></i>
+          </button>
       </div>
     </div>
   </div>
@@ -106,6 +106,7 @@
       if (this.userToken != null) {
         this.userToken = this.$cookie.get('userToken');
         this.$http.defaults.headers.common.Authorization = this.userToken;
+        // 유저 정보 조회
         this.$http.get('users/my-info')
           .then((resInfo) => {
             this.userid = resInfo.data.user.userId;
@@ -113,13 +114,20 @@
               .then((res) => {
                 i = 0;
                 length = res.data.users.length;
-           if (i / 10 === parseInt(length / 10, 10)) {
-              end = length;
-              this.loadState = false;
-            } else if (end === length) {
-              this.loadState = false;
-            }
+                if (i / 10 === parseInt(length / 10, 10)) {
+                  /**
+                    유저가 끝난경우 ex) i = 10, length = 18
+                    i / 10 = 1, paseInt(length / 10, 10) = 1
+                    end를 총 공지 갯수만큼 변경
+                   */
+                  end = length;
+                  this.loadState = false;
+                } else if (end === length) {
+                  // 10의 배수로 끝난 경우
+                  this.loadState = false;
+                }
                 while (i < length) {
+                  // 데이터 추가
                   this.data.push({
                     name: res.data.users[i].username,
                     score: res.data.users[i].score,
@@ -127,12 +135,14 @@
                   });
                   i += 1;
                 }
+                // 랭크 정렬
                 const sort = 'score';
                 this.data.sort(function(a, b) {
                   return b[sort] - a[sort];
                 });
                 i = 0;
                 while (i < end) {
+                  // 유저데이터 추가
                   this.users.push({
                     name: this.data[i].name,
                     score: this.data[i].score,
@@ -141,6 +151,7 @@
                 }
                 i = 0;
                 while (i < 3) {
+                  // 랭킹 3위 추가
                   if (this.users[i] != null) {
                     this.ranker.push({
                       name: this.users[i].name,
@@ -148,6 +159,7 @@
                     });
                   } else {
                     this.ranker.push({
+                      // 랭킹에 유저가 없는 경우
                       name: `${i + 1}등에 도전해보세요`,
                     });
                   }
@@ -251,7 +263,7 @@
                 });
                 i += 1;
               }
-
+  
               i = 0;
               while (i < 3) {
                 if (this.users[i] != null) {
@@ -301,7 +313,7 @@
                 });
                 i += 1;
               }
-
+  
               i = 0;
               while (i < 3) {
                 if (this.users[i] != null) {
@@ -335,5 +347,10 @@
     },
   };
 </script>
-<!-- <style scoped></style> -->
-<style src="../../assets/css/rank.css" scoped></style>
+
+<!--<style scoped>
+  
+</style>-->
+<style src="../../assets/css/rank.css" scoped>
+  
+</style>

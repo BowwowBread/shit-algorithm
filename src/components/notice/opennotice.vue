@@ -3,18 +3,18 @@
         <div class="notice" v-if="entering">
             <div class="notipoll">
                 <div class="notipen">
-                  <div class="noti-head">
-                    <p>{{name}}</p>
-                  </div>
-                  <div class="noti-main">
-                    <div class="noti-in">
-                      <p>{{contents}}</p>
+                    <div class="noti-head">
+                        <p>{{name}}</p>
                     </div>
-                    <div class="noti-sub">
-                      <p><span>{{num}}</span>번</p>
-                      <p><span>{{date}}</span></p>
+                    <div class="noti-main">
+                        <div class="noti-in">
+                            <p>{{contents}}</p>
+                        </div>
+                        <div class="noti-sub">
+                            <p><span>{{num}}</span>번</p>
+                            <p><span>{{date}}</span></p>
+                        </div>
                     </div>
-                  </div>
                 </div>
             </div>
         </div>
@@ -26,6 +26,7 @@
     </div>
     </div>
 </template>
+
 <script>
     export default {
         name: 'openNotice',
@@ -40,7 +41,7 @@
         },
         updated() {
             this.$nextTick(() => {
-                        // 데이터 갱신 완료시 프로그레스바, 로딩창 종료
+                // 데이터 갱신 완료시 프로그레스바, 로딩창 종료
                 this.$store.commit('loadingOff');
                 this.$Progress.finish();
             });
@@ -70,4 +71,7 @@
         },
     };
 </script>
-<style src="../../assets/css/opennotice.css" scoped></style>
+
+<style src="../../assets/css/opennotice.css" scoped>
+    
+</style>

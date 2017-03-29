@@ -38,7 +38,7 @@
             </div>
           </div>
         </div>
-        <div id="list" class="ui bottom attached tab segment active"  data-tab="first">
+        <div id="list" class="ui bottom attached tab segment active" data-tab="first">
           <transition-group name="flip-list, problemlist" tag="ul" :style="{ 'max-height': lineheight + 'px' , 'min-height' : lineheight + 'px', 'overflow': 'hidden'}">
             <div class="ui items" v-for="item in items" v-bind:key="item">
               <div class="item">
@@ -71,11 +71,12 @@
         <i class="huge chevron circle up icon" v-on:click="scrollUp"></i>
       </a>
       <button class="ui button" v-if="loadState" v-on:click="loadList(false)">
-        <i class="large chevron down icon"></i>
-      </button>
+          <i class="large chevron down icon"></i>
+        </button>
     </div>
   </div>
 </template>
+
 <script>
   let i = 0;
   let end = 10;
@@ -137,7 +138,7 @@
                         //문제 번호 === 문제 결과 번호
                         if (i + 101 === resRatio.data.resolves[j].resolveData.problemNum) {
                           // 문제 번호 101번 부터 시작
-
+  
                           //문제 결과 카운트
                           if (resRatio.data.resolves[j].resolveData.result === 'success') {
                             // 성공
@@ -173,13 +174,13 @@
                       i += 1;
                     }
                     // 문제 개수만큼 높이 변경
-                    this.lineheight = 45 * this.items.length;                    
+                    this.lineheight = 45 * this.items.length;
                     this.entering = true;
                   })
                   .catch((err) => {
                     // 문제 기록 로드 실패
                     this.$swal({
-                      // 실패 모달
+                        // 실패 모달
                         title: '문제 기록 로드 실패',
                         text: err,
                         type: 'error',
@@ -193,7 +194,7 @@
               .catch((err) => {
                 // 문제 로드 실패
                 this.$swal({
-                  // 실패 모달
+                    // 실패 모달
                     title: '문제 로드 실패',
                     text: err,
                     type: 'error',
@@ -207,7 +208,7 @@
           .catch((error) => {
             // 유저 조회 실패
             this.$swal({
-              // 실패 모달
+                // 실패 모달
                 title: '입장 실패',
                 text: '유저 조회 실패',
                 type: 'error',
@@ -220,7 +221,7 @@
       } else {
         // 토큰 인증 실패
         this.$swal({
-          // 실패 모달
+            // 실패 모달
             title: '입장 실패',
             text: '로그인을 해주세요',
             type: 'error',
@@ -242,21 +243,21 @@
       clickNormal() {
         // 일반문제 클릭
         if (!this.changeLoad) {
-        this.normal_problem = true;
-        this.contest_problem = false;
-        this.random_problem = false;
-        this.changeLoad = true;
-        this.loadList(this.changeLoad);
+          this.normal_problem = true;
+          this.contest_problem = false;
+          this.random_problem = false;
+          this.changeLoad = true;
+          this.loadList(this.changeLoad);
         }
       },
       clickContest() {
         // 대회문제 클릭
-        if (!this.changeLoad) {        
-        this.normal_problem = false;
-        this.contest_problem = true;
-        this.random_problem = false;
-        this.changeLoad = true;
-        this.loadList(this.changeLoad);
+        if (!this.changeLoad) {
+          this.normal_problem = false;
+          this.contest_problem = true;
+          this.random_problem = false;
+          this.changeLoad = true;
+          this.loadList(this.changeLoad);
         }
       },
       scrollUp() {
@@ -292,11 +293,11 @@
             .then((res) => {
               length = res.data.problems.length;
               if (i / 10 === parseInt(length / 10, 10)) {
-              /**
-                문제가 끝난경우 ex) i = 10, length = 18
-                i / 10 = 1, paseInt(length / 10, 10) = 1
-                end를 총 공지 갯수만큼 변경
-               */
+                /**
+                  문제가 끝난경우 ex) i = 10, length = 18
+                  i / 10 = 1, paseInt(length / 10, 10) = 1
+                  end를 총 공지 갯수만큼 변경
+                 */
                 end = length;
                 this.loadState = false;
               } else if (end === length) {
@@ -356,14 +357,14 @@
                     });
                     i += 1;
                     // 문제 갯수 만큼 높이 변경
-                    this.lineheight = 45 * this.items.length;                    
+                    this.lineheight = 45 * this.items.length;
                   }
-                  this.changeLoad = false;                  
+                  this.changeLoad = false;
                 })
                 .catch((err) => {
                   // 문제 기록 로드 실패
                   this.$swal({
-                    // 실패 모달
+                      // 실패 모달
                       title: '문제 기록 로드 실패',
                       text: err,
                       type: 'error',
@@ -380,7 +381,7 @@
                 // 대회기간이 아닌 경우
                 err = '대회기간이 아닙니다.';
                 this.$swal({
-                  // 실패 모달
+                    // 실패 모달
                     title: '문제 로드 실패',
                     text: err,
                     type: 'error',
@@ -392,7 +393,7 @@
                   });
               } else {
                 this.$swal({
-                  // 실패 모달
+                    // 실패 모달
                     title: '문제 로드 실패',
                     text: err,
                     type: 'error',
@@ -409,10 +410,10 @@
             .then((res) => {
               if (i / 10 === parseInt(length / 10, 10)) {
                 /**
-                문제가 끝난경우 ex) i = 10, length = 18
-                i / 10 = 1, paseInt(length / 10, 10) = 1
-                end를 총 공지 갯수만큼 변경
-               */
+                  문제가 끝난경우 ex) i = 10, length = 18
+                  i / 10 = 1, paseInt(length / 10, 10) = 1
+                  end를 총 공지 갯수만큼 변경
+                 */
                 end = length;
                 this.loadState = false;
               } else if (end === length) {
@@ -479,7 +480,7 @@
                 .catch((err) => {
                   // 문제 기록 로드 실패
                   this.$swal({
-                    // 실패 모달
+                      // 실패 모달
                       title: '문제 기록 로드 실패',
                       text: err,
                       type: 'error',
@@ -493,7 +494,7 @@
             .catch((err) => {
               // 문제 로드 실패
               this.$swal({
-                // 실패 모달
+                  // 실패 모달
                   title: '문제 로드 실패',
                   text: err,
                   type: 'error',
@@ -535,4 +536,7 @@
     },
   };
 </script>
-<style src="../../assets/css/problems.css" scoped></style>
+
+<style src="../../assets/css/problems.css" scoped>
+  
+</style>

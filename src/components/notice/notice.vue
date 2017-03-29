@@ -21,31 +21,32 @@
             </div>
           </div>
           <div class="notice_wrap">
-          <transition-group name="noticeList" tag="div">
-            <div class="ui items" v-for="notice in notices" v-bind:key="notice">
-              <div class="item">
-                <div class="content" v-on:click='open(notice.num)'>
-                  <p class="header" id="pollist"><span>{{notice.num}}</span></p>
-                  <a class="ui header" id="destent">
-                    <span>{{notice.noticename}}</span>
-                  </a>
-                  <p class="notdate"><span>{{notice.date}}</span></p>
+            <transition-group name="noticeList" tag="div">
+              <div class="ui items" v-for="notice in notices" v-bind:key="notice">
+                <div class="item">
+                  <div class="content" v-on:click='open(notice.num)'>
+                    <p class="header" id="pollist"><span>{{notice.num}}</span></p>
+                    <a class="ui header" id="destent">
+                      <span>{{notice.noticename}}</span>
+                    </a>
+                    <p class="notdate"><span>{{notice.date}}</span></p>
+                  </div>
                 </div>
               </div>
-            </div>
-          </transition-group>
+            </transition-group>
           </div>
         </div>
         <a href="#">
           <i class="huge chevron circle up icon" v-on:click="scrollUp"></i>
         </a>
         <button class="ui button" v-if="loadState" v-on:click="loadList">
-          <i class="large chevron down icon"></i>
-        </button>
+            <i class="large chevron down icon"></i>
+          </button>
       </div>
     </div>
   </div>
 </template>
+
 <script>
   let i = 0;
   let end = 10;
@@ -61,7 +62,7 @@
     },
     updated() {
       this.$nextTick(() => {
-              // 데이터 갱신 완료시 프로그레스바, 로딩창 종료
+        // 데이터 갱신 완료시 프로그레스바, 로딩창 종료
         this.$store.commit('loadingOff');
         this.$Progress.finish();
       });
@@ -95,11 +96,11 @@
         .catch((err) => {
           // 공지 로드 실패
           this.$swal({
-            // 실패 모달
-            title: '공지 로드 실패',
-            text: err,
-            type: 'error',
-          })
+              // 실패 모달
+              title: '공지 로드 실패',
+              text: err,
+              type: 'error',
+            })
             .then((res) => {
               // 메인으로 이동
               location.href = '/';
@@ -153,7 +154,7 @@
           .catch((err) => {
             // 공지 로드 실패
             this.$swal({
-              // 실패 모달
+                // 실패 모달
                 title: '공지 로드 실패',
                 text: err,
                 type: 'error',
@@ -166,7 +167,11 @@
     },
   };
 </script>
-<style src="../../assets/css/notice.css" scoped></style>
+
+<style src="../../assets/css/notice.css" scoped>
+  
+</style>
+
 <style scoped>
   * {
     margin: 0;

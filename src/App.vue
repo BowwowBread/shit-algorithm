@@ -52,12 +52,12 @@
                       </div>
                     </div>
                     <button type="button" v-on:click="submit" class="ui fluid large teal submit button submitButton">
-                      로그인
-                    </button>
+                        로그인
+                      </button>
                   </form>
                   <button v-on:click="signState = false" class="ui button black signButton">
-                    회원가입하기
-                  </button>
+                      회원가입하기
+                    </button>
                 </div>
               </div>
             </div>
@@ -109,16 +109,16 @@
                     </div>
                   </form>
                   <button v-on:click="signState = true" class="ui button black signButton">
-                    로그인하기
-                  </button>
+                      로그인하기
+                    </button>
                 </div>
               </div>
             </div>
-
+  
           </div>
-
+  
         </div>
-
+  
       </div>
     </div>
     <vue-progress-bar></vue-progress-bar>
@@ -142,7 +142,7 @@
     mapGetters,
     mapMutations,
   } from 'vuex';
-
+  
   export default {
     components: {
       VueRecaptcha,
@@ -476,7 +476,7 @@
             })
             .catch(() => {
               this.$swal({
-                // 인증 실패
+                  // 인증 실패
                   title: '확인 실패하였습니다',
                   text: '다시 시도해주세요',
                   type: 'error',
@@ -491,14 +491,17 @@
     },
   };
 </script>
-<style src="./assets/css/app.css" scoped>
 
+<style src="./assets/css/app.css" scoped>
+  
 </style>
+
 <style>
   body {
     background-color: rgb(40, 40, 40) !important;
   }
-  .dimmable:not(.body){
+  
+  .dimmable:not(.body) {
     position: static !important;
   }
 </style>

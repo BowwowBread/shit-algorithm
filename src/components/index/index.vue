@@ -13,7 +13,7 @@
 <script>
   import timeline from './timeline.vue';
   import parallax from './main.vue';
-
+  
   export default {
     name: 'index',
     components: {
@@ -22,8 +22,7 @@
       timeline,
     },
     data() {
-      return {
-      };
+      return {};
     },
     created() {
       this.$nextTick(() => {
@@ -34,4 +33,7 @@
     },
   };
 </script>
-<style src="../../assets/css/index.css" scoped></style>
+
+<style src="../../assets/css/index.css" scoped>
+  
+</style>
