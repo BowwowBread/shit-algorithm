@@ -40,12 +40,15 @@
         },
         updated() {
             this.$nextTick(() => {
+                        // 데이터 갱신 완료시 프로그레스바, 로딩창 종료
                 this.$store.commit('loadingOff');
                 this.$Progress.finish();
             });
         },
         created() {
+            // 선택한 공지 로드            
             const num = this.$route.params.num;
+            // 해당라우터의 파람값으로 공지를 로드
             this.$http.get(`notices/${num}`)
                 .then((res) => {
                     this.num = res.data.notice.num;
@@ -56,7 +59,9 @@
                     this.entering = true;
                 })
                 .catch((err) => {
+                    // 공지 로드 실패
                     this.$swal({
+                        // 실패 모달
                         title: `${this.num}번 공지 로드 실패`,
                         text: err,
                         type: 'error',

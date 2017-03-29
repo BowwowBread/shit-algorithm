@@ -77,7 +77,7 @@
                     <li>학번 : {{list.studentcode}}</li>
                     <li>결과 : {{list.result}}</li>
                     <li>날짜 : {{list.date}}</li>
-                    <li>코드 : {{list.code}}</li>
+                    <li><pre>코드 : {{list.code}}</pre></li>
             </ul>
             </transition-group>
         </div>
@@ -113,19 +113,19 @@ export default{
     };
   },
   created() {
-      //토큰테스트
-    this.userToken = this.$cookie.get('userToken');
-	  this.$http.defaults.headers.common.Authorization = this.userToken;
+    // 문제 로드
 	  this.fetchData();
   },
   updated() {
     this.$nextTick(() => {
+      // 데이터 갱신 완료시 프로그레스바, 로딩창 종료
       this.$store.commit('loadingOff');
       this.$Progress.finish();
     });
   },
   methods: {
   	openAdd() {
+      // 문제 등록 버튼
         this.addState = !this.addState;
         if (this.addState) {
         	this.addMsg = '닫기';
@@ -134,7 +134,9 @@ export default{
         }
     },
     deleteData(num, item) {
+      // 문제 삭제
 	    this.$swal({
+        // 삭제 확인 모달
 		    title: '문제 삭제',
 		    text: '정말로 삭제하시겠습니까?',
 		    type: 'question',
@@ -143,19 +145,25 @@ export default{
             cancelButtonText: '취소',
 	    })
           .then(() => {
+            // 삭제 확인
 	          this.userToken = this.$cookie.get('userToken');
 	          this.$http.defaults.headers.common.Authorization = this.userToken;
             this.$http.delete(`problems/${num}`)
               .then(() => {
+                // 삭제 성공
 	              this.$swal({
+                  // 성공 모달
                       title: '삭제 완료',
                       text: `${num}번 문제를 삭제하셨습니다`,
                       type: 'success',
                     });
+                // 리스트의 해당 인덱스의 문제 삭제
                 this.items.splice(this.items.indexOf(item), 1);
               })
               .catch((err) => {
+                // 삭제 실패
 	              this.$swal({
+                  // 실패 모달
 		              title: '삭제 실패',
 		              text: err,
 		              type: 'error',
@@ -163,7 +171,9 @@ export default{
               });
 	    })
           .catch(() => {
+            // 삭제 실패
 	          this.$swal({
+              // 실패 모달
 			          title: '삭제 실패',
 			          text: err,
 			          type: 'error',
@@ -171,6 +181,7 @@ export default{
           });
     },
     modify() {
+      // 문제 수정
 	    this.$http.defaults.headers.common.Authorization = this.userToken;
 	    this.$http.put('problems', {
             problemnum: this.problemNum,
@@ -187,18 +198,22 @@ export default{
             type: this.problemType,
         })
         .then(() => {
+          // 수정 성공
 	        this.$swal({
+            // 성공 모달
 		        title: '수정 성공',
 		        text: '문제를 수정하였습니다',
 		        type: 'success',
 	        });
         })
         .catch((err) => {
+          // 수정 실패
 	      let errMsgs;
 	      if (err.response.data.message === 'validation error') {
 	        errMsgs = '모든 정보를 입력해주세요';
           }
         this.$swal({
+          // 실패 모달
                 title: '수정 실페',
                 text: errMsgs,
                 type: 'error',
@@ -206,9 +221,17 @@ export default{
         });
     },
     modifyData(num) {
+      // 해당 문제 정보 로드
 	    this.$http.defaults.headers.common.Authorization = this.userToken;
 	    this.$http.get(`problems/${num}`)
         .then((res) => {
+          // 문제 정보 로드 성공
+                  this.addState = !this.addState;
+        if (this.addState) {
+        	this.addMsg = '닫기';
+        } else {
+        	this.addMsg = '문제 등록하기';
+        }
         	this.modifyState = !this.modifyState;
         	this.problemName = res.data.problem.problemName;
         	this.source = res.data.problem.source;
@@ -224,6 +247,7 @@ export default{
 	        this.type = res.data.problem.type;
           })
           .catch((err) => {
+            // 로드 실패
 	          this.$swal({
 		          title: '문제 조회 실패',
 		          text: err,
@@ -232,10 +256,12 @@ export default{
           });
     },
     solveListData(num) {
+      // 해당 문제 결과 로드
         this.solveList = [];
         this.$http.defaults.headers.common.Authorization = this.userToken;
         this.$http.get('solution')
           .then((res) => {
+            // 문제 결과 로드 성공
   	    	let i = 0;
 	          let username;
 	          let id;
@@ -245,15 +271,18 @@ export default{
 	          let code;
 	          while (i < res.data.resolves.length) {
             	if (res.data.resolves[i].resolveData.problemNum === num) {
+                // 문제 결과의 번호와 해당 문제의 번호가 맞으면 데이터 추가
                     id = res.data.resolves[i].userId;
                     result = res.data.resolves[i].resolveData.result;
                     date = res.data.resolves[i].resolveData.date;
                     code = res.data.resolves[i].resolveData.code;
                     this.$http.defaults.headers.common.Authorization = this.userToken;
+                    // 해당 아이디의 정보 로드
                     this.$http.get(`users/search/${id}`)
                       .then((userInfo) => {
             			 username = userInfo.data.users.username;
             			 studentcode = userInfo.data.users.studentCode;
+                   // 데이터 추가
 	                      this.solveList.push({
 	                      	username,
                             studentcode,
@@ -267,7 +296,9 @@ export default{
             }
           })
           .catch((err) => {
+            // 문제 결과 로드 실패
 	          this.$swal({
+              // 실패 모달
 		          title: '결과 로드 실패',
 		          text: err,
 		          type: 'error',
@@ -275,6 +306,7 @@ export default{
           });
     },
     isNumber(number) {
+      // 문제 수정 추가시, 메모리, 시간 제한 숫자 체크
 		  const evt = (number) || window.event;
 		  const charCode = (evt.which) ? evt.which : evt.keyCode;
 		  if ((charCode > 31 && (charCode < 48 || charCode > 57)) && charCode !== 46) {
@@ -284,6 +316,7 @@ export default{
 			  return true;
 	  },
   	add() {
+      // 문제 등록
       this.$http.defaults.headers.common.Authorization = this.userToken;
       this.$http.post('problems', {
       type: this.problemType,
@@ -299,11 +332,14 @@ export default{
       score: this.score,
     })
       .then(() => {
+        // 등록 성공
 	      this.$swal(
+          // 성공 모달
 		      '등록 성공',
 		      '문제를 등록하였습니다',
 		      'success',
 	      );
+        // 데이터 추가
 	      this.items.push({
 	      	num: this.lastNum + 1,
             name: this.problemName,
@@ -311,11 +347,13 @@ export default{
           });
       })
       .catch((err) => {
+        // 등록 실패
       	let errMsg;
       	if (err.response.data.message === 'validation error') {
       		errMsg = '정보가 부족합니다';
         }
 	      this.$swal({
+          // 실패 모달
 		      title: '등록 실패',
 		      text: errMsg,
 		      type: 'error',
@@ -323,7 +361,7 @@ export default{
       });
   },
     fetchData() {
-	    //토큰테스트
+      // 문제 로드
 	    this.userToken = this.$cookie.get('userToken');
 	    this.$http.defaults.headers.common.Authorization = this.userToken;
 	    this.$http.get('problems')
@@ -331,6 +369,7 @@ export default{
           let i = 0;
           console.log(res);
           while (i < res.data.problems.length) {
+            // 데이터 추가
             this.data.push({
               num: res.data.problems[i].num,
               name: res.data.problems[i].problemName,
@@ -339,6 +378,7 @@ export default{
             i += 1;
           }
           this.$http.get('problems/contest')
+          // 대회 문제 로드
             .then((resContest) => {
             let j = 0;
               while (j < resContest.data.problems.length) {
@@ -350,12 +390,14 @@ export default{
                 j += 1;
                 }
                 if (j === resContest.data.problems.length) {
+                  // 문제 리스트 정렬                  
                   const sort = 'num';
                   this.data.sort(function (a, b) {
                     return a[sort] - b[sort];
                   });
                   i = 0;
                   while (i < this.data.length) {
+                    // 데이터 추가
                     this.items.push({
                       num: this.data[i].num,
                       name: this.data[i].name,
@@ -366,7 +408,9 @@ export default{
                 }
              })
            .catch((err) => {
+             // 문제 로드 실패
                 this.$swal({
+                  // 실패 모달
                 title: '문제 로드 실패',
                 text: err,
                 type: 'error',
@@ -375,7 +419,9 @@ export default{
           this.enteringProblemmanage = true;
         })
         .catch((err) => {
+          // 문제 로드 실패
 	        this.$swal({
+            // 실패 모달
 		        title: '문제 로드 실패',
 		        text: err,
 		        type: 'error',

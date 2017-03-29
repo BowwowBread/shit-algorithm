@@ -61,25 +61,27 @@
     },
     updated() {
       this.$nextTick(() => {
+              // 데이터 갱신 완료시 프로그레스바, 로딩창 종료
         this.$store.commit('loadingOff');
         this.$Progress.finish();
       });
     },
     created() {
+      // 공지 로드
       this.$http.get('notices')
         .then((res) => {
           i = 0;
           length = res.data.notices.length;
-           if (i / 10 === parseInt(length / 10, 10)) {
-              end = length;
-              this.loadState = false;
-            } else if (end === length) {
-              this.loadState = false;
-            }
+          if (length <= 10) {
+            // 공지가 10개 이하인 경우
+            end = length;
+            this.loadState = false;
+          }
           while (i < end) {
             let date = res.data.notices[i].date.replace('T', ', ');
             date = date.substring(0, date.length - 8);
             if (res.data.notices[i].type === 'notice') {
+              // 데이터 추가
               this.notices.push({
                 num: res.data.notices[i].num,
                 noticename: res.data.notices[i].noticeName,
@@ -91,42 +93,55 @@
           this.entering = true;
         })
         .catch((err) => {
+          // 공지 로드 실패
           this.$swal({
+            // 실패 모달
             title: '공지 로드 실패',
             text: err,
             type: 'error',
           })
             .then((res) => {
+              // 메인으로 이동
               location.href = '/';
             });
         });
     },
     methods: {
       scrollUp() {
+        // 화면 상단으로 스크롤 애니메이션
         $('html, body').stop().animate({
           scrollTop: 0,
         }, 500);
       },
       open(num) {
+        // 공지 클릭 시
         location.href = `https://algorithm.seoulit.kr/notice/${num}`;
-//        this.$router.push({
-//          path: `notices/${num}`,
-//        });
       },
       loadList() {
+        // 공지 추가 로드
         this.$http.get('notices')
           .then((res) => {
+            // 처음 공지 로드의 마지막부터 시작
             i = end;
             end += 10;
             if (i / 10 === parseInt(length / 10, 10)) {
+              /**
+                공지가 끝난경우 ex) i = 10, length = 18
+                i / 10 = 1, paseInt(length / 10, 10) = 1
+                end를 총 공지 갯수만큼 변경
+               */
+              console.log(i);
+              console.log(length);
               end = length;
               this.loadState = false;
             } else if (end === length) {
+              // 10의 배수로 끝난 경우
               this.loadState = false;
             }
             while (i < end) {
               let date = res.data.notices[i].date.replace('T', ', ');
               date = date.substring(0, date.length - 8);
+              // 데이터 추가
               this.notices.push({
                 num: res.data.notices[i].num,
                 noticename: res.data.notices[i].noticeName,
@@ -136,7 +151,9 @@
             }
           })
           .catch((err) => {
+            // 공지 로드 실패
             this.$swal({
+              // 실패 모달
                 title: '공지 로드 실패',
                 text: err,
                 type: 'error',

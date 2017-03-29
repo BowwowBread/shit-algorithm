@@ -29,7 +29,6 @@
     name: 'sigo',
     data() {
       return {
-        timeline: [],
       };
     },
   };

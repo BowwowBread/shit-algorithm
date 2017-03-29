@@ -4,8 +4,8 @@
             <div class="wrapper">
                 <div class="four">
                     <div class="btn">
-                        <button class="ui button">On</button>
-                        <button class="ui button">Off</button>
+                        <button class="ui button" @click="contestOpen">On</button>
+                        <button class="ui button" @click="contestClose">Off</button>
                     </div>
                     <div class="ui cards">
                         <div class="card" id="mncard">
@@ -44,7 +44,7 @@
                             </div>
                         </div>
                     </div>
-                        <transition-group name="monitorlist" tag="div" class="ui cards">
+                        <transition-group name="monitorlist" tag="ul" class="ui cards">
                         <div class="card" v-for="monitor in monitorData" v-bind:key="monitor">
                             <div class="content">
                                 <div class="header">
@@ -64,7 +64,7 @@
                                 </div>
                                 <hr>
                                 <div class="description">
-                                    <p>코드 : <span>{{monitor.code}}</span></p>
+                                    <pre><span>{{monitor.code}}</span></pre>
                                 </div>
                             </div>
                         </div>
@@ -77,6 +77,7 @@
 
 <script>
     let i = 0;
+    let monitoring = null;
     export default {
         name: 'monitor',
         data() {
@@ -92,82 +93,135 @@
             };
         },
         created() {
+            // 토큰 테스트
             this.userToken = this.$cookie.get('userToken');
             if (this.userToken != null) {
                 this.$http.defaults.headers.common.Authorization = this.userToken;
                 this.$http.get('users/my-info')
                     .then((resInfo) => {
+                        // 유저정보 확인
                         this.userRating = resInfo.data.user.rating;
                         if (this.userRating !== 3) {
+                            // 어드민이 아닌 경우
                             this.$swal({
+                                // 실패 모달
                                     title: '입장 실패',
                                     text: '어드민이 아닙니다',
                                     type: 'error',
                                 })
                                 .then(() => {
+                                    // 메인으로 이동
                                     location.href = '/';
                                 });
                         } else {
+                            // 어드민인 경우
                             this.entering = true;
+                            // 모니터링 시작                            
                             this.monitoring('first');
-                            setInterval(() => {
+                            monitoring = setInterval(() => {
+                                // 3초마다 모니터링 시작
                                 this.monitoring('more');
                             }, 3000);
                         }
                     })
                     .catch((error) => {
+                        // 유저 정보 조회 실패
                         this.$swal({
+                            // 실패 모달
                                 title: '유저 정보 조회 실패',
                                 text: error,
                                 type: 'error',
                             })
                             .then(() => {
+                                // 메인으로 이동
                                 location.href = '/';
                             });
                     });
             } else {
+                // 토큰 테스트 실패
                 this.$swal({
+                    // 실패 모달
                         title: '입장 실패',
                         text: '로그인을 해주세요',
                         type: 'error',
                     })
                     .then(() => {
+                        // 메인으로 이동
                         location.href = '/';
                     });
             }
         },
         mounted() {
             this.$nextTick(() => {
+      // 데이터 갱신 완료시 프로그레스바, 로딩창 종료
                 this.$store.commit('loadingOff');
                 this.$Progress.finish();
             });
         },
         methods: {
             normalMonitor() {
+                // 일반 모니터링
                 this.monitorState = 'normal';
                 this.monitorData = [];
                 i = 0;
                 this.monitoring('first');
-                i = 0;
-                setInterval(() => {
+                clearInterval(monitoring);
+                monitoring = setInterval(() => {
                     this.monitoring('more');
                 }, 3000);
             },
             contestMonitor() {
+                // 대회 모니터링
                 this.monitorState = 'contest';
                 this.monitorData = [];
                 i = 0;
                 this.monitoring('first');
-                i = 0;
-                setInterval(() => {
+                clearInterval(monitoring);
+                monitoring = setInterval(() => {
                     this.monitoring('more');
                 }, 3000);
             },
+            contestOpen() {
+                this.$http.get('users/contest/true')
+                .then(() => {
+                this.$swal(
+                    '대회 오픈',
+                    '대회가 시작되었습니다.',
+                    'success',
+                );
+                })
+                .catch((err) => {
+                    this.$swal({
+                        title: '대회 오픈 실패',
+                        text: err,
+                        type: 'error',
+                    });
+                });
+            },
+            contestClose() {
+                this.$http.get('users/contest/false')
+                .then(() => {
+                this.$swal(
+                    '대회 종료',
+                    '대회가 종료되었습니다.',
+                    'success',
+                );
+                })
+                .catch((err) => {
+                    this.$swal({
+                        title: '대회 종료 실패',
+                        text: err,
+                        type: 'error',
+                    });
+                });
+            },
             monitoring(state) {
+                // 문제 결과 로드
                 this.$http.get('solution')
                     .then((res) => {
+                        // 로드 성공
                         if (state === 'first') {
-                            console.log('first');
+                            // 처음 모니터링하는 경우
                             this.success = 0;
                             this.fail = 0;
                             this.count = 0;
@@ -175,8 +229,10 @@
                             this.resolveLength = 0;
                             while (i < res.data.resolves.length) {
                                 if (this.monitorState === 'normal') {
+                                    // 일반 모니터링인 경우
                                     if (res.data.resolves[i].resolveData.problemType === 'normal') {
                                         const data = res.data.resolves[i].resolveData.date.replace('T', ', ');
+                                        // 성공 실패 총 결과 
                                         if (res.data.resolves[i].resolveData.result === 'success') {
                                             this.success += 1;
                                         } else if (res.data.resolves[i].resolveData.result === 'fail') {
@@ -185,6 +241,7 @@
                                             this.compileError += 1;
                                         }
                                         this.count += 1;
+                                        // 데이터 추가
                                         this.monitorData.push({
                                             userid: res.data.resolves[i].userId,
                                             code: res.data.resolves[i].resolveData.code,
@@ -196,8 +253,10 @@
                                         });
                                     }
                                 } else if (this.monitorState === 'contest') {
+                                    // 대회 모니터링인 경우
                                     if (res.data.resolves[i].resolveData.problemType === 'contest') {
                                         const data = res.data.resolves[i].resolveData.date.replace('T', ', ');
+                                        // 성공 실패 총 결과                                         
                                         if (res.data.resolves[i].resolveData.result === 'success') {
                                             this.success += 1;
                                         } else if (res.data.resolves[i].resolveData.result === 'fail') {
@@ -206,6 +265,7 @@
                                             this.compileError += 1;
                                         }
                                         this.count += 1;
+                                        // 데이터 추가
                                         this.monitorData.push({
                                             userid: res.data.resolves[i].userId,
                                             code: res.data.resolves[i].resolveData.code,
@@ -218,20 +278,26 @@
                                     }
                                 }
                                 i += 1;
+                                // 현재 개수 저장
                                 this.resolveLength = this.count;
                             }
                         } else if (state === 'more') {
+                            // 처음 이후 모니터링
                             i = 0;
                             this.count = 0;
                             if (this.monitorState === 'normal') {
+                                // 일반 모니터링인 경우
                                 while (i < res.data.resolves.length) {
+                                    // 문제 결과 개수 로드                                    
                                     if (res.data.resolves[i].resolveData.problemType === 'normal') {
                                         this.count += 1;
                                     }
                                     i += 1;
                                 }
                             } else if (this.monitorState === 'contest') {
+                                // 대회 모니터링인 경우
                                 while (i < res.data.resolves.length) {
+                                    // 문제 결과 개수 로드
                                     if (res.data.resolves[i].resolveData.problemType === 'contest') {
                                         this.count += 1;
                                     }
@@ -239,13 +305,15 @@
                                 }
                             }
                             if (this.resolveLength !== this.count) {
-                                console.log('more');
+                                // 전의 문제결과 개수와 현재 문제결과의 개수가 다른 경우
+                                // 최신문제가 인덱스 0 이므로 0부터 시작
                                 i = (this.count - 1) - this.resolveLength;
                                 while (i >= 0) {
-                                    console.log(i);
                                     if (this.monitorState === 'normal') {
+                                        // 일반 모니터링인 경우
                                         if (res.data.resolves[i].resolveData.problemType === 'normal') {
                                             const data = res.data.resolves[i].resolveData.date.replace('T', ', ');
+                                            // 성공 샐피 총 결과
                                             if (res.data.resolves[i].resolveData.result === 'success') {
                                                 this.success += 1;
                                             } else if (res.data.resolves[i].resolveData.result === 'fail') {
@@ -253,6 +321,7 @@
                                             } else if (res.data.resolves[i].resolveData.result === 'compile error') {
                                                 this.compileError += 1;
                                             }
+                                            // 데이터를 앞에서부터 추가
                                             this.monitorData.unshift({
                                                 userid: res.data.resolves[i].userId,
                                                 code: res.data.resolves[i].resolveData.code,
@@ -266,6 +335,7 @@
                                     } else if (this.monitorState === 'contest') {
                                         if (res.data.resolves[i].resolveData.problemType === 'contest') {
                                             const data = res.data.resolves[i].resolveData.date.replace('T', ', ');
+                                            // 성공 실패 총 결과
                                             if (res.data.resolves[i].resolveData.result === 'success') {
                                                 this.success += 1;
                                             } else if (res.data.resolves[i].resolveData.result === 'fail') {
@@ -273,6 +343,7 @@
                                             } else if (res.data.resolves[i].resolveData.result === 'compile error') {
                                                 this.compileError += 1;
                                             }
+                                            // 데이터를 앞에서부터 추가
                                             this.monitorData.unshift({
                                                 userid: res.data.resolves[i].userId,
                                                 code: res.data.resolves[i].resolveData.code,
@@ -286,17 +357,21 @@
                                     }
                                     i -= 1;
                                 }
+                                // 현재 개수 저장
                                 this.resolveLength = this.count;                                
                             }
                         }
                     })
                     .catch((err) => {
+                        // 문제 결과 로드 실패
                         this.$swal({
+                            // 실패 모달
                                 title: '모니터링 페이지 오류',
                                 text: err,
                                 type: 'error',
                             })
                             .then(() => {
+                                // 메인으로 이동
                                 location.href = '/';
                             });
                     });

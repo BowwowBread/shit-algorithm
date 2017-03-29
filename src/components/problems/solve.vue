@@ -105,11 +105,13 @@ export default {
 	  if (this.userToken != null) {
 	    this.userToken = this.$cookie.get('userToken');
 	    this.$http.defaults.headers.common.Authorization = this.userToken;
+      // 유저 정보 조회
 	    this.$http.get('users/my-info')
         .then((resInfo) => {
           this.userid = resInfo.data.user.userId;
           const id = this.$route.params.num;
           this.$http.defaults.headers.common.Authorization = this.userToken;
+          // 해당 라우터 파람의 값으로 문제 로드
           this.$http.get(`problems/${id}`)
           .then((res) => {
               this.items.push({
@@ -125,18 +127,22 @@ export default {
           })
           .catch((err) => {
             if (err.response.data.message === '아직 오픈되지 않았습니다.') {
+              // 대회기간이 아닌 경우
               this.$swal({
+                // 실패 모달
                 title: '문제 로드 실패',
                 text: '대회기간이 아닙니다',
                 type: 'error',
               })
               .then(() => {
+                // 문제페이지로 이동
                 location.href = '/problems';
               });
             }
           });
         })
         .catch((error) => {
+          // 유저 조회 실패
         this.$swal({
                 title: '유저 조회 실패',
                 text: error,

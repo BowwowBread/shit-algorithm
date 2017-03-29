@@ -40,6 +40,7 @@ import problemresult from './problemresult.vue';
 export default {
   name: 'admin',
   components: {
+    // 컴포넌트 등록
     member,
     problemmanage,
     notice,
@@ -63,56 +64,68 @@ export default {
     };
   },
   updated() {
-    this.$Progress.start();
     this.$nextTick(() => {
+      // 데이터 갱신 완료시 프로그레스바, 로딩창 종료
       this.$store.commit('loadingOff');
       this.$Progress.finish();
     });
   },
   beforeCreate() {
-//          토큰 테스트
+    // 토큰 테스트
 	  this.userToken = this.$cookie.get('userToken');
     if (this.userToken != null) {
       this.$http.defaults.headers.common.Authorization = this.userToken;
       this.$http.get('users/my-info')
         .then((resInfo) => {
+          // 유저 정보 확인
             this.userRating = resInfo.data.user.rating;
 	          if (this.userRating !== 3) {
+              // 어드민이 아닐 경우
                   this.$swal({
+                    // 입장 실패 모달
                       title: '입장 실패',
                       text: '어드민이 아닙니다',
                       type: 'error',
                   })
                   .then(() => {
+                    // 메인으로 이동
                       location.href = '/';
 		          });
 	          } else {
+              // 어드민인 경우
 		          this.adminState = true;
 		          this.entering = true;
 	          }
         })
         .catch((error) => {
+          // 유저 정보 확인
 		    this.$swal({
+          // 입장 실패 모달
 			    title: '유저 정보 조회 실패',
 			    text: error,
 			    type: 'error',
 		    })
 		    .then(() => {
+          // 메인으로 이동
 		    location.href = '/';
              });
     });
     } else {
+      // 토큰 인증 실패시
 	    this.$swal({
+        // 입장 실패 모달
 		    title: '입장 실패',
 		    text: '로그인을 해주세요',
 		    type: 'error',
 	    })
 	    .then(() => {
+        // 메인으로 이동
 		    location.href = '/';
          });
     }
   },
   methods: {
+    // 메뉴 컴포넌트 클릭 함수
     click_problem() {
       this.memberState = false;
       this.problemState = true;
@@ -148,7 +161,6 @@ export default {
       this.nonaccountState = false;
       this.problemresultState = true;
     },
-    // 어드민이 아닐경우
   },
 };
 </script>

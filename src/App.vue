@@ -237,10 +237,13 @@
       this.$router.beforeEach((to, from, next) => {
         next();
         if (to.name !== 'index') {
+          // 로딩창 시작
           this.$store.commit('loadingOn');
         }
+        // 프로그레스바 시작
         this.$Progress.start();
       });
+      // 스코롤 이벤트 리스너 등록
       window.addEventListener('scroll', this.scrollFunction);
     },
     destroyed() {
@@ -252,6 +255,7 @@
         'loadingOff',
       ]),
       scrollFunction() {
+        // 스크롤 메뉴 변경
         this.scrolled = window.scrollY;
         if (this.scrolled > 200) {
           this.scrollMenu = true;
@@ -260,6 +264,7 @@
         }
       },
       problemLoginCheck() {
+        // 문제리스트 입장 체크
         if (this.$cookie.get('userToken') == null) {
           this.$swal(
             '입장 불가',
@@ -273,6 +278,7 @@
         }
       },
       rankLoginCheck() {
+        // 랭킹 입장 체크
         if (this.$cookie.get('userToken') == null) {
           this.$swal(
             '입장 불가',
@@ -292,6 +298,7 @@
         this.$cookie.delete('userName');
       },
       isNumber(number) {
+        // 회원가입 학번 숫자 체크
         const evt = (number) || window.event;
         const charCode = (evt.which) ? evt.which : evt.keyCode;
         if ((charCode > 31 && (charCode < 48 || charCode > 57)) && charCode !== 46) {
@@ -301,13 +308,16 @@
         return true;
       },
       logout() {
+        // 로그아웃
         this.$swal({
           title: '로그아웃합니다',
           text: '이 상자는 2초후에 사라집니다',
           timer: 2000,
         });
         this.cookieDel();
+        // 쿠키삭제
         this.$router.push({
+          // 메인으로 이동
           name: 'index',
         });
         this.loginState = false;
@@ -319,6 +329,7 @@
       closeModal() {
         $('.ui.modal').modal('hide');
       },
+      // 켑챠 함수
       onloadCallback() {
         alert('grecaptcha is ready!');
       },
@@ -331,9 +342,11 @@
       resetRecaptcha() {
         this.$refs.recaptcha.reset(); // Direct call reset method
       },
+      // 폼 제출
       submit() {
         let errMsg;
         if (this.signState === true) {
+          // 로그인
           this.$http.post('users/signin', {
               userid: this.userid,
               password: this.password,
@@ -353,7 +366,7 @@
                     this.userRating = resInfo.data.user.rating;
                     // Cookie : 이름 , 내용 , 만료기간 , 도메인
                     this.$cookie.set('userToken', this.userToken, 1);
-                    // 쿠키 값 출력
+                    // 로그인 성공 모달
                     this.$swal(
                       '로그인 성공',
                       '안녕하세요!',
@@ -372,6 +385,7 @@
                 });
             })
             .catch((err) => {
+              // 에러시 모달 메세지
               if (err.response.data.message === 'account false') {
                 errMsg = '관리자의 승인을 기다려주세요';
               } else if (err.response.data.message === 'login fail') {
@@ -382,6 +396,7 @@
                 errMsg = '5회 이상 틀려 확인정보를 입력해 주세요';
                 this.infoSubmit = true;
               }
+              // 에러 모달
               this.$swal({
                   title: '로그인 실패',
                   text: errMsg,
@@ -389,6 +404,7 @@
                 })
                 .then(() => {
                   if (this.infoSubmit === true) {
+                    // 로그인 5회 실패시 회원 정보를 물어보는 모달
                     this.failReset();
                     this.infoSubmit = '';
                   }
@@ -403,9 +419,11 @@
               studentcode: this.studentcode,
             })
             .then((resRegister) => {
+              // 회원가입 성공
               this.closeModal();
               const username = resRegister.data.username;
               this.$swal({
+                // 회원가입 성공 모달
                 title: '회원가입 성공',
                 text: `안녕하세요 ${username}님`,
                 type: 'success',
@@ -413,9 +431,11 @@
             })
             .catch((error) => {
               this.closeModal();
+              // 에러시 모달 메세지
               if (error.response.data.message === 'validation error') {
                 errMsg = '정보를 제대로 기입해주세요';
               }
+              // 에러 모달
               this.$swal({
                 title: '회원가입 실패',
                 text: errMsg,
@@ -425,6 +445,7 @@
         }
       },
       failReset() {
+        // 로그인 5회 실패시 회원 정보를 물어보는 모달
         this.$swal.setDefaults({
           input: 'text',
           confirmButtonText: '다음',
@@ -447,6 +468,7 @@
             })
             .then(() => {
               this.$swal({
+                // 인증 성공
                 title: '확인 완료되었습니다',
                 text: '다시 로그인 해주세요',
                 type: 'success',
@@ -454,11 +476,13 @@
             })
             .catch(() => {
               this.$swal({
+                // 인증 실패
                   title: '확인 실패하였습니다',
                   text: '다시 시도해주세요',
                   type: 'error',
                 })
                 .then(() => {
+                  // 다시 인증
                   this.failReset();
                 });
             });

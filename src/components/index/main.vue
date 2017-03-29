@@ -67,6 +67,7 @@ export default {
   data() {
     return {
       swiperOption: {
+        // 스와이퍼 옵션
         parallax: true,
         speed: 600,
         autoplay: 5000,

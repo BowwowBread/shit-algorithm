@@ -58,6 +58,7 @@
     },
     updated() {
       this.$nextTick(() => {
+        // 데이터 갱신 완료시 프로그레스바, 로딩창 종료
         this.$store.commit('loadingOff');
         this.$Progress.finish();
       });
@@ -76,11 +77,14 @@
             this.$http.get('solution/resultsuccess')
               .then((res) => {
                 if (res.resolves != null) {
+                  // 문제 푼 결과가 있는 경우
                   this.successCount = res.data.resolves.length;
+                  // 최근 5문제만 출력
                   let i = res.data.resolves.length - 5;
                   while (i < res.data.resolves.length) {
                     let date = res.data.resolves[i].resolveData.date.replace('T', ', ');
                     date = date.substring(0, date.length - 8);
+                    // 데이터 추가
                     this.recentProblem.push({
                       num: res.data.resolves[i].resolveData.problemNum,
                       date,
@@ -91,33 +95,42 @@
                 this.entering = true;
               })
               .catch((err) => {
+                // 문제 결과 조회 실패
                 this.$swal({
+                  // 실패 모달
                   title: '문제 결과 조회 실패',
                   text: err,
                   type: 'error',
                 })
                 .then(() => {
+                  // 메인으로 이동
                   location.href = '/';
                 });
               });
           })
           .catch((error) => {
+            // 유저 조회 실패
             this.$swal({
+              // 실패 모달
                 title: '유저 조회 실패',
                 text: error,
                 type: 'error',
               })
               .then(() => {
+                // 메인으로 이동
                 location.href = '/';
               });
           });
       } else {
+        // 토큰 인증 실패
         this.$swal({
+          // 실패 모달
             title: '입장 실패',
             text: '로그인을 해주세요',
             type: 'error',
           })
           .then(() => {
+            // 메인으로 이동
             location.href = '/';
           });
       }
