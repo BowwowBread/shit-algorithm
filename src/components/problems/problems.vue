@@ -71,8 +71,8 @@
         <i class="huge chevron circle up icon" v-on:click="scrollUp"></i>
       </a>
       <button class="ui button" v-if="loadState" v-on:click="loadList(false)">
-          <i class="large chevron down icon"></i>
-        </button>
+                      <i class="large chevron down icon"></i>
+                    </button>
     </div>
   </div>
 </template>
@@ -184,6 +184,7 @@
                         title: '문제 기록 로드 실패',
                         text: err,
                         type: 'error',
+                        allowOutsideClick: false,
                       })
                       .then(() => {
                         // 메인으로 이동
@@ -198,6 +199,7 @@
                     title: '문제 로드 실패',
                     text: err,
                     type: 'error',
+                    allowOutsideClick: false,
                   })
                   .then(() => {
                     // 메인으로 이동
@@ -212,6 +214,7 @@
                 title: '입장 실패',
                 text: '유저 조회 실패',
                 type: 'error',
+                allowOutsideClick: false,
               })
               .then(() => {
                 // 메인으로 이동
@@ -225,6 +228,7 @@
             title: '입장 실패',
             text: '로그인을 해주세요',
             type: 'error',
+            allowOutsideClick: false,
           })
           .then(() => {
             // 메인으로 이동
@@ -274,14 +278,15 @@
         this.items = _.shuffle(this.items);
       },
       loadList(changeLoad) {
+        this.loadState = false;
         // 문제 추가 로드
         if (changeLoad) {
           // 문제 종류가 바뀐 경우 처음부터 로드
           i = 0;
           end = 10;
           this.items = [];
-          this.loadState = true;
-        } else {
+          this.lineheight = 0;
+        } else if (!changeLoad) {
           // 같은 문제종류의 추가 로드인경우
           i = end;
           end += 10;
@@ -298,9 +303,11 @@
                   i / 10 = 1, paseInt(length / 10, 10) = 1
                   end를 총 공지 갯수만큼 변경
                  */
+                console.log('ss');
                 end = length;
                 this.loadState = false;
               } else if (end === length) {
+                console.log('saa');
                 // 10의 배수로 끝난 경우
                 this.loadState = false;
               }
@@ -322,7 +329,7 @@
                     //문제 결과 수 반복
                     while (j < resRatio.data.resolves.length) {
                       //문제 번호 === 문제 결과 번호
-                      if (i + 101 === resRatio.data.resolves[j].resolveData.problemNum) {
+                      if (i + 121 === resRatio.data.resolves[j].resolveData.problemNum) {
                         //문제 결과 카운트
                         if (resRatio.data.resolves[j].resolveData.result === 'success') {
                           // 성공
@@ -360,6 +367,9 @@
                     this.lineheight = 45 * this.items.length;
                   }
                   this.changeLoad = false;
+                  this.$nextTick(() => {
+                    this.loadState = true;
+                  });
                 })
                 .catch((err) => {
                   // 문제 기록 로드 실패
@@ -368,6 +378,8 @@
                       title: '문제 기록 로드 실패',
                       text: err,
                       type: 'error',
+                      allowOutsideClick: false,
+  
                     })
                     .then(() => {
                       // 메인으로 이동
@@ -385,9 +397,11 @@
                     title: '문제 로드 실패',
                     text: err,
                     type: 'error',
+                    allowOutsideClick: false,
                   })
                   .then(() => {
                     // 일반문제로 이동
+                    this.loadState = true;
                     this.clickNormal();
                     return;
                   });
@@ -397,6 +411,7 @@
                     title: '문제 로드 실패',
                     text: err,
                     type: 'error',
+                    allowOutsideClick: false,
                   })
                   .then(() => {
                     // 메인으로 이동
@@ -408,6 +423,7 @@
           //일반 문제
           this.$http.get('problems')
             .then((res) => {
+              length = res.data.problems.length;
               if (i / 10 === parseInt(length / 10, 10)) {
                 /**
                   문제가 끝난경우 ex) i = 10, length = 18
@@ -425,6 +441,9 @@
               this.$http.get('solution')
                 .then((resRatio) => {
                   //문제 개수 반복
+                  console.log(i);
+                  console.log(end);
+                  console.log(length);
                   while (i < end) {
                     const num = res.data.problems[i].num;
                     const name = res.data.problems[i].problemName;
@@ -476,6 +495,9 @@
                     this.lineheight = 45 * this.items.length;
                   }
                   this.changeLoad = false;
+                  this.$nextTick(() => {
+                    this.loadState = true;
+                  });
                 })
                 .catch((err) => {
                   // 문제 기록 로드 실패
@@ -484,6 +506,7 @@
                       title: '문제 기록 로드 실패',
                       text: err,
                       type: 'error',
+                      allowOutsideClick: false,
                     })
                     .then(() => {
                       // 메인으로 이동
@@ -498,6 +521,7 @@
                   title: '문제 로드 실패',
                   text: err,
                   type: 'error',
+                  allowOutsideClick: false,
                 })
                 .then(() => {
                   // 메인으로 이동

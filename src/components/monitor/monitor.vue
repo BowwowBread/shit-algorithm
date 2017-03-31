@@ -45,7 +45,7 @@
                         </div>
                     </div>
                     <transition-group name="monitorlist" tag="ul" class="ui cards">
-                        <div class="card" v-for="monitor in monitorData" v-bind:key="monitor">
+                        <div class="card" v-for="monitor in monitorData" v-bind:key="monitor" v-on:click="codeView(monitor)">
                             <div class="content">
                                 <div class="header">
                                     <p>아이디 : <span>{{monitor.userid}}</span></p>
@@ -61,10 +61,6 @@
                                 </div>
                                 <div class="meta">
                                     <p>시간/메모리 : <span>{{monitor.time}} / {{monitor.memory}}</span></p>
-                                </div>
-                                <hr>
-                                <div class="description">
-                                    <pre><span>{{monitor.code}}</span></pre>
                                 </div>
                             </div>
                         </div>
@@ -108,6 +104,7 @@
                                     title: '입장 실패',
                                     text: '어드민이 아닙니다',
                                     type: 'error',
+                                                      allowOutsideClick: false,
                                 })
                                 .then(() => {
                                     // 메인으로 이동
@@ -131,6 +128,7 @@
                                 title: '유저 정보 조회 실패',
                                 text: error,
                                 type: 'error',
+                                                  allowOutsideClick: false,
                             })
                             .then(() => {
                                 // 메인으로 이동
@@ -144,6 +142,7 @@
                         title: '입장 실패',
                         text: '로그인을 해주세요',
                         type: 'error',
+                                          allowOutsideClick: false,
                     })
                     .then(() => {
                         // 메인으로 이동
@@ -180,6 +179,12 @@
                 monitoring = setInterval(() => {
                     this.monitoring('more');
                 }, 3000);
+            },
+            codeView(item) {
+                this.$swal({
+                    title: 'Code',
+                    html: `<pre style="text-align:left;">${item.code}</pre>`,
+                });
             },
             contestOpen() {
                 this.$http.get('users/contest/true')

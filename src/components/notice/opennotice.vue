@@ -66,6 +66,10 @@
                         title: `${this.num}번 공지 로드 실패`,
                         text: err,
                         type: 'error',
+                        allowOutsideClick: false,
+                    })
+                    .then(() => {
+                        location.href = '/notice';
                     });
                 });
         },

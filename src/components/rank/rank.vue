@@ -27,8 +27,8 @@
               <img src="../../assets/img/bg.jpg">
             </div>
             <p class="rant1">3등</p>
+            <hr>            
             <p class="rant2" v-if="rank">{{ranker[2].name}}</p>
-            <hr>
           </div>
         </div>
         <div class="ui top attached tabular menu" id="topmn">
@@ -172,6 +172,7 @@
                     title: '유저 정보 조회 실패',
                     text: err,
                     type: 'error',
+                                                                      allowOutsideClick: false,
                   })
                   .then(() => {
                     location.href = '/';
@@ -183,6 +184,7 @@
                 title: '유저 조회 실패',
                 text: error,
                 type: 'error',
+                                                                  allowOutsideClick: false,
               })
               .then(() => {
                 location.href = '/';
@@ -193,6 +195,7 @@
             title: '입장 실패',
             text: '로그인을 해주세요',
             type: 'error',
+                                                              allowOutsideClick: false,
           })
           .then(() => {
             location.href = '/';
@@ -287,6 +290,7 @@
                   title: '유저 로드 실패',
                   text: err,
                   type: 'error',
+                                                                    allowOutsideClick: false,
                 })
                 .then(() => {
                   location.href = '/';
@@ -337,6 +341,7 @@
                   title: '유저 로드 실패',
                   text: err,
                   type: 'error',
+                                                                    allowOutsideClick: false,
                 })
                 .then(() => {
                   location.href = '/';

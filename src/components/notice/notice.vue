@@ -40,8 +40,8 @@
           <i class="huge chevron circle up icon" v-on:click="scrollUp"></i>
         </a>
         <button class="ui button" v-if="loadState" v-on:click="loadList">
-            <i class="large chevron down icon"></i>
-          </button>
+              <i class="large chevron down icon"></i>
+            </button>
       </div>
     </div>
   </div>
@@ -100,6 +100,7 @@
               title: '공지 로드 실패',
               text: err,
               type: 'error',
+              allowOutsideClick: false,
             })
             .then((res) => {
               // 메인으로 이동
@@ -158,6 +159,7 @@
                 title: '공지 로드 실패',
                 text: err,
                 type: 'error',
+                allowOutsideClick: false,
               })
               .then(() => {
                 location.href = '/';

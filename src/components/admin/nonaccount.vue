@@ -24,6 +24,7 @@
     },
     created() {
       // 유저 정보 로드
+      this.userToken = this.$cookie.get('userToken');
       this.getMember();
     },
     updated() {

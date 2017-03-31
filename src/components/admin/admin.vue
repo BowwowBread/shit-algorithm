@@ -83,6 +83,7 @@
                   title: '입장 실패',
                   text: '어드민이 아닙니다',
                   type: 'error',
+                  allowOutsideClick: false,
                 })
                 .then(() => {
                   // 메인으로 이동
@@ -101,6 +102,7 @@
                 title: '유저 정보 조회 실패',
                 text: error,
                 type: 'error',
+                allowOutsideClick: false,                
               })
               .then(() => {
                 // 메인으로 이동
@@ -114,6 +116,7 @@
             title: '입장 실패',
             text: '로그인을 해주세요',
             type: 'error',
+            allowOutsideClick: false,            
           })
           .then(() => {
             // 메인으로 이동
